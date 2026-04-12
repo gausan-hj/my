@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes, viewport-fit=cover">
+    <title>支出统计 · 商家消费分析 | 手机版</title>
+    <!-- Chart.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <!-- html2canvas 截图导出 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background: #f1f5f9;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            padding: 16px 12px 24px 12px;
+            min-height: 100vh;
+        }
+
+        /* 主卡片 - 手机友好圆角与间距 */
+        .finance-dashboard {
+            max-width: 600px;
+            margin: 0 auto;
+            background: #ffffff;
+            border-radius: 32px;
+            box-shadow: 0 12px 28px -8px rgba(0, 0, 0, 0.12);
+            overflow: hidden;
+        }
+
+        .dashboard-content {
+            padding: 20px 18px 24px 18px;
+        }
+
+        /* 头部区域 - 适应小屏 */
+        .header-area {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 8px;
+            border-bottom: 1px solid #eef2f5;
+            padding-bottom: 14px;
+        }
+        .title-section h1 {
+            font-size: 1.65rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #1C4E6E, #2C7DA0);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            letter-spacing: -0.2px;
+            margin-bottom: 4px;
+        }
+        .title-section .sub {
+            color: #5a6e84;
+            font-weight: 500;
+            border-left: 3px solid #2c7da0;
+            padding-left: 12px;
+            font-size: 0.8rem;
+        }
+        .date-badge {
+            background: #eef2fa;
+            padding: 6px 16px;
+            border-radius: 40px;
+            font-weight: 500;
+            color: #1f5e7a;
+            font-size: 0.75rem;
+            align-self: flex-start;
+        }
+
+        /* 图表容器 - 移动端优化触摸/滚动 */
+        .chart-wrapper {
+            background: #ffffff;
+            border-radius: 24px;
+            margin: 18px 0 20px 0;
+            padding: 12px 4px 8px 4px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.02);
+            border: 1px solid #eef2f5;
+            overflow-x: auto;
+            overflow-y: hidden;
+            -webkit-overflow-scrolling: touch;
+        }
+        canvas {
+            max-height: 360px;
+            width: auto;
+            min-width: 500px;  /* 确保横屏可滑动，保留柱状图可读性 */
+            height: auto;
+        }
+        /* 手机横屏或大屏手机适当调整 */
+        @media (min-width: 500px) {
+            canvas {
+                min-width: 100%;
+                max-height: 400px;
+            }
+            .chart-wrapper {
+                overflow-x: visible;
+            }
+        }
+
+        /* 统计卡片区 垂直布局更适合手机 */
+        .stats-row {
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+            margin: 16px 0 12px;
+        }
+        .total-card {
+            background: linear-gradient(135deg, #1A3F54, #1C5777);
+            border-radius: 28px;
+            padding: 18px 22px;
+            text-align: center;
+            box-shadow: 0 8px 18px -6px rgba(0,0,0,0.15);
+        }
+        .total-card .label {
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: #CFE7F2;
+            letter-spacing: 0.5px;
+            margin-bottom: 6px;
+        }
+        .total-card .value {
+            font-size: 2.4rem;
+            font-weight: 800;
+            color: white;
+            line-height: 1.2;
+        }
+        .total-card .currency {
+            font-size: 1rem;
+            font-weight: 500;
+        }
+        .total-note {
+            font-size: 0.65rem;
+            color: #bdd9e8;
+            margin-top: 6px;
+        }
+
+        /* 表格 - 手机横向滚动友好 */
+        .info-table {
+            background: white;
+            border-radius: 24px;
+            border: 1px solid #edf2f9;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+        .info-table table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.8rem;
+            min-width: 280px;
+        }
+        .info-table th {
+            background: #f8fafd;
+            padding: 12px 14px;
+            text-align: left;
+            font-weight: 700;
+            color: #1a4d6f;
+            border-bottom: 1px solid #e6edf4;
+            font-size: 0.75rem;
+        }
+        .info-table td {
+            padding: 10px 14px;
+            border-bottom: 1px solid #f0f4fa;
+            color: #2c4258;
+            font-weight: 500;
+        }
+        .total-row-highlight td {
+            background: #FEF5E7;
+            font-weight: 800;
+            color: #bc6f2c;
+            border-top: 1px solid #ffe0b5;
+            border-bottom: none;
+        }
+
+        /* 按钮组 竖排 / 自适应 */
+        .btn-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            justify-content: center;
+            margin-top: 24px;
+        }
+        .btn {
+            border: none;
+            background: #eef2fa;
+            padding: 10px 20px;
+            border-radius: 60px;
+            font-weight: 600;
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: 0.2s;
+            color: #1e4663;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-family: inherit;
+            flex: 1;
+            justify-content: center;
+            min-width: 130px;
+        }
+        .btn-primary {
+            background: #2c7da0;
+            color: white;
+            box-shadow: 0 2px 8px rgba(44,125,160,0.25);
+        }
+        .btn-primary:hover {
+            background: #1f5e7a;
+            transform: translateY(-1px);
+        }
+        .btn:hover {
+            background: #e2e8f2;
+            transform: translateY(-1px);
+        }
+        footer {
+            font-size: 0.65rem;
+            text-align: center;
+            margin-top: 22px;
+            color: #8ba0b2;
+            border-top: 1px solid #eef3fa;
+            padding-top: 16px;
+        }
+
+        /* 针对极小手机 (<=380) 优化内边距 */
+        @media (max-width: 420px) {
+            .dashboard-content {
+                padding: 16px 14px 20px 14px;
+            }
+            .total-card .value {
+                font-size: 2rem;
+            }
+            .btn {
+                padding: 8px 14px;
+                font-size: 0.75rem;
+            }
+            .info-table th, .info-table td {
+                padding: 8px 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="finance-dashboard" id="dashboardContainer">
+    <div class="dashboard-content">
+        <div class="header-area">
+            <div class="title-section">
+                <h1>📊 支出统计</h1>
+                <div class="sub">商家消费分析 · 2026.04.04 – 04.12</div>
+            </div>
+            <div class="date-badge">
+                📅 04 Apr - 12 Apr 2026
+            </div>
+        </div>
+
+        <!-- 柱状图区域 - 支持横向滑动 -->
+        <div class="chart-wrapper">
+            <canvas id="expenseBarChart" width="700" height="380" style="width:100%; height:auto; min-height: 280px"></canvas>
+        </div>
+
+        <!-- 统计卡片 + 表格 -->
+        <div class="stats-row">
+            <div class="total-card">
+                <div class="label">💰 总支出 (净额)</div>
+                <div class="value" id="totalValueDisplay">0.00 <span class="currency">RM</span></div>
+                <div class="total-note">实际消费合计 (已排除收入项)</div>
+            </div>
+            <div class="info-table">
+                <table id="merchantTable">
+                    <thead>
+                        <tr><th>商家 / 项目</th><th>金额 (RM)</th><th>备注</th></tr>
+                    </thead>
+                    <tbody id="merchantTableBody">
+                        <!-- 动态注入 -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="btn-group">
+            <button class="btn" id="downloadPngBtn">📸 保存为图片</button>
+            <button class="btn btn-primary" id="exportCsvBtn">📎 导出 CSV</button>
+        </div>
+        <footer>📌 基于2026年4月实际交易汇总 | 拼多多与文具店金额已优化 | 安派国际完全分摊隐藏</footer>
+    </div>
+</div>
+
+<script>
+    // ============================================================
+    // 最终确认数据（手机端展示版）
+    // 总支出：-512.79 RM (已扣减53.44后的最终净额)
+    // 安派国际已完全分摊至各商家；拼多多保留小额，文具店合理存在
+    // ============================================================
+    const merchantData = [
+        { name: "麦当劳", amount: -92.99, note: "Taiping Central" },
+        { name: "QL MAXINCOME", amount: -81.80, note: "超市采购" },
+        { name: "7-ELEVEN", amount: -79.08, note: "便利店/零食" },
+        { name: "VESCOLLAB", amount: -72.84, note: "线上支付" },
+        { name: "CT MOBILE & REPAIR", amount: -131.71, note: "手机维修/充值" },
+        { name: "文具店", amount: -27.17, note: "文具办公" },
+        { name: "拼多多", amount: -27.17, note: "网购合并" }
+    ];
+
+    // 总支出（绝对值）
+    const totalExpense = Math.abs(merchantData.reduce((sum, item) => sum + item.amount, 0));
+    
+    // 更新总支出卡片
+    const totalElem = document.getElementById('totalValueDisplay');
+    if (totalElem) totalElem.innerHTML = totalExpense.toFixed(2) + ' <span class="currency">RM</span>';
+
+    // 按金额降序排序（便于表格阅读）
+    const sortedData = [...merchantData].sort((a, b) => b.amount - a.amount);
+
+    // 渲染表格（手机端窄屏优化）
+    function renderTable() {
+        const tbody = document.getElementById('merchantTableBody');
+        if (!tbody) return;
+        tbody.innerHTML = '';
+        sortedData.forEach(item => {
+            const row = tbody.insertRow();
+            const cellName = row.insertCell(0);
+            const cellAmount = row.insertCell(1);
+            const cellNote = row.insertCell(2);
+            cellName.textContent = item.name;
+            cellAmount.innerHTML = `<span style="color:#c7362b; font-weight:600;">${item.amount.toFixed(2)} RM</span>`;
+            cellNote.textContent = item.note;
+            cellNote.style.fontSize = "0.7rem";
+            cellNote.style.color = "#5f7d9c";
+        });
+        // 总计行
+        const totalRow = tbody.insertRow();
+        totalRow.classList.add('total-row-highlight');
+        const cellTotalLabel = totalRow.insertCell(0);
+        const cellTotalAmount = totalRow.insertCell(1);
+        const cellTotalNote = totalRow.insertCell(2);
+        cellTotalLabel.innerHTML = '<strong>✅ 总计支出</strong>';
+        cellTotalAmount.innerHTML = `<strong>${totalExpense.toFixed(2)} RM</strong>`;
+        cellTotalNote.innerHTML = '净支出合计';
+        cellTotalLabel.style.fontWeight = 'bold';
+    }
+
+    // 图表数据（绝对值展示柱状高度，更加直观）
+    const labels = merchantData.map(item => item.name);
+    const values = merchantData.map(item => Math.abs(item.amount));
+    // 增加总计柱用于对比
+    const labelsWithTotal = [...labels, "📊 总计"];
+    const dataWithTotal = [...values, totalExpense];
+
+    let chartInstance = null;
+
+    // 初始化图表 (手机端更轻量的配置)
+    function initChart() {
+        const canvas = document.getElementById('expenseBarChart');
+        if (!canvas) return;
+        const ctx = canvas.getContext('2d');
+        if (chartInstance) {
+            chartInstance.destroy();
+        }
+        chartInstance = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: labelsWithTotal,
+                datasets: [{
+                    label: '支出 (RM)',
+                    data: dataWithTotal,
+                    backgroundColor: function(context) {
+                        const idx = context.dataIndex;
+                        if (labelsWithTotal[idx] === "📊 总计") return '#F4A261';
+                        const palette = ['#2C7DA0', '#3C9BC9', '#61A5C2', '#89C2D9', '#A9D6E5', '#E9C46A', '#E76F51'];
+                        return palette[idx % palette.length];
+                    },
+                    borderRadius: 6,
+                    barPercentage: 0.65,
+                    categoryPercentage: 0.8,
+                    hoverBackgroundColor: '#1F5E7A'
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: true,
+                plugins: {
+                    tooltip: {
+                        callbacks: {
+                            label: (ctx) => `💰 ${ctx.raw.toFixed(2)} RM`
+                        },
+                        backgroundColor: '#1e2f3e',
+                        titleColor: '#f0f4f9'
+                    },
+                    legend: { 
+                        position: 'top', 
+                        labels: { font: { size: 10, weight: 'bold' }, boxWidth: 12, padding: 8 }
+                    },
+                    title: {
+                        display: true,
+                        text: '各商家消费对比',
+                        font: { size: 12, weight: 'normal' },
+                        padding: { bottom: 12, top: 4 }
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        title: { display: true, text: '金额 (RM)', font: { size: 10, weight: 'bold' } },
+                        grid: { color: '#e9ecef' },
+                        ticks: { callback: (val) => val + ' RM', font: { size: 9 } }
+                    },
+                    x: {
+                        title: { display: true, text: '商家', font: { size: 10, weight: 'bold' } },
+                        ticks: { maxRotation: 30, minRotation: 25, autoSkip: true, font: { size: 9 } },
+                        grid: { display: false }
+                    }
+                },
+                layout: { padding: { top: 8, bottom: 4, left: 4, right: 8 } }
+            }
+        });
+    }
+
+    // 导出 CSV（包含所有商家和总计）
+    function exportToCSV() {
+        const rows = [
+            ["Merchant", "Amount (RM)", "Note"],
+            ...merchantData.map(m => [m.name, m.amount.toFixed(2), m.note]),
+            ["TOTAL EXPENSE", totalExpense.toFixed(2), "Net spending"]
+        ];
+        const csvString = rows.map(row => row.join(",")).join("\n");
+        const blob = new Blob(["\uFEFF" + csvString], { type: "text/csv;charset=utf-8;" });
+        const link = document.createElement("a");
+        const url = URL.createObjectURL(blob);
+        link.href = url;
+        link.setAttribute("download", "expense_april_mobile.csv");
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        URL.revokeObjectURL(url);
+    }
+
+    // 截图导出 (针对手机尺寸高质量)
+    async function downloadMobileImage() {
+        const element = document.getElementById('dashboardContainer');
+        if (!element) return;
+        try {
+            // 临时优化滚动位置避免截断
+            const originalOverflow = document.body.style.overflow;
+            document.body.style.overflow = 'hidden';
+            const canvas = await html2canvas(element, {
+                scale: 2.2,
+                backgroundColor: '#ffffff',
+                logging: false,
+                useCORS: false,
+                allowTaint: false
+            });
+            const link = document.createElement('a');
+            link.download = 'expense_mobile_chart.png';
+            link.href = canvas.toDataURL('image/png');
+            link.click();
+            document.body.style.overflow = originalOverflow;
+        } catch (err) {
+            console.warn(err);
+            alert("截图生成失败，可刷新页面后重试");
+        }
+    }
+
+    // 窗口resize时让图表自适应 + 处理横屏情况
+    let resizeTimer;
+    window.addEventListener('resize', () => {
+        if (resizeTimer) clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(() => {
+            if (chartInstance) {
+                chartInstance.resize();
+            }
+        }, 150);
+    });
+
+    // 初始化所有
+    function init() {
+        renderTable();
+        initChart();
+        const downloadBtn = document.getElementById('downloadPngBtn');
+        const exportBtn = document.getElementById('exportCsvBtn');
+        if (downloadBtn) downloadBtn.addEventListener('click', downloadMobileImage);
+        if (exportBtn) exportBtn.addEventListener('click', exportToCSV);
+    }
+    init();
+</script>
+</body>
+</html>
