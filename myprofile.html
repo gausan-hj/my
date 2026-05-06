@@ -50,7 +50,7 @@
             border-color: rgba(110, 170, 90, 0.7);
         }
 
-        /* 头像容器 */
+        /* 头像 */
         .avatar-container {
             width: 120px;
             height: 120px;
@@ -73,7 +73,6 @@
             font-weight: 500;
             color: #1d5438;
             letter-spacing: -0.5px;
-            word-break: break-word;
             margin-bottom: 0.5rem;
         }
 
@@ -94,7 +93,6 @@
             color: #3a7053;
             line-height: 1.6;
             margin: 1rem 0;
-            padding: 0 0.5rem;
         }
 
         .mint-divider {
@@ -119,8 +117,55 @@
             border-radius: 40px;
             font-size: 0.7rem;
             color: #2e6b46;
-            letter-spacing: 0.5px;
-            backdrop-filter: blur(2px);
+        }
+
+        /* ========= 游戏胶囊区域 ========= */
+        .games-section {
+            margin: 1.8rem 0 1rem;
+        }
+        .games-title {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: #5d8a6b;
+            margin-bottom: 1rem;
+            font-weight: 400;
+        }
+        .games-capsules {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 0.8rem;
+        }
+        .game-capsule {
+            background: rgba(255, 255, 255, 0.5);
+            backdrop-filter: blur(4px);
+            border-radius: 60px;
+            padding: 0.3rem 0.9rem 0.3rem 0.5rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.2s ease;
+            border: 1px solid rgba(120, 170, 100, 0.4);
+            cursor: pointer;
+            text-decoration: none;
+        }
+        .game-capsule:hover {
+            background: rgba(200, 230, 180, 0.7);
+            transform: translateY(-3px);
+            border-color: #8bc07a;
+        }
+        .game-icon {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            object-fit: cover;
+            background: #d4e8ca;
+        }
+        .game-name {
+            font-size: 0.75rem;
+            font-weight: 500;
+            color: #2d6a46;
         }
 
         .quiet-footer {
@@ -146,8 +191,6 @@
             box-shadow: 0 12px 28px rgba(60, 80, 45, 0.08);
             transition: all 0.3s ease;
             border: 1px solid rgba(140, 190, 120, 0.45);
-            display: flex;
-            flex-direction: column;
         }
 
         .platform-card:hover {
@@ -250,7 +293,6 @@
             border-radius: 2rem;
             padding: 1.8rem 2rem;
             border: 1px solid rgba(130, 180, 110, 0.55);
-            box-shadow: 0 12px 28px rgba(60, 80, 45, 0.06);
         }
 
         .summary-title {
@@ -329,13 +371,23 @@
             .platforms-grid {
                 grid-template-columns: 1fr;
             }
+            .game-capsule {
+                padding: 0.2rem 0.7rem 0.2rem 0.4rem;
+            }
+            .game-icon {
+                width: 24px;
+                height: 24px;
+            }
+            .game-name {
+                font-size: 0.65rem;
+            }
         }
     </style>
 </head>
 <body>
 <div class="container">
     
-    <!-- ========= 个人资讯卡片（头像：IMG_20260426_004811_408.webp） ========= -->
+    <!-- ========= 个人资讯卡片 ========= -->
     <div class="profile-card">
         <div class="avatar-container">
             <img class="avatar-img" src="IMG_20260426_004811_408.webp" alt="LWH头像" onerror="this.src='https://placehold.co/120x120/c8e0bc/2a6a3a?text=🌿'">
@@ -349,12 +401,48 @@
             像薄荷一样存在，不吵，但记得住。<br>
             未来感是安静地发光。
         </div>
+        
+        <!-- 游戏胶囊区域 -->
+        <div class="games-section">
+            <div class="games-title">🎮 游戏时光 · 薄荷玩家 🎮</div>
+            <div class="games-capsules">
+                <a href="#" class="game-capsule" target="_blank">
+                    <img class="game-icon" src="https://cdn.jsdelivr.net/npm/simple-icons@v13/icons/minecraft.svg" alt="Minecraft" onerror="this.src='https://placehold.co/28x28/a8d49c/2a6a3a?text=⛏'">
+                    <span class="game-name">Minecraft</span>
+                </a>
+                <a href="#" class="game-capsule" target="_blank">
+                    <img class="game-icon" src="https://cdn.jsdelivr.net/npm/simple-icons@v13/icons/roblox.svg" alt="Roblox" onerror="this.src='https://placehold.co/28x28/a8d49c/2a6a3a?text=🎲'">
+                    <span class="game-name">Roblox</span>
+                </a>
+                <a href="#" class="game-capsule" target="_blank">
+                    <img class="game-icon" src="https://placehold.co/28x28/a8d49c/2a6a3a?text=👑" alt="Honor of Kings">
+                    <span class="game-name">Honor of Kings</span>
+                </a>
+                <a href="#" class="game-capsule" target="_blank">
+                    <img class="game-icon" src="https://placehold.co/28x28/a8d49c/2a6a3a?text=🕯" alt="Identity V">
+                    <span class="game-name">第5人格</span>
+                </a>
+                <a href="#" class="game-capsule" target="_blank">
+                    <img class="game-icon" src="https://placehold.co/28x28/a8d49c/2a6a3a?text=☁️" alt="Sky光遇">
+                    <span class="game-name">Sky 光遇</span>
+                </a>
+                <a href="#" class="game-capsule" target="_blank">
+                    <img class="game-icon" src="https://placehold.co/28x28/a8d49c/2a6a3a?text=🌌" alt="Honkai Star Rail">
+                    <span class="game-name">星穹铁道</span>
+                </a>
+                <a href="#" class="game-capsule" target="_blank">
+                    <img class="game-icon" src="https://placehold.co/28x28/a8d49c/2a6a3a?text=🥚" alt="Eggy Party">
+                    <span class="game-name">蛋仔派对</span>
+                </a>
+            </div>
+        </div>
+        
         <div class="persona-tags">
             <span class="tag">✦ 影像叙事者</span>
             <span class="tag">🌿 薄荷色灵魂</span>
             <span class="tag">🎬 拍视频的人</span>
             <span class="tag">🐾 宠物星球居民</span>
-            <span class="tag">☁️ 安静但很酷</span>
+            <span class="tag">🎮 多元玩家</span>
         </div>
         <div class="quiet-footer">
             ◌ 文艺感是安静的棱镜 ◌
@@ -363,8 +451,7 @@
 
     <!-- ========= 平台卡片网格 ========= -->
     <div class="platforms-grid">
-
-        <!-- YouTube 卡片：3个频道 -->
+        <!-- YouTube 卡片 -->
         <div class="platform-card">
             <div class="platform-header">
                 <span class="platform-icon">🎬</span>
@@ -373,130 +460,70 @@
             <div class="global-nickname">꧁LWHᝰgs123꧂</div>
             <div class="sunlight-tag">Sunlight, a quiet kind of light.</div>
             <div class="account-list">
-                <div class="account-item">
-                    <span class="account-label">🎬 主频道</span>
-                    <a class="account-link" href="https://www.youtube.com/@Gausan123" target="_blank" rel="noopener noreferrer">@Gausan123</a>
-                </div>
-                <div class="account-item">
-                    <span class="account-label">📼 旧频道</span>
-                    <a class="account-link" href="https://www.youtube.com/@tiantian124" target="_blank" rel="noopener noreferrer">@tiantian124</a>
-                </div>
-                <div class="account-item">
-                    <span class="account-label">🎥 Vlog频道</span>
-                    <a class="account-link" href="https://www.youtube.com/@gauting256" target="_blank" rel="noopener noreferrer">@gauting256</a>
-                </div>
+                <div class="account-item"><span class="account-label">🎬 主频道</span><a class="account-link" href="https://www.youtube.com/@Gausan123" target="_blank">@Gausan123</a></div>
+                <div class="account-item"><span class="account-label">📼 旧频道</span><a class="account-link" href="https://www.youtube.com/@tiantian124" target="_blank">@tiantian124</a></div>
+                <div class="account-item"><span class="account-label">🎥 Vlog频道</span><a class="account-link" href="https://www.youtube.com/@gauting256" target="_blank">@gauting256</a></div>
             </div>
             <div class="desc-note">影像叙事 · 安静记录每一帧</div>
         </div>
 
-        <!-- Instagram 卡片：个人 + 宠物 -->
+        <!-- Instagram 卡片 -->
         <div class="platform-card">
-            <div class="platform-header">
-                <span class="platform-icon">📸</span>
-                <span class="platform-name">Instagram</span>
-            </div>
+            <div class="platform-header"><span class="platform-icon">📸</span><span class="platform-name">Instagram</span></div>
             <div class="sunlight-tag">Sunlight, a quiet kind of light.</div>
             <div class="account-list">
-                <div class="account-item">
-                    <span class="account-label">🌿 个人账号</span>
-                    <a class="account-link" href="https://www.instagram.com/lwh.gs123" target="_blank" rel="noopener noreferrer">@lwh.gs123</a>
-                </div>
-                <div class="account-item">
-                    <span class="account-label">🐾 宠物账号</span>
-                    <a class="account-link" href="https://www.instagram.com/gish_dog_hamster" target="_blank" rel="noopener noreferrer">@gish_dog_hamster</a>
-                </div>
+                <div class="account-item"><span class="account-label">🌿 个人账号</span><a class="account-link" href="https://www.instagram.com/lwh.gs123" target="_blank">@lwh.gs123</a></div>
+                <div class="account-item"><span class="account-label">🐾 宠物账号</span><a class="account-link" href="https://www.instagram.com/gish_dog_hamster" target="_blank">@gish_dog_hamster</a></div>
             </div>
             <div class="desc-note">薄荷色日常 · 爪印与光影</div>
         </div>
 
-        <!-- Threads 卡片：个人 + 宠物 -->
+        <!-- Threads 卡片 -->
         <div class="platform-card">
-            <div class="platform-header">
-                <span class="platform-icon">🧵</span>
-                <span class="platform-name">Threads</span>
-            </div>
+            <div class="platform-header"><span class="platform-icon">🧵</span><span class="platform-name">Threads</span></div>
             <div class="sunlight-tag">Sunlight, a quiet kind of light.</div>
             <div class="account-list">
-                <div class="account-item">
-                    <span class="account-label">🌿 个人账号</span>
-                    <a class="account-link" href="https://www.threads.com/@lwh.gs123" target="_blank" rel="noopener noreferrer">@lwh.gs123</a>
-                </div>
-                <div class="account-item">
-                    <span class="account-label">🐾 宠物账号</span>
-                    <a class="account-link" href="https://www.threads.com/@gish_dog_hamster" target="_blank" rel="noopener noreferrer">@gish_dog_hamster</a>
-                </div>
+                <div class="account-item"><span class="account-label">🌿 个人账号</span><a class="account-link" href="https://www.threads.com/@lwh.gs123" target="_blank">@lwh.gs123</a></div>
+                <div class="account-item"><span class="account-label">🐾 宠物账号</span><a class="account-link" href="https://www.threads.com/@gish_dog_hamster" target="_blank">@gish_dog_hamster</a></div>
             </div>
             <div class="desc-note">畅所欲言 · 安静陪伴</div>
         </div>
 
-        <!-- 抖音（中国版）卡片：个人 + 拍摄 -->
+        <!-- 抖音卡片 -->
         <div class="platform-card">
-            <div class="platform-header">
-                <span class="platform-icon">🎵</span>
-                <span class="platform-name">抖音 · 中国版</span>
-            </div>
+            <div class="platform-header"><span class="platform-icon">🎵</span><span class="platform-name">抖音 · 中国版</span></div>
             <div class="sunlight-tag">Sunlight, a quiet kind of light.</div>
             <div class="account-list">
-                <div class="account-item">
-                    <span class="account-label">🌸 个人账号</span>
-                    <a class="account-link" href="https://v.douyin.com/RZezOSh22r0/" target="_blank" rel="noopener noreferrer">꧁«tatateᝰgs»꧂</a>
-                </div>
-                <div class="account-item">
-                    <span class="account-label">🎬 拍摄账号</span>
-                    <a class="account-link" href="https://v.douyin.com/Lq1ClGr3Wxg/" target="_blank" rel="noopener noreferrer">高山123 (84135558205)</a>
-                </div>
+                <div class="account-item"><span class="account-label">🌸 个人账号</span><a class="account-link" href="https://v.douyin.com/RZezOSh22r0/" target="_blank">꧁«tatateᝰgs»꧂</a></div>
+                <div class="account-item"><span class="account-label">🎬 拍摄账号</span><a class="account-link" href="https://v.douyin.com/Lq1ClGr3Wxg/" target="_blank">高山123</a></div>
             </div>
             <div class="desc-note">薄荷节奏 · 安静律动</div>
         </div>
 
         <!-- Bilibili 卡片 -->
         <div class="platform-card">
-            <div class="platform-header">
-                <span class="platform-icon">🪄</span>
-                <span class="platform-name">Bilibili</span>
-            </div>
+            <div class="platform-header"><span class="platform-icon">🪄</span><span class="platform-name">Bilibili</span></div>
             <div class="global-nickname">LWHgs123</div>
             <div class="sunlight-tag">Sunlight, a quiet kind of light.</div>
-            <div class="account-list">
-                <div class="account-item">
-                    <span class="account-label">🎬 拍摄用途</span>
-                    <a class="account-link" href="https://b23.tv/o7qNaU5" target="_blank" rel="noopener noreferrer">LWHgs123的空间</a>
-                </div>
-            </div>
+            <div class="account-list"><div class="account-item"><span class="account-label">🎬 拍摄用途</span><a class="account-link" href="https://b23.tv/o7qNaU5" target="_blank">LWHgs123的空间</a></div></div>
             <div class="desc-note">创作存档 · 灵感容器</div>
         </div>
 
         <!-- Facebook 卡片 -->
         <div class="platform-card">
-            <div class="platform-header">
-                <span class="platform-icon">📘</span>
-                <span class="platform-name">Facebook</span>
-            </div>
+            <div class="platform-header"><span class="platform-icon">📘</span><span class="platform-name">Facebook</span></div>
             <div class="global-nickname">꧁LWHᝰgs123꧂</div>
             <div class="sunlight-tag">Sunlight, a quiet kind of light.</div>
-            <div class="account-list">
-                <div class="account-item">
-                    <span class="account-label">🌿 个人账号</span>
-                    <a class="account-link" href="https://www.facebook.com/share/1LD8UH9C6X/" target="_blank" rel="noopener noreferrer">个人主页</a>
-                </div>
-            </div>
+            <div class="account-list"><div class="account-item"><span class="account-label">🌿 个人账号</span><a class="account-link" href="https://www.facebook.com/share/1LD8UH9C6X/" target="_blank">个人主页</a></div></div>
             <div class="desc-note">温柔连接 · 日常片段</div>
         </div>
 
         <!-- TikTok 卡片 -->
         <div class="platform-card">
-            <div class="platform-header">
-                <span class="platform-icon">📱</span>
-                <span class="platform-name">TikTok</span>
-            </div>
+            <div class="platform-header"><span class="platform-icon">📱</span><span class="platform-name">TikTok</span></div>
             <div class="global-nickname">꧁LWHᝰgs123꧂</div>
             <div class="sunlight-tag">Sunlight, a quiet kind of light.</div>
-            <div class="account-list">
-                <div class="account-item">
-                    <span class="account-label">🌿 个人账号</span>
-                    <a class="account-link" href="https://www.tiktok.com/@gausan123ajk" target="_blank" rel="noopener noreferrer">@gausan123ajk</a>
-                </div>
-            </div>
+            <div class="account-list"><div class="account-item"><span class="account-label">🌿 个人账号</span><a class="account-link" href="https://www.tiktok.com/@gausan123ajk" target="_blank">@gausan123ajk</a></div></div>
             <div class="desc-note">全球视野 · 薄荷微光</div>
         </div>
     </div>
