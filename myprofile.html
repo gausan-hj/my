@@ -26,23 +26,123 @@
             color: #1a3f2c;
         }
 
-        /* 主容器：每个平台一张卡片 */
-        .platforms-container {
+        .container {
             max-width: 1300px;
             width: 100%;
             margin: 0 auto;
+        }
+
+        /* ========= 个人资讯卡片 ========= */
+        .profile-card {
+            background: rgba(255, 255, 255, 0.78);
+            backdrop-filter: blur(14px);
+            border-radius: 2.5rem;
+            padding: 2.2rem 2rem;
+            margin-bottom: 2.5rem;
+            border: 1px solid rgba(140, 190, 120, 0.5);
+            box-shadow: 0 20px 35px rgba(60, 80, 45, 0.1);
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .profile-card:hover {
+            background: rgba(255, 255, 255, 0.88);
+            border-color: rgba(110, 170, 90, 0.7);
+        }
+
+        /* 头像容器 */
+        .avatar-container {
+            width: 120px;
+            height: 120px;
+            margin: 0 auto 1.2rem auto;
+            border-radius: 50%;
+            overflow: hidden;
+            box-shadow: 0 8px 18px rgba(60, 80, 45, 0.15);
+            border: 3px solid rgba(255,255,240,0.7);
+            background: #c8e0bc;
+        }
+        .avatar-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .main-name {
+            font-family: 'Space Grotesk', monospace;
+            font-size: 2.2rem;
+            font-weight: 500;
+            color: #1d5438;
+            letter-spacing: -0.5px;
+            word-break: break-word;
+            margin-bottom: 0.5rem;
+        }
+
+        .tagline {
+            font-size: 1rem;
+            font-weight: 340;
+            color: #428f62;
+            font-style: italic;
+            letter-spacing: 0.3px;
+            margin-bottom: 1.2rem;
+            border-bottom: 1px dashed #c2dfb4;
+            display: inline-block;
+            padding-bottom: 0.4rem;
+        }
+
+        .poetic-bio {
+            font-size: 0.9rem;
+            color: #3a7053;
+            line-height: 1.6;
+            margin: 1rem 0;
+            padding: 0 0.5rem;
+        }
+
+        .mint-divider {
+            width: 60px;
+            height: 2px;
+            background: #b8d9aa;
+            margin: 1rem auto;
+            opacity: 0.6;
+        }
+
+        .persona-tags {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 0.6rem;
+            margin: 1.2rem 0 0.6rem;
+        }
+
+        .tag {
+            background: rgba(140, 190, 120, 0.2);
+            padding: 0.3rem 1rem;
+            border-radius: 40px;
+            font-size: 0.7rem;
+            color: #2e6b46;
+            letter-spacing: 0.5px;
+            backdrop-filter: blur(2px);
+        }
+
+        .quiet-footer {
+            font-size: 0.65rem;
+            color: #7aa27e;
+            margin-top: 1rem;
+            opacity: 0.8;
+        }
+
+        /* ========= 平台卡片网格 ========= */
+        .platforms-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
             gap: 1.8rem;
             margin-bottom: 2.5rem;
         }
 
-        /* 平台卡片 */
         .platform-card {
             background: rgba(255, 255, 255, 0.72);
             backdrop-filter: blur(12px);
             border-radius: 2rem;
-            padding: 1.6rem 1.5rem;
+            padding: 1.5rem;
             box-shadow: 0 12px 28px rgba(60, 80, 45, 0.08);
             transition: all 0.3s ease;
             border: 1px solid rgba(140, 190, 120, 0.45);
@@ -54,10 +154,8 @@
             background: rgba(255, 255, 255, 0.88);
             transform: translateY(-5px);
             border-color: rgba(110, 170, 90, 0.7);
-            box-shadow: 0 22px 38px rgba(70, 100, 50, 0.12);
         }
 
-        /* 平台头部 */
         .platform-header {
             display: flex;
             align-items: center;
@@ -66,24 +164,23 @@
             border-bottom: 2px solid rgba(130, 180, 110, 0.4);
             padding-bottom: 0.7rem;
         }
+
         .platform-icon {
             font-size: 2rem;
         }
+
         .platform-name {
             font-size: 1.2rem;
             font-weight: 600;
             color: #2a6a3a;
-            letter-spacing: -0.3px;
         }
 
-        /* 通用昵称行 */
         .global-nickname {
             font-family: 'Space Grotesk', monospace;
             font-size: 1rem;
             font-weight: 500;
             color: #276e46;
             margin: 0.2rem 0 0.3rem;
-            word-break: break-word;
         }
 
         .sunlight-tag {
@@ -92,10 +189,8 @@
             border-left: 2px solid #b8d5aa;
             padding-left: 0.6rem;
             margin: 0.3rem 0 0.8rem;
-            font-weight: 350;
         }
 
-        /* 账号列表 */
         .account-list {
             display: flex;
             flex-direction: column;
@@ -148,11 +243,8 @@
             font-style: italic;
         }
 
-        /* 总结卡片 */
+        /* ========= 总结卡片 ========= */
         .summary-card {
-            max-width: 1300px;
-            width: 100%;
-            margin: 0 auto;
             background: rgba(255, 255, 255, 0.8);
             backdrop-filter: blur(12px);
             border-radius: 2rem;
@@ -206,7 +298,7 @@
             margin-top: 0.5rem;
         }
 
-        .footer-note {
+        .global-footer {
             text-align: center;
             margin-top: 2rem;
             font-size: 0.65rem;
@@ -219,8 +311,11 @@
             body {
                 padding: 1rem;
             }
-            .platform-name {
-                font-size: 1rem;
+            .main-name {
+                font-size: 1.6rem;
+            }
+            .profile-card {
+                padding: 1.5rem;
             }
             .account-item {
                 flex-direction: column;
@@ -231,187 +326,215 @@
                 max-width: 100%;
                 text-align: left;
             }
-            .summary-card {
-                padding: 1.2rem;
+            .platforms-grid {
+                grid-template-columns: 1fr;
             }
         }
     </style>
 </head>
 <body>
-
-<div class="platforms-container">
-
-    <!-- YouTube 卡片：集合3个频道 -->
-    <div class="platform-card">
-        <div class="platform-header">
-            <span class="platform-icon">🎬</span>
-            <span class="platform-name">YouTube</span>
+<div class="container">
+    
+    <!-- ========= 个人资讯卡片（头像：IMG_20260426_004811_408.webp） ========= -->
+    <div class="profile-card">
+        <div class="avatar-container">
+            <img class="avatar-img" src="IMG_20260426_004811_408.webp" alt="LWH头像" onerror="this.src='https://placehold.co/120x120/c8e0bc/2a6a3a?text=🌿'">
         </div>
-        <div class="global-nickname">꧁LWHᝰgs123꧂</div>
-        <div class="sunlight-tag">Sunlight, a quiet kind of light.</div>
-        <div class="account-list">
-            <div class="account-item">
-                <span class="account-label">🎬 主频道</span>
-                <a class="account-link" href="https://www.youtube.com/@Gausan123" target="_blank" rel="noopener noreferrer">@Gausan123</a>
-            </div>
-            <div class="account-item">
-                <span class="account-label">📼 旧频道</span>
-                <a class="account-link" href="https://www.youtube.com/@tiantian124" target="_blank" rel="noopener noreferrer">@tiantian124</a>
-            </div>
-            <div class="account-item">
-                <span class="account-label">🎥 Vlog频道</span>
-                <a class="account-link" href="https://www.youtube.com/@gauting256" target="_blank" rel="noopener noreferrer">@gauting256</a>
-            </div>
+        <div class="main-name">꧁LWHᝰgs123꧂</div>
+        <div class="tagline">Sunlight, a quiet kind of light.</div>
+        <div class="mint-divider"></div>
+        <div class="poetic-bio">
+            薄荷绿的影子落在指尖上。<br>
+            安静，但不空洞。<br>
+            像薄荷一样存在，不吵，但记得住。<br>
+            未来感是安静地发光。
         </div>
-        <div class="desc-note">影像叙事 · 安静记录每一帧</div>
+        <div class="persona-tags">
+            <span class="tag">✦ 影像叙事者</span>
+            <span class="tag">🌿 薄荷色灵魂</span>
+            <span class="tag">🎬 拍视频的人</span>
+            <span class="tag">🐾 宠物星球居民</span>
+            <span class="tag">☁️ 安静但很酷</span>
+        </div>
+        <div class="quiet-footer">
+            ◌ 文艺感是安静的棱镜 ◌
+        </div>
     </div>
 
-    <!-- Instagram 卡片：集合个人+宠物 -->
-    <div class="platform-card">
-        <div class="platform-header">
-            <span class="platform-icon">📸</span>
-            <span class="platform-name">Instagram</span>
-        </div>
-        <div class="sunlight-tag">Sunlight, a quiet kind of light.</div>
-        <div class="account-list">
-            <div class="account-item">
-                <span class="account-label">🌿 个人账号</span>
-                <a class="account-link" href="https://www.instagram.com/lwh.gs123" target="_blank" rel="noopener noreferrer">@lwh.gs123</a>
+    <!-- ========= 平台卡片网格 ========= -->
+    <div class="platforms-grid">
+
+        <!-- YouTube 卡片：3个频道 -->
+        <div class="platform-card">
+            <div class="platform-header">
+                <span class="platform-icon">🎬</span>
+                <span class="platform-name">YouTube</span>
             </div>
-            <div class="account-item">
-                <span class="account-label">🐾 宠物账号</span>
-                <a class="account-link" href="https://www.instagram.com/gish_dog_hamster" target="_blank" rel="noopener noreferrer">@gish_dog_hamster</a>
+            <div class="global-nickname">꧁LWHᝰgs123꧂</div>
+            <div class="sunlight-tag">Sunlight, a quiet kind of light.</div>
+            <div class="account-list">
+                <div class="account-item">
+                    <span class="account-label">🎬 主频道</span>
+                    <a class="account-link" href="https://www.youtube.com/@Gausan123" target="_blank" rel="noopener noreferrer">@Gausan123</a>
+                </div>
+                <div class="account-item">
+                    <span class="account-label">📼 旧频道</span>
+                    <a class="account-link" href="https://www.youtube.com/@tiantian124" target="_blank" rel="noopener noreferrer">@tiantian124</a>
+                </div>
+                <div class="account-item">
+                    <span class="account-label">🎥 Vlog频道</span>
+                    <a class="account-link" href="https://www.youtube.com/@gauting256" target="_blank" rel="noopener noreferrer">@gauting256</a>
+                </div>
             </div>
+            <div class="desc-note">影像叙事 · 安静记录每一帧</div>
         </div>
-        <div class="desc-note">薄荷色日常 · 爪印与光影</div>
+
+        <!-- Instagram 卡片：个人 + 宠物 -->
+        <div class="platform-card">
+            <div class="platform-header">
+                <span class="platform-icon">📸</span>
+                <span class="platform-name">Instagram</span>
+            </div>
+            <div class="sunlight-tag">Sunlight, a quiet kind of light.</div>
+            <div class="account-list">
+                <div class="account-item">
+                    <span class="account-label">🌿 个人账号</span>
+                    <a class="account-link" href="https://www.instagram.com/lwh.gs123" target="_blank" rel="noopener noreferrer">@lwh.gs123</a>
+                </div>
+                <div class="account-item">
+                    <span class="account-label">🐾 宠物账号</span>
+                    <a class="account-link" href="https://www.instagram.com/gish_dog_hamster" target="_blank" rel="noopener noreferrer">@gish_dog_hamster</a>
+                </div>
+            </div>
+            <div class="desc-note">薄荷色日常 · 爪印与光影</div>
+        </div>
+
+        <!-- Threads 卡片：个人 + 宠物 -->
+        <div class="platform-card">
+            <div class="platform-header">
+                <span class="platform-icon">🧵</span>
+                <span class="platform-name">Threads</span>
+            </div>
+            <div class="sunlight-tag">Sunlight, a quiet kind of light.</div>
+            <div class="account-list">
+                <div class="account-item">
+                    <span class="account-label">🌿 个人账号</span>
+                    <a class="account-link" href="https://www.threads.com/@lwh.gs123" target="_blank" rel="noopener noreferrer">@lwh.gs123</a>
+                </div>
+                <div class="account-item">
+                    <span class="account-label">🐾 宠物账号</span>
+                    <a class="account-link" href="https://www.threads.com/@gish_dog_hamster" target="_blank" rel="noopener noreferrer">@gish_dog_hamster</a>
+                </div>
+            </div>
+            <div class="desc-note">畅所欲言 · 安静陪伴</div>
+        </div>
+
+        <!-- 抖音（中国版）卡片：个人 + 拍摄 -->
+        <div class="platform-card">
+            <div class="platform-header">
+                <span class="platform-icon">🎵</span>
+                <span class="platform-name">抖音 · 中国版</span>
+            </div>
+            <div class="sunlight-tag">Sunlight, a quiet kind of light.</div>
+            <div class="account-list">
+                <div class="account-item">
+                    <span class="account-label">🌸 个人账号</span>
+                    <a class="account-link" href="https://v.douyin.com/RZezOSh22r0/" target="_blank" rel="noopener noreferrer">꧁«tatateᝰgs»꧂</a>
+                </div>
+                <div class="account-item">
+                    <span class="account-label">🎬 拍摄账号</span>
+                    <a class="account-link" href="https://v.douyin.com/Lq1ClGr3Wxg/" target="_blank" rel="noopener noreferrer">高山123 (84135558205)</a>
+                </div>
+            </div>
+            <div class="desc-note">薄荷节奏 · 安静律动</div>
+        </div>
+
+        <!-- Bilibili 卡片 -->
+        <div class="platform-card">
+            <div class="platform-header">
+                <span class="platform-icon">🪄</span>
+                <span class="platform-name">Bilibili</span>
+            </div>
+            <div class="global-nickname">LWHgs123</div>
+            <div class="sunlight-tag">Sunlight, a quiet kind of light.</div>
+            <div class="account-list">
+                <div class="account-item">
+                    <span class="account-label">🎬 拍摄用途</span>
+                    <a class="account-link" href="https://b23.tv/o7qNaU5" target="_blank" rel="noopener noreferrer">LWHgs123的空间</a>
+                </div>
+            </div>
+            <div class="desc-note">创作存档 · 灵感容器</div>
+        </div>
+
+        <!-- Facebook 卡片 -->
+        <div class="platform-card">
+            <div class="platform-header">
+                <span class="platform-icon">📘</span>
+                <span class="platform-name">Facebook</span>
+            </div>
+            <div class="global-nickname">꧁LWHᝰgs123꧂</div>
+            <div class="sunlight-tag">Sunlight, a quiet kind of light.</div>
+            <div class="account-list">
+                <div class="account-item">
+                    <span class="account-label">🌿 个人账号</span>
+                    <a class="account-link" href="https://www.facebook.com/share/1LD8UH9C6X/" target="_blank" rel="noopener noreferrer">个人主页</a>
+                </div>
+            </div>
+            <div class="desc-note">温柔连接 · 日常片段</div>
+        </div>
+
+        <!-- TikTok 卡片 -->
+        <div class="platform-card">
+            <div class="platform-header">
+                <span class="platform-icon">📱</span>
+                <span class="platform-name">TikTok</span>
+            </div>
+            <div class="global-nickname">꧁LWHᝰgs123꧂</div>
+            <div class="sunlight-tag">Sunlight, a quiet kind of light.</div>
+            <div class="account-list">
+                <div class="account-item">
+                    <span class="account-label">🌿 个人账号</span>
+                    <a class="account-link" href="https://www.tiktok.com/@gausan123ajk" target="_blank" rel="noopener noreferrer">@gausan123ajk</a>
+                </div>
+            </div>
+            <div class="desc-note">全球视野 · 薄荷微光</div>
+        </div>
     </div>
 
-    <!-- Threads 卡片：集合个人+宠物 -->
-    <div class="platform-card">
-        <div class="platform-header">
-            <span class="platform-icon">🧵</span>
-            <span class="platform-name">Threads</span>
+    <!-- ========= 总结卡片 ========= -->
+    <div class="summary-card">
+        <div class="summary-title">◌ 薄荷绿档案 · 全平台速览 ◌</div>
+        <div class="summary-badge-grid">
+            <span class="summary-badge">🎬 YouTube · 3频道</span>
+            <span class="summary-badge">📸 Instagram · 2账号</span>
+            <span class="summary-badge">🧵 Threads · 2账号</span>
+            <span class="summary-badge">🎵 抖音 · 2账号</span>
+            <span class="summary-badge">🪄 Bilibili · 1账号</span>
+            <span class="summary-badge">📘 Facebook · 1账号</span>
+            <span class="summary-badge">📱 TikTok · 1账号</span>
         </div>
-        <div class="sunlight-tag">Sunlight, a quiet kind of light.</div>
-        <div class="account-list">
-            <div class="account-item">
-                <span class="account-label">🌿 个人账号</span>
-                <a class="account-link" href="https://www.threads.com/@lwh.gs123" target="_blank" rel="noopener noreferrer">@lwh.gs123</a>
-            </div>
-            <div class="account-item">
-                <span class="account-label">🐾 宠物账号</span>
-                <a class="account-link" href="https://www.threads.com/@gish_dog_hamster" target="_blank" rel="noopener noreferrer">@gish_dog_hamster</a>
-            </div>
+        <div class="summary-badge-grid">
+            <a href="https://www.youtube.com/@Gausan123" target="_blank" class="summary-badge">▶ YouTube主</a>
+            <a href="https://www.youtube.com/@tiantian124" target="_blank" class="summary-badge">📼 YouTube旧</a>
+            <a href="https://www.youtube.com/@gauting256" target="_blank" class="summary-badge">🎥 Vlog</a>
+            <a href="https://www.instagram.com/lwh.gs123" target="_blank" class="summary-badge">📸 IG个人</a>
+            <a href="https://www.instagram.com/gish_dog_hamster" target="_blank" class="summary-badge">🐾 IG宠物</a>
+            <a href="https://www.threads.com/@lwh.gs123" target="_blank" class="summary-badge">🧵 Threads个人</a>
+            <a href="https://www.threads.com/@gish_dog_hamster" target="_blank" class="summary-badge">🧸 Threads宠物</a>
+            <a href="https://b23.tv/o7qNaU5" target="_blank" class="summary-badge">🪄 B站</a>
+            <a href="https://www.facebook.com/share/1LD8UH9C6X/" target="_blank" class="summary-badge">📘 FB</a>
+            <a href="https://v.douyin.com/RZezOSh22r0/" target="_blank" class="summary-badge">🎵 抖音个人</a>
+            <a href="https://v.douyin.com/Lq1ClGr3Wxg/" target="_blank" class="summary-badge">🎬 抖音拍摄</a>
+            <a href="https://www.tiktok.com/@gausan123ajk" target="_blank" class="summary-badge">📱 TikTok</a>
         </div>
-        <div class="desc-note">畅所欲言 · 安静陪伴</div>
+        <div class="core-quote">
+            ✦ Sunlight, a quiet kind of light. ✦ 像薄荷一样存在 · 不吵但记得住 ✦ 未来感是安静地发光
+        </div>
     </div>
 
-    <!-- 抖音（中国版）卡片：集合个人+拍摄 -->
-    <div class="platform-card">
-        <div class="platform-header">
-            <span class="platform-icon">🎵</span>
-            <span class="platform-name">抖音 · 中国版</span>
-        </div>
-        <div class="sunlight-tag">Sunlight, a quiet kind of light.</div>
-        <div class="account-list">
-            <div class="account-item">
-                <span class="account-label">🌸 个人账号</span>
-                <a class="account-link" href="https://v.douyin.com/RZezOSh22r0/" target="_blank" rel="noopener noreferrer">꧁«tatateᝰgs»꧂</a>
-            </div>
-            <div class="account-item">
-                <span class="account-label">🎬 拍摄账号</span>
-                <a class="account-link" href="https://v.douyin.com/Lq1ClGr3Wxg/" target="_blank" rel="noopener noreferrer">高山123 (84135558205)</a>
-            </div>
-        </div>
-        <div class="desc-note">薄荷节奏 · 安静律动</div>
-    </div>
-
-    <!-- Bilibili 卡片 -->
-    <div class="platform-card">
-        <div class="platform-header">
-            <span class="platform-icon">🪄</span>
-            <span class="platform-name">Bilibili</span>
-        </div>
-        <div class="global-nickname">LWHgs123</div>
-        <div class="sunlight-tag">Sunlight, a quiet kind of light.</div>
-        <div class="account-list">
-            <div class="account-item">
-                <span class="account-label">🎬 拍摄用途</span>
-                <a class="account-link" href="https://b23.tv/o7qNaU5" target="_blank" rel="noopener noreferrer">LWHgs123的空间</a>
-            </div>
-        </div>
-        <div class="desc-note">创作存档 · 灵感容器</div>
-    </div>
-
-    <!-- Facebook 卡片 -->
-    <div class="platform-card">
-        <div class="platform-header">
-            <span class="platform-icon">📘</span>
-            <span class="platform-name">Facebook</span>
-        </div>
-        <div class="global-nickname">꧁LWHᝰgs123꧂</div>
-        <div class="sunlight-tag">Sunlight, a quiet kind of light.</div>
-        <div class="account-list">
-            <div class="account-item">
-                <span class="account-label">🌿 个人账号</span>
-                <a class="account-link" href="https://www.facebook.com/share/1LD8UH9C6X/" target="_blank" rel="noopener noreferrer">个人主页</a>
-            </div>
-        </div>
-        <div class="desc-note">温柔连接 · 日常片段</div>
-    </div>
-
-    <!-- TikTok 卡片 -->
-    <div class="platform-card">
-        <div class="platform-header">
-            <span class="platform-icon">📱</span>
-            <span class="platform-name">TikTok</span>
-        </div>
-        <div class="global-nickname">꧁LWHᝰgs123꧂</div>
-        <div class="sunlight-tag">Sunlight, a quiet kind of light.</div>
-        <div class="account-list">
-            <div class="account-item">
-                <span class="account-label">🌿 个人账号</span>
-                <a class="account-link" href="https://www.tiktok.com/@gausan123ajk" target="_blank" rel="noopener noreferrer">@gausan123ajk</a>
-            </div>
-        </div>
-        <div class="desc-note">全球视野 · 薄荷微光</div>
+    <div class="global-footer">
+        ☁️  mint green aesthetic · 安静但很酷 · 点击任意链接直接跳转  ☁️
     </div>
 </div>
-
-<!-- 总结卡片：所有平台汇总 -->
-<div class="summary-card">
-    <div class="summary-title">◌ 薄荷绿档案 · 全平台速览 ◌</div>
-    <div class="summary-badge-grid">
-        <span class="summary-badge">🎬 YouTube · 3频道</span>
-        <span class="summary-badge">📸 Instagram · 2账号</span>
-        <span class="summary-badge">🧵 Threads · 2账号</span>
-        <span class="summary-badge">🎵 抖音 · 2账号</span>
-        <span class="summary-badge">🪄 Bilibili · 1账号</span>
-        <span class="summary-badge">📘 Facebook · 1账号</span>
-        <span class="summary-badge">📱 TikTok · 1账号</span>
-    </div>
-    <div class="summary-badge-grid" style="margin-top: 0;">
-        <a href="https://www.youtube.com/@Gausan123" target="_blank" class="summary-badge">▶ YouTube主</a>
-        <a href="https://www.youtube.com/@tiantian124" target="_blank" class="summary-badge">📼 YouTube旧</a>
-        <a href="https://www.youtube.com/@gauting256" target="_blank" class="summary-badge">🎥 Vlog</a>
-        <a href="https://www.instagram.com/lwh.gs123" target="_blank" class="summary-badge">📸 IG个人</a>
-        <a href="https://www.instagram.com/gish_dog_hamster" target="_blank" class="summary-badge">🐾 IG宠物</a>
-        <a href="https://www.threads.com/@lwh.gs123" target="_blank" class="summary-badge">🧵 Threads个人</a>
-        <a href="https://www.threads.com/@gish_dog_hamster" target="_blank" class="summary-badge">🧸 Threads宠物</a>
-        <a href="https://b23.tv/o7qNaU5" target="_blank" class="summary-badge">🪄 B站</a>
-        <a href="https://www.facebook.com/share/1LD8UH9C6X/" target="_blank" class="summary-badge">📘 FB</a>
-        <a href="https://v.douyin.com/RZezOSh22r0/" target="_blank" class="summary-badge">🎵 抖音个人</a>
-        <a href="https://v.douyin.com/Lq1ClGr3Wxg/" target="_blank" class="summary-badge">🎬 抖音拍摄</a>
-        <a href="https://www.tiktok.com/@gausan123ajk" target="_blank" class="summary-badge">📱 TikTok</a>
-    </div>
-    <div class="core-quote">
-        ✦ Sunlight, a quiet kind of light. ✦ 像薄荷一样存在 · 不吵但记得住 ✦ 未来感是安静地发光
-    </div>
-</div>
-
-<div class="footer-note">
-    ☁️  mint green aesthetic · 安静但很酷 · 点击任意链接直接跳转  ☁️
-</div>
-
 </body>
 </html>
