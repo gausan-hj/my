@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>LWH · 薄荷绿个人主页 | 安静发光体</title>
+    <title>LWH · 薄荷绿个人主页 | 安静发光体 · 生日特别版</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600&family=Space+Grotesk:wght@300;400;500;600&display=swap" rel="stylesheet">
@@ -43,11 +43,30 @@
             box-shadow: 0 20px 35px rgba(60, 80, 45, 0.1);
             transition: all 0.3s ease;
             text-align: center;
+            position: relative;
+            overflow: hidden;
         }
 
         .profile-card:hover {
             background: rgba(255, 255, 255, 0.88);
             border-color: rgba(110, 170, 90, 0.7);
+        }
+
+        /* 生日彩蛋小飘带 */
+        .birthday-ribbon {
+            position: absolute;
+            top: 18px;
+            right: -32px;
+            background: #a8d49c;
+            color: #1d5438;
+            font-size: 0.65rem;
+            font-weight: 600;
+            padding: 0.25rem 2.8rem;
+            transform: rotate(38deg);
+            letter-spacing: 1px;
+            box-shadow: 0 2px 8px rgba(60, 100, 40, 0.15);
+            opacity: 0.9;
+            pointer-events: none;
         }
 
         /* 头像 */
@@ -103,20 +122,57 @@
             opacity: 0.6;
         }
 
-        .persona-tags {
-            display: flex;
+        /* ========= 生日活动卡片 ========= */
+        .birthday-event {
+            background: linear-gradient(105deg, rgba(210, 240, 190, 0.7) 0%, rgba(190, 225, 170, 0.5) 100%);
+            border-radius: 1.8rem;
+            padding: 1rem 1.6rem;
+            margin: 1.5rem 0 1rem;
+            border: 1px solid rgba(140, 200, 110, 0.8);
+            box-shadow: 0 4px 12px rgba(90, 130, 60, 0.1);
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
             flex-wrap: wrap;
             justify-content: center;
-            gap: 0.6rem;
-            margin: 1.2rem 0 0.6rem;
+            backdrop-filter: blur(4px);
         }
 
-        .tag {
-            background: rgba(140, 190, 120, 0.2);
-            padding: 0.3rem 1rem;
+        .birthday-icon {
+            font-size: 2rem;
+            filter: drop-shadow(0 4px 6px rgba(80, 120, 50, 0.2));
+            animation: gentle-bounce 3s infinite ease-in-out;
+        }
+
+        @keyframes gentle-bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+        }
+
+        .birthday-text {
+            font-size: 0.95rem;
+            font-weight: 500;
+            color: #1d5438;
+            letter-spacing: 0.3px;
+        }
+
+        .birthday-date {
+            background: #ffffffc7;
+            padding: 0.3rem 1.2rem;
             border-radius: 40px;
+            font-family: 'Space Grotesk', monospace;
+            font-weight: 600;
+            font-size: 1.1rem;
+            color: #2b7345;
+            border: 1px solid #b2d8a2;
+            box-shadow: 0 2px 8px rgba(100, 140, 70, 0.1);
+        }
+
+        .birthday-note {
             font-size: 0.7rem;
-            color: #2e6b46;
+            color: #4f8568;
+            margin-left: 0.5rem;
+            font-style: italic;
         }
 
         /* ========= 游戏胶囊区域 ========= */
@@ -349,6 +405,17 @@
             font-family: monospace;
         }
 
+        /* 生日专属额外特效 */
+        .birthday-sparkle {
+            display: inline-block;
+            animation: soft-glow 2.5s infinite alternate;
+        }
+
+        @keyframes soft-glow {
+            0% { filter: drop-shadow(0 0 2px #c2e0b4); }
+            100% { filter: drop-shadow(0 0 8px #b0d89c); }
+        }
+
         @media (max-width: 680px) {
             body {
                 padding: 1rem;
@@ -381,6 +448,26 @@
             .game-name {
                 font-size: 0.65rem;
             }
+            .birthday-event {
+                padding: 0.8rem 1rem;
+                gap: 8px;
+            }
+            .birthday-icon {
+                font-size: 1.6rem;
+            }
+            .birthday-date {
+                font-size: 0.9rem;
+                padding: 0.2rem 0.9rem;
+            }
+            .birthday-text {
+                font-size: 0.8rem;
+            }
+            .birthday-ribbon {
+                top: 12px;
+                right: -36px;
+                font-size: 0.55rem;
+                padding: 0.2rem 2.5rem;
+            }
         }
     </style>
 </head>
@@ -389,6 +476,9 @@
     
     <!-- ========= 个人资讯卡片 ========= -->
     <div class="profile-card">
+        <!-- 生日小彩蛋丝带 -->
+        <div class="birthday-ribbon">🎂 9.25 🎂</div>
+
         <div class="avatar-container">
             <img class="avatar-img" src="IMG_20260426_004811_408.webp" alt="LWH头像" onerror="this.src='https://placehold.co/120x120/c8e0bc/2a6a3a?text=🌿'">
         </div>
@@ -402,6 +492,14 @@
             人生不到三万天。
         </div>
         
+        <!-- ========= 生日活动卡片（新增） ========= -->
+        <div class="birthday-event">
+            <span class="birthday-icon">🎂</span>
+            <span class="birthday-text">生日特别活动</span>
+            <span class="birthday-date">09 / 25</span>
+            <span class="birthday-note">✦ 安静庆祝 · 薄荷色的又一年 ✦</span>
+        </div>
+
         <!-- 游戏胶囊区域 -->
         <div class="games-section">
             <div class="games-title">🎮 游戏时光 · 薄荷玩家 🎮</div>
@@ -443,9 +541,10 @@
             <span class="tag">🎬 拍视频的人</span>
             <span class="tag">🐾 宠物星球居民</span>
             <span class="tag">🎮 多元玩家</span>
+            <span class="tag">🎂 9.25 生日</span>
         </div>
         <div class="quiet-footer">
-            ◌ 文艺感是安静的棱镜 ◌
+            ◌ 文艺感是安静的棱镜 · 生日是温柔的刻度 ◌
         </div>
     </div>
 
@@ -539,6 +638,7 @@
             <span class="summary-badge">🪄 Bilibili · 1账号</span>
             <span class="summary-badge">📘 Facebook · 1账号</span>
             <span class="summary-badge">📱 TikTok · 1账号</span>
+            <span class="summary-badge">🎂 09.25 生日</span>
         </div>
         <div class="summary-badge-grid">
             <a href="https://www.youtube.com/@Gausan123" target="_blank" class="summary-badge">▶ YouTube主</a>
@@ -555,7 +655,7 @@
             <a href="https://www.tiktok.com/@gausan123ajk" target="_blank" class="summary-badge">📱 TikTok</a>
         </div>
         <div class="core-quote">
-            ✦ Sunlight, a quiet kind of light. ✦ 像薄荷一样存在 · 不吵但记得住 ✦ 未来感是安静地发光
+            ✦ Sunlight, a quiet kind of light. ✦ 像薄荷一样存在 · 不吵但记得住 ✦ 9.25 生日快乐，安静地发光 ✦
         </div>
     </div>
 
