@@ -24,15 +24,212 @@
             align-items: center;
             justify-content: center;
             color: #1a3f2c;
+            transition: background 1.5s ease;
         }
 
-        .container {
-            max-width: 1300px;
+        /* ===== 生日当天全屏氛围 ===== */
+        body.birthday-mode {
+            background: linear-gradient(135deg, #d4ecd0 0%, #b8e0b0 100%);
+        }
+
+        /* ===== 飘落彩带层 ===== */
+        .confetti-container {
+            position: fixed;
+            top: 0;
+            left: 0;
             width: 100%;
-            margin: 0 auto;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1000;
+            overflow: hidden;
+            display: none;
         }
 
-        /* ========= 个人资讯卡片 ========= */
+        .confetti-container.active {
+            display: block;
+        }
+
+        .confetti {
+            position: absolute;
+            top: -20px;
+            width: 12px;
+            height: 12px;
+            opacity: 0.85;
+            animation: fall linear forwards;
+        }
+
+        @keyframes fall {
+            0% {
+                transform: translateY(0) rotate(0deg) scale(1);
+                opacity: 1;
+            }
+            70% {
+                opacity: 0.9;
+            }
+            100% {
+                transform: translateY(105vh) rotate(720deg) scale(0.6);
+                opacity: 0;
+            }
+        }
+
+        /* ===== 全屏生日祝福弹层 ===== */
+        .birthday-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 30% 40%, rgba(200, 235, 180, 0.92), rgba(140, 190, 120, 0.95));
+            backdrop-filter: blur(20px);
+            z-index: 2000;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 2rem;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 1.2s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+
+        .birthday-overlay.show {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .birthday-overlay-content {
+            transform: translateY(30px) scale(0.95);
+            transition: transform 1.2s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+
+        .birthday-overlay.show .birthday-overlay-content {
+            transform: translateY(0) scale(1);
+        }
+
+        .overlay-cake {
+            font-size: 6rem;
+            display: block;
+            margin-bottom: 1rem;
+            animation: cake-bounce 1.8s infinite ease-in-out;
+            filter: drop-shadow(0 10px 20px rgba(60, 100, 30, 0.2));
+        }
+
+        @keyframes cake-bounce {
+            0%, 100% { transform: translateY(0) scale(1); }
+            50% { transform: translateY(-15px) scale(1.05); }
+        }
+
+        .overlay-title {
+            font-family: 'Space Grotesk', monospace;
+            font-size: 3.5rem;
+            font-weight: 600;
+            color: #1d5438;
+            letter-spacing: -1px;
+            margin-bottom: 0.5rem;
+            text-shadow: 0 2px 12px rgba(255, 255, 255, 0.5);
+        }
+
+        .overlay-sub {
+            font-size: 1.2rem;
+            color: #2d6a46;
+            font-weight: 400;
+            margin-bottom: 0.8rem;
+            letter-spacing: 1px;
+        }
+
+        .overlay-date {
+            font-family: 'Space Grotesk', monospace;
+            font-size: 1.8rem;
+            color: #1d5438;
+            background: rgba(255, 255, 255, 0.7);
+            padding: 0.6rem 2rem;
+            border-radius: 60px;
+            display: inline-block;
+            border: 1px solid rgba(140, 200, 110, 0.6);
+            box-shadow: 0 8px 24px rgba(80, 130, 50, 0.12);
+            margin-bottom: 1.5rem;
+        }
+
+        .overlay-quote {
+            font-size: 0.95rem;
+            color: #3a7053;
+            font-style: italic;
+            max-width: 420px;
+            line-height: 1.7;
+            margin: 0 auto 1.5rem;
+            padding: 0 1rem;
+        }
+
+        .overlay-close-btn {
+            background: rgba(255, 255, 255, 0.75);
+            border: 1.5px solid #8bc07a;
+            color: #1d5438;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.9rem;
+            font-weight: 500;
+            padding: 0.8rem 2.5rem;
+            border-radius: 60px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(4px);
+            letter-spacing: 0.5px;
+        }
+
+        .overlay-close-btn:hover {
+            background: #ffffff;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 28px rgba(80, 130, 50, 0.18);
+            border-color: #6aa85a;
+        }
+
+        /* ===== 生日倒计时小卡片 ===== */
+        .countdown-card {
+            background: rgba(255, 255, 255, 0.6);
+            backdrop-filter: blur(8px);
+            border-radius: 1.5rem;
+            padding: 0.7rem 1.5rem;
+            margin: 1rem auto 0;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            border: 1px dashed #a8d49c;
+            font-size: 0.8rem;
+            color: #3a7053;
+            transition: all 0.5s ease;
+        }
+
+        .countdown-card.birthday-today {
+            background: linear-gradient(105deg, #d4f0c8, #c2e8b0);
+            border: 1px solid #8bc07a;
+            box-shadow: 0 4px 16px rgba(120, 180, 80, 0.25);
+            animation: soft-pulse 2s infinite;
+        }
+
+        @keyframes soft-pulse {
+            0%, 100% { box-shadow: 0 4px 16px rgba(120, 180, 80, 0.2); }
+            50% { box-shadow: 0 6px 24px rgba(100, 170, 60, 0.35); }
+        }
+
+        .countdown-emoji {
+            font-size: 1.2rem;
+        }
+
+        .countdown-text {
+            font-weight: 500;
+            letter-spacing: 0.3px;
+        }
+
+        .countdown-days {
+            font-family: 'Space Grotesk', monospace;
+            font-weight: 600;
+            font-size: 1.1rem;
+            color: #1d5438;
+            min-width: 2rem;
+            text-align: center;
+        }
+
+        /* ===== 个人资讯卡片 ===== */
         .profile-card {
             background: rgba(255, 255, 255, 0.78);
             backdrop-filter: blur(14px);
@@ -69,6 +266,17 @@
             pointer-events: none;
         }
 
+        .birthday-ribbon.today-ribbon {
+            background: #f5d76e;
+            color: #5a4a1a;
+            animation: ribbon-glow 1.5s infinite alternate;
+        }
+
+        @keyframes ribbon-glow {
+            from { box-shadow: 0 2px 8px rgba(200, 160, 40, 0.3); }
+            to { box-shadow: 0 2px 18px rgba(220, 180, 60, 0.7); }
+        }
+
         /* 头像 */
         .avatar-container {
             width: 120px;
@@ -79,7 +287,14 @@
             box-shadow: 0 8px 18px rgba(60, 80, 45, 0.15);
             border: 3px solid rgba(255,255,240,0.7);
             background: #c8e0bc;
+            transition: border-color 0.5s ease;
         }
+
+        .avatar-container.birthday-avatar {
+            border-color: #f5d76e;
+            box-shadow: 0 0 0 4px rgba(245, 215, 110, 0.3), 0 8px 24px rgba(180, 150, 40, 0.25);
+        }
+
         .avatar-img {
             width: 100%;
             height: 100%;
@@ -122,7 +337,7 @@
             opacity: 0.6;
         }
 
-        /* ========= 生日活动卡片 ========= */
+        /* ===== 生日活动卡片 ===== */
         .birthday-event {
             background: linear-gradient(105deg, rgba(210, 240, 190, 0.7) 0%, rgba(190, 225, 170, 0.5) 100%);
             border-radius: 1.8rem;
@@ -136,6 +351,19 @@
             flex-wrap: wrap;
             justify-content: center;
             backdrop-filter: blur(4px);
+            transition: all 0.5s ease;
+        }
+
+        .birthday-event.active-event {
+            background: linear-gradient(105deg, rgba(230, 250, 200, 0.95) 0%, rgba(200, 240, 170, 0.9) 100%);
+            border-color: #8bc07a;
+            box-shadow: 0 8px 28px rgba(120, 180, 80, 0.3);
+            animation: event-pulse 2s infinite;
+        }
+
+        @keyframes event-pulse {
+            0%, 100% { box-shadow: 0 8px 28px rgba(120, 180, 80, 0.25); }
+            50% { box-shadow: 0 10px 36px rgba(100, 170, 60, 0.45); }
         }
 
         .birthday-icon {
@@ -166,6 +394,14 @@
             color: #2b7345;
             border: 1px solid #b2d8a2;
             box-shadow: 0 2px 8px rgba(100, 140, 70, 0.1);
+            transition: all 0.5s ease;
+        }
+
+        .birthday-event.active-event .birthday-date {
+            background: #fff9e0;
+            border-color: #e8c84a;
+            color: #7a5a10;
+            box-shadow: 0 4px 14px rgba(200, 160, 40, 0.25);
         }
 
         .birthday-note {
@@ -175,7 +411,7 @@
             font-style: italic;
         }
 
-        /* ========= 游戏胶囊区域 ========= */
+        /* ===== 游戏胶囊区域 ===== */
         .games-section {
             margin: 1.8rem 0 1rem;
         }
@@ -231,7 +467,7 @@
             opacity: 0.8;
         }
 
-        /* ========= 平台卡片网格 ========= */
+        /* ===== 平台卡片网格 ===== */
         .platforms-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
@@ -342,7 +578,7 @@
             font-style: italic;
         }
 
-        /* ========= 总结卡片 ========= */
+        /* ===== 总结卡片 ===== */
         .summary-card {
             background: rgba(255, 255, 255, 0.8);
             backdrop-filter: blur(12px);
@@ -468,18 +704,64 @@
                 font-size: 0.55rem;
                 padding: 0.2rem 2.5rem;
             }
+            .overlay-title {
+                font-size: 2.2rem;
+            }
+            .overlay-cake {
+                font-size: 4rem;
+            }
+            .overlay-date {
+                font-size: 1.3rem;
+                padding: 0.4rem 1.4rem;
+            }
+            .overlay-sub {
+                font-size: 0.95rem;
+            }
+            .overlay-quote {
+                font-size: 0.8rem;
+            }
+            .overlay-close-btn {
+                font-size: 0.8rem;
+                padding: 0.6rem 1.8rem;
+            }
+            .countdown-card {
+                padding: 0.5rem 1rem;
+                font-size: 0.7rem;
+            }
+            .countdown-days {
+                font-size: 0.95rem;
+            }
         }
     </style>
 </head>
 <body>
+<!-- ===== 飘落彩带层 ===== -->
+<div class="confetti-container" id="confettiContainer"></div>
+
+<!-- ===== 全屏生日祝福弹层 ===== -->
+<div class="birthday-overlay" id="birthdayOverlay">
+    <div class="birthday-overlay-content">
+        <span class="overlay-cake">🎂</span>
+        <div class="overlay-title">Happy Birthday!</div>
+        <div class="overlay-sub">꧁ LWH · 薄荷色的又一年 ꧂</div>
+        <div class="overlay-date">09 / 25</div>
+        <div class="overlay-quote">
+            Sunlight, a quiet kind of light.<br>
+            像薄荷一样存在，不吵，但记得住。<br>
+            愿你的新一岁，安静发光，温柔生长。
+        </div>
+        <button class="overlay-close-btn" id="overlayCloseBtn">✦ 进入我的主页 ✦</button>
+    </div>
+</div>
+
 <div class="container">
     
     <!-- ========= 个人资讯卡片 ========= -->
-    <div class="profile-card">
+    <div class="profile-card" id="profileCard">
         <!-- 生日小彩蛋丝带 -->
-        <div class="birthday-ribbon">🎂 9.25 🎂</div>
+        <div class="birthday-ribbon" id="birthdayRibbon">🎂 9.25 🎂</div>
 
-        <div class="avatar-container">
+        <div class="avatar-container" id="avatarContainer">
             <img class="avatar-img" src="IMG_20260426_004811_408.webp" alt="LWH头像" onerror="this.src='https://placehold.co/120x120/c8e0bc/2a6a3a?text=🌿'">
         </div>
         <div class="main-name">꧁LWHᝰgs123꧂</div>
@@ -492,12 +774,20 @@
             人生不到三万天。
         </div>
         
-        <!-- ========= 生日活动卡片（新增） ========= -->
-        <div class="birthday-event">
+        <!-- ========= 生日活动卡片 ========= -->
+        <div class="birthday-event" id="birthdayEventCard">
             <span class="birthday-icon">🎂</span>
             <span class="birthday-text">生日特别活动</span>
             <span class="birthday-date">09 / 25</span>
-            <span class="birthday-note">✦ 安静庆祝 · 薄荷色的又一年 ✦</span>
+            <span class="birthday-note" id="birthdayNote">✦ 安静庆祝 · 薄荷色的又一年 ✦</span>
+        </div>
+
+        <!-- 生日倒计时小卡片 -->
+        <div class="countdown-card" id="countdownCard">
+            <span class="countdown-emoji">🎈</span>
+            <span class="countdown-text" id="countdownText">距离生日还有</span>
+            <span class="countdown-days" id="countdownDays">--</span>
+            <span class="countdown-text">天</span>
         </div>
 
         <!-- 游戏胶囊区域 -->
@@ -541,7 +831,7 @@
             <span class="tag">🎬 拍视频的人</span>
             <span class="tag">🐾 宠物星球居民</span>
             <span class="tag">🎮 多元玩家</span>
-            <span class="tag">🎂 9.25 生日</span>
+            <span class="tag" id="birthdayTag">🎂 9.25 生日</span>
         </div>
         <div class="quiet-footer">
             ◌ 文艺感是安静的棱镜 · 生日是温柔的刻度 ◌
@@ -638,7 +928,7 @@
             <span class="summary-badge">🪄 Bilibili · 1账号</span>
             <span class="summary-badge">📘 Facebook · 1账号</span>
             <span class="summary-badge">📱 TikTok · 1账号</span>
-            <span class="summary-badge">🎂 09.25 生日</span>
+            <span class="summary-badge" id="birthdaySummaryBadge">🎂 09.25 生日</span>
         </div>
         <div class="summary-badge-grid">
             <a href="https://www.youtube.com/@Gausan123" target="_blank" class="summary-badge">▶ YouTube主</a>
@@ -654,7 +944,7 @@
             <a href="https://v.douyin.com/Lq1ClGr3Wxg/" target="_blank" class="summary-badge">🎬 抖音拍摄</a>
             <a href="https://www.tiktok.com/@gausan123ajk" target="_blank" class="summary-badge">📱 TikTok</a>
         </div>
-        <div class="core-quote">
+        <div class="core-quote" id="coreQuote">
             ✦ Sunlight, a quiet kind of light. ✦ 像薄荷一样存在 · 不吵但记得住 ✦ 9.25 生日快乐，安静地发光 ✦
         </div>
     </div>
@@ -663,5 +953,216 @@
         ☁️  mint green aesthetic · 安静但很酷 · 点击任意链接直接跳转  ☁️
     </div>
 </div>
+
+<script>
+    (function() {
+        'use strict';
+
+        // ===== 生日配置 =====
+        const BIRTHDAY_MONTH = 9;   // 9月
+        const BIRTHDAY_DAY = 25;    // 25日
+
+        // ===== DOM 元素 =====
+        const overlay = document.getElementById('birthdayOverlay');
+        const overlayCloseBtn = document.getElementById('overlayCloseBtn');
+        const confettiContainer = document.getElementById('confettiContainer');
+        const countdownDays = document.getElementById('countdownDays');
+        const countdownText = document.getElementById('countdownText');
+        const countdownCard = document.getElementById('countdownCard');
+        const birthdayRibbon = document.getElementById('birthdayRibbon');
+        const avatarContainer = document.getElementById('avatarContainer');
+        const birthdayEventCard = document.getElementById('birthdayEventCard');
+        const birthdayNote = document.getElementById('birthdayNote');
+        const birthdayTag = document.getElementById('birthdayTag');
+        const birthdaySummaryBadge = document.getElementById('birthdaySummaryBadge');
+        const coreQuote = document.getElementById('coreQuote');
+        const profileCard = document.getElementById('profileCard');
+
+        // ===== 获取当前日期 =====
+        function getNow() {
+            return new Date();
+        }
+
+        // ===== 计算距离下一个生日还有多少天 =====
+        function getDaysUntilBirthday() {
+            const now = getNow();
+            const currentYear = now.getFullYear();
+            let birthdayThisYear = new Date(currentYear, BIRTHDAY_MONTH - 1, BIRTHDAY_DAY);
+
+            // 如果今年生日已过，则算明年
+            const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+            if (today > birthdayThisYear) {
+                birthdayThisYear = new Date(currentYear + 1, BIRTHDAY_MONTH - 1, BIRTHDAY_DAY);
+            }
+
+            const diffTime = birthdayThisYear - today;
+            const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+            return diffDays;
+        }
+
+        // ===== 判断今天是否生日 =====
+        function isBirthdayToday() {
+            const now = getNow();
+            return now.getMonth() === BIRTHDAY_MONTH - 1 && now.getDate() === BIRTHDAY_DAY;
+        }
+
+        // ===== 创建飘落彩带 =====
+        function createConfetti(count = 80) {
+            const colors = [
+                '#a8d49c', '#c2e8b0', '#f5d76e', '#f0b8b8', '#b8d9aa',
+                '#d4ecd0', '#e8c84a', '#8bc07a', '#fce4a8', '#c8e0bc'
+            ];
+            const shapes = ['50%', '2px', '50% 0 50% 50%']; // 圆、方块、水滴
+
+            for (let i = 0; i < count; i++) {
+                const confetti = document.createElement('div');
+                confetti.className = 'confetti';
+                const color = colors[Math.floor(Math.random() * colors.length)];
+                const shape = shapes[Math.floor(Math.random() * shapes.length)];
+                const size = Math.random() * 10 + 6; // 6-16px
+                const left = Math.random() * 100;
+                const delay = Math.random() * 3; // 0-3s 延迟
+                const duration = Math.random() * 3 + 3; // 3-6s 飘落
+                const rotate = Math.random() * 360;
+
+                confetti.style.cssText = `
+                    left: ${left}%;
+                    width: ${size}px;
+                    height: ${size}px;
+                    background: ${color};
+                    border-radius: ${shape};
+                    animation-duration: ${duration}s;
+                    animation-delay: ${delay}s;
+                    transform: rotate(${rotate}deg);
+                    opacity: ${Math.random() * 0.5 + 0.5};
+                    box-shadow: 0 0 6px ${color}40;
+                `;
+                confettiContainer.appendChild(confetti);
+            }
+        }
+
+        // ===== 清空彩带 =====
+        function clearConfetti() {
+            confettiContainer.innerHTML = '';
+        }
+
+        // ===== 触发全屏生日模式 =====
+        function triggerBirthdayMode() {
+            // 1. 全屏彩带
+            confettiContainer.classList.add('active');
+            createConfetti(120);
+
+            // 2. 弹出全屏祝福
+            setTimeout(() => {
+                overlay.classList.add('show');
+            }, 400);
+
+            // 3. body 氛围
+            document.body.classList.add('birthday-mode');
+
+            // 4. 各个卡片特效
+            birthdayRibbon.classList.add('today-ribbon');
+            avatarContainer.classList.add('birthday-avatar');
+            birthdayEventCard.classList.add('active-event');
+            countdownCard.classList.add('birthday-today');
+
+            // 5. 更新文案
+            birthdayNote.textContent = '🎉 生日快乐！今天是我的日子 🎉';
+            countdownText.textContent = '🎂 今天生日！';
+            countdownDays.textContent = '🎈';
+            birthdayTag.textContent = '🎂 生日快乐！';
+
+            // 6. 更新总结卡片
+            birthdaySummaryBadge.textContent = '🎂 09.25 生日快乐！';
+            birthdaySummaryBadge.style.background = 'rgba(245, 215, 110, 0.5)';
+            birthdaySummaryBadge.style.color = '#5a4a1a';
+
+            // 7. 更新核心引用
+            coreQuote.innerHTML = '✦ Sunlight, a quiet kind of light. ✦ 像薄荷一样存在 · 不吵但记得住 ✦ <span style="font-weight:600;color:#7a5a10;">🎂 9.25 生日快乐，安静地发光 🎂</span> ✦';
+
+            // 8. 5秒后自动关闭弹层
+            setTimeout(() => {
+                if (overlay.classList.contains('show')) {
+                    overlay.classList.remove('show');
+                }
+            }, 5000);
+
+            // 9. 继续飘落（每10秒补充一次）
+            setInterval(() => {
+                createConfetti(40);
+            }, 10000);
+        }
+
+        // ===== 关闭弹层 =====
+        overlayCloseBtn.addEventListener('click', function() {
+            overlay.classList.remove('show');
+        });
+
+        // 点击遮罩空白处也关闭
+        overlay.addEventListener('click', function(e) {
+            if (e.target === overlay) {
+                overlay.classList.remove('show');
+            }
+        });
+
+        // ===== 更新倒计时显示 =====
+        function updateCountdown() {
+            const days = getDaysUntilBirthday();
+
+            if (days === 0 || isBirthdayToday()) {
+                // 今天生日
+                countdownCard.classList.add('birthday-today');
+                countdownText.textContent = '🎂 今天生日！';
+                countdownDays.textContent = '🎈';
+                countdownDays.style.fontSize = '1.3rem';
+                countdownCard.style.background = 'linear-gradient(105deg, #d4f0c8, #c2e8b0)';
+                countdownCard.style.border = '1px solid #8bc07a';
+                countdownCard.style.boxShadow = '0 4px 16px rgba(120, 180, 80, 0.25)';
+                countdownCard.style.animation = 'soft-pulse 2s infinite';
+            } else {
+                countdownCard.classList.remove('birthday-today');
+                countdownText.textContent = '距离生日还有';
+                countdownDays.textContent = days;
+                countdownDays.style.fontSize = '1.1rem';
+                countdownCard.style.background = 'rgba(255, 255, 255, 0.6)';
+                countdownCard.style.border = '1px dashed #a8d49c';
+                countdownCard.style.boxShadow = 'none';
+                countdownCard.style.animation = 'none';
+            }
+        }
+
+        // ===== 初始化 =====
+        function init() {
+            updateCountdown();
+
+            // 判断是否生日
+            if (isBirthdayToday()) {
+                // 延迟一点触发，让页面先渲染
+                setTimeout(triggerBirthdayMode, 600);
+            } else {
+                // 非生日也显示彩带预览？不，只显示倒计时
+                // 但可以让丝带轻微发光提醒
+                birthdayRibbon.style.animation = 'soft-pulse 3s infinite';
+            }
+
+            // 每60秒更新一次倒计时
+            setInterval(updateCountdown, 60000);
+        }
+
+        // 页面加载完成后执行
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', init);
+        } else {
+            init();
+        }
+
+        // ===== 开发者测试：模拟生日 (取消注释即可测试) =====
+        // setTimeout(() => {
+        //     // 强制触发生日模式（测试用）
+        //     triggerBirthdayMode();
+        // }, 1500);
+
+    })();
+</script>
 </body>
 </html>
