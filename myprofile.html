@@ -14,12 +14,11 @@
             box-sizing: border-box;
         }
 
-        /* 全局移除点击蓝色高亮 */
         * {
             -webkit-tap-highlight-color: transparent;
         }
 
-        button, a, .game-capsule, .birthday-event, .candle, .wish-submit, .overlay-btn, .overlay-close-btn {
+        button, a, .game-capsule, .birthday-event, .candle, .wish-submit, .overlay-btn {
             -webkit-tap-highlight-color: transparent;
             outline: none;
         }
@@ -183,19 +182,27 @@
             margin-bottom: 1.2rem;
         }
 
+        /* ===== 真实按钮质感 ===== */
         .overlay-btn {
-            background: rgba(255, 255, 255, 0.75);
-            border: 1.5px solid #8bc07a;
+            position: relative;
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.92) 0%, rgba(240, 248, 235, 0.85) 100%);
+            border: none;
             color: #1d5438;
             font-family: 'Inter', sans-serif;
             font-size: 0.85rem;
             font-weight: 500;
-            padding: 0.7rem 1.8rem;
+            padding: 0.75rem 1.9rem;
             border-radius: 60px;
             cursor: pointer;
-            transition: all 0.3s ease;
-            backdrop-filter: blur(4px);
             letter-spacing: 0.3px;
+            box-shadow:
+                0 4px 0 #a8c89a,
+                0 6px 12px rgba(80, 130, 50, 0.18),
+                inset 0 1px 0 rgba(255, 255, 255, 0.8);
+            transition: all 0.08s ease;
+            transform: translateY(0);
+            user-select: none;
+            -webkit-user-select: none;
             -webkit-tap-highlight-color: transparent;
             outline: none;
             -webkit-appearance: none;
@@ -205,27 +212,52 @@
         .overlay-btn:focus,
         .overlay-btn:active {
             outline: none;
-            box-shadow: none;
-            -webkit-box-shadow: none;
         }
 
         .overlay-btn:hover {
-            background: #ffffff;
-            transform: translateY(-3px);
-            box-shadow: 0 10px 28px rgba(80, 130, 50, 0.18);
-            border-color: #6aa85a;
+            background: linear-gradient(180deg, #ffffff 0%, #f0f8eb 100%);
+            box-shadow:
+                0 4px 0 #a8c89a,
+                0 8px 18px rgba(80, 130, 50, 0.22),
+                inset 0 1px 0 rgba(255, 255, 255, 0.9);
+            transform: translateY(-1px);
+        }
+
+        /* 按下时真正下沉 */
+        .overlay-btn:active {
+            transform: translateY(4px);
+            box-shadow:
+                0 0 0 #a8c89a,
+                0 2px 4px rgba(80, 130, 50, 0.15),
+                inset 0 2px 6px rgba(80, 130, 50, 0.15);
+            transition: all 0.05s ease;
         }
 
         .overlay-btn.primary-btn {
-            background: linear-gradient(105deg, #f5d76e, #f0c84a);
-            border-color: #e0b830;
+            background: linear-gradient(180deg, #fce88a 0%, #f0c84a 100%);
             color: #5a4a1a;
             font-weight: 600;
+            box-shadow:
+                0 4px 0 #c8a030,
+                0 6px 12px rgba(200, 160, 40, 0.25),
+                inset 0 1px 0 rgba(255, 255, 255, 0.6);
         }
 
         .overlay-btn.primary-btn:hover {
-            background: linear-gradient(105deg, #fce88a, #f5d24a);
-            box-shadow: 0 10px 28px rgba(200, 160, 40, 0.3);
+            background: linear-gradient(180deg, #fcefa0 0%, #f5d24a 100%);
+            box-shadow:
+                0 4px 0 #c8a030,
+                0 8px 18px rgba(200, 160, 40, 0.35),
+                inset 0 1px 0 rgba(255, 255, 255, 0.7);
+            transform: translateY(-1px);
+        }
+
+        .overlay-btn.primary-btn:active {
+            transform: translateY(4px);
+            box-shadow:
+                0 0 0 #c8a030,
+                0 2px 4px rgba(200, 160, 40, 0.2),
+                inset 0 2px 6px rgba(180, 140, 30, 0.25);
         }
 
         /* ===== 吹蜡烛互动 ===== */
@@ -258,19 +290,26 @@
             align-items: center;
             gap: 4px;
             cursor: pointer;
-            transition: transform 0.3s ease;
+            transition: transform 0.15s ease;
             -webkit-tap-highlight-color: transparent;
             outline: none;
+            user-select: none;
+            -webkit-user-select: none;
         }
 
         .candle:hover {
-            transform: scale(1.15);
+            transform: scale(1.12);
+        }
+
+        .candle:active {
+            transform: scale(0.92);
         }
 
         .candle-flame {
             font-size: 1.8rem;
             transition: all 0.5s ease;
             filter: drop-shadow(0 0 8px #f5d76e);
+            pointer-events: none;
         }
 
         .candle-flame.blown-out {
@@ -284,6 +323,7 @@
             height: 30px;
             background: linear-gradient(180deg, #f5d76e, #e0b830);
             border-radius: 4px;
+            pointer-events: none;
         }
 
         .candle-stick.blown-out-stick {
@@ -326,27 +366,38 @@
             font-size: 0.8rem;
             color: #1d5438;
             outline: none;
-            transition: border-color 0.2s;
+            transition: border-color 0.2s, box-shadow 0.2s;
             -webkit-appearance: none;
             appearance: none;
+            box-shadow: inset 0 2px 4px rgba(80, 130, 50, 0.06);
         }
 
         .wish-input:focus {
             border-color: #8bc07a;
-            box-shadow: 0 0 0 3px rgba(140, 190, 120, 0.2);
+            box-shadow: inset 0 2px 4px rgba(80, 130, 50, 0.06), 0 0 0 3px rgba(140, 190, 120, 0.2);
         }
 
+        /* ===== 许愿提交按钮 ===== */
         .wish-submit {
-            background: #8bc07a;
+            position: relative;
+            background: linear-gradient(180deg, #9ad48a 0%, #7ab86a 100%);
             border: none;
             color: #ffffff;
-            padding: 0.6rem 1.2rem;
+            padding: 0.65rem 1.3rem;
             border-radius: 40px;
             font-size: 0.8rem;
             font-weight: 500;
             cursor: pointer;
-            transition: all 0.2s;
             white-space: nowrap;
+            letter-spacing: 0.3px;
+            box-shadow:
+                0 3px 0 #5a9a4a,
+                0 5px 10px rgba(80, 130, 50, 0.25),
+                inset 0 1px 0 rgba(255, 255, 255, 0.35);
+            transition: all 0.08s ease;
+            transform: translateY(0);
+            user-select: none;
+            -webkit-user-select: none;
             -webkit-tap-highlight-color: transparent;
             outline: none;
             -webkit-appearance: none;
@@ -356,12 +407,23 @@
         .wish-submit:focus,
         .wish-submit:active {
             outline: none;
-            box-shadow: none;
         }
 
         .wish-submit:hover {
-            background: #6aa85a;
-            transform: translateY(-2px);
+            background: linear-gradient(180deg, #a8e098 0%, #84c274 100%);
+            box-shadow:
+                0 3px 0 #5a9a4a,
+                0 7px 14px rgba(80, 130, 50, 0.3),
+                inset 0 1px 0 rgba(255, 255, 255, 0.4);
+            transform: translateY(-1px);
+        }
+
+        .wish-submit:active {
+            transform: translateY(3px);
+            box-shadow:
+                0 0 0 #5a9a4a,
+                0 2px 4px rgba(80, 130, 50, 0.2),
+                inset 0 2px 6px rgba(60, 110, 40, 0.3);
         }
 
         .wish-list {
@@ -568,48 +630,87 @@
             opacity: 0.6;
         }
 
-        /* ===== 生日活动卡片 ===== */
+        /* ===== 生日活动卡片 - 按钮质感 ===== */
         .birthday-event {
-            background: linear-gradient(105deg, rgba(210, 240, 190, 0.7) 0%, rgba(190, 225, 170, 0.5) 100%);
+            position: relative;
+            background: linear-gradient(180deg, rgba(220, 245, 200, 0.95) 0%, rgba(190, 225, 170, 0.85) 100%);
             border-radius: 1.8rem;
             padding: 1rem 1.6rem;
             margin: 1.5rem 0 1rem;
-            border: 1px solid rgba(140, 200, 110, 0.8);
-            box-shadow: 0 4px 12px rgba(90, 130, 60, 0.1);
+            border: none;
             display: inline-flex;
             align-items: center;
             gap: 12px;
             flex-wrap: wrap;
             justify-content: center;
             backdrop-filter: blur(4px);
-            transition: all 0.5s ease;
             cursor: pointer;
+            user-select: none;
+            -webkit-user-select: none;
             -webkit-tap-highlight-color: transparent;
             outline: none;
+            box-shadow:
+                0 5px 0 #8ab87a,
+                0 8px 18px rgba(90, 130, 60, 0.18),
+                inset 0 1px 0 rgba(255, 255, 255, 0.7);
+            transition: all 0.1s ease;
+            transform: translateY(0);
         }
 
         .birthday-event:focus,
         .birthday-event:active {
             outline: none;
-            box-shadow: none;
+        }
+
+        .birthday-event:hover {
+            background: linear-gradient(180deg, rgba(230, 250, 210, 1) 0%, rgba(200, 235, 180, 0.95) 100%);
+            box-shadow:
+                0 5px 0 #8ab87a,
+                0 12px 24px rgba(90, 130, 60, 0.25),
+                inset 0 1px 0 rgba(255, 255, 255, 0.8);
+            transform: translateY(-2px);
+        }
+
+        .birthday-event:active {
+            transform: translateY(5px);
+            box-shadow:
+                0 0 0 #8ab87a,
+                0 2px 6px rgba(90, 130, 60, 0.15),
+                inset 0 3px 8px rgba(80, 120, 50, 0.2);
+            transition: all 0.05s ease;
         }
 
         .birthday-event.active-event {
-            background: linear-gradient(105deg, rgba(230, 250, 200, 0.95) 0%, rgba(200, 240, 170, 0.9) 100%);
-            border-color: #8bc07a;
-            box-shadow: 0 8px 28px rgba(120, 180, 80, 0.3);
+            background: linear-gradient(180deg, rgba(240, 255, 215, 1) 0%, rgba(210, 245, 185, 0.95) 100%);
+            box-shadow:
+                0 5px 0 #7ab06a,
+                0 10px 28px rgba(120, 180, 80, 0.35),
+                inset 0 1px 0 rgba(255, 255, 255, 0.8);
             animation: event-pulse 2s infinite;
         }
 
         @keyframes event-pulse {
-            0%, 100% { box-shadow: 0 8px 28px rgba(120, 180, 80, 0.25); }
-            50% { box-shadow: 0 10px 36px rgba(100, 170, 60, 0.45); }
+            0%, 100% {
+                box-shadow: 0 5px 0 #7ab06a, 0 10px 28px rgba(120, 180, 80, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.8);
+            }
+            50% {
+                box-shadow: 0 5px 0 #7ab06a, 0 14px 38px rgba(100, 170, 60, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.8);
+            }
+        }
+
+        .birthday-event.active-event:active {
+            transform: translateY(5px);
+            box-shadow:
+                0 0 0 #7ab06a,
+                0 2px 6px rgba(90, 130, 60, 0.2),
+                inset 0 3px 8px rgba(80, 120, 50, 0.25);
         }
 
         .birthday-icon {
             font-size: 2rem;
             filter: drop-shadow(0 4px 6px rgba(80, 120, 50, 0.2));
             animation: gentle-bounce 3s infinite ease-in-out;
+            pointer-events: none;
         }
 
         @keyframes gentle-bounce {
@@ -622,6 +723,7 @@
             font-weight: 500;
             color: #1d5438;
             letter-spacing: 0.3px;
+            pointer-events: none;
         }
 
         .birthday-date {
@@ -633,15 +735,16 @@
             font-size: 1.1rem;
             color: #2b7345;
             border: 1px solid #b2d8a2;
-            box-shadow: 0 2px 8px rgba(100, 140, 70, 0.1);
+            box-shadow: 0 2px 8px rgba(100, 140, 70, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.8);
             transition: all 0.5s ease;
+            pointer-events: none;
         }
 
         .birthday-event.active-event .birthday-date {
             background: #fff9e0;
             border-color: #e8c84a;
             color: #7a5a10;
-            box-shadow: 0 4px 14px rgba(200, 160, 40, 0.25);
+            box-shadow: 0 4px 14px rgba(200, 160, 40, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.8);
         }
 
         .birthday-note {
@@ -649,9 +752,10 @@
             color: #4f8568;
             margin-left: 0.5rem;
             font-style: italic;
+            pointer-events: none;
         }
 
-        /* ===== 游戏胶囊区域 ===== */
+        /* ===== 游戏胶囊区域 - 按钮质感 ===== */
         .games-section {
             margin: 1.8rem 0 1rem;
         }
@@ -669,35 +773,52 @@
             justify-content: center;
             gap: 0.8rem;
         }
+
         .game-capsule {
-            background: rgba(255, 255, 255, 0.5);
-            backdrop-filter: blur(4px);
+            position: relative;
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.75) 0%, rgba(240, 248, 235, 0.65) 100%);
             border-radius: 60px;
-            padding: 0.3rem 0.9rem 0.3rem 0.5rem;
+            padding: 0.4rem 1rem 0.4rem 0.5rem;
             display: inline-flex;
             align-items: center;
             gap: 8px;
-            transition: all 0.2s ease;
-            border: 1px solid rgba(120, 170, 100, 0.4);
-            cursor: pointer;
             text-decoration: none;
+            cursor: pointer;
+            user-select: none;
+            -webkit-user-select: none;
             -webkit-tap-highlight-color: transparent;
             outline: none;
+            box-shadow:
+                0 3px 0 #b0c8a4,
+                0 4px 8px rgba(80, 130, 50, 0.12),
+                inset 0 1px 0 rgba(255, 255, 255, 0.7);
+            transition: all 0.08s ease;
+            transform: translateY(0);
         }
 
         .game-capsule:focus,
         .game-capsule:active {
             outline: none;
-            box-shadow: none;
         }
 
         .game-capsule:hover {
-            background: rgba(200, 230, 180, 0.7);
-            transform: translateY(-3px);
-            border-color: #8bc07a;
+            background: linear-gradient(180deg, rgba(230, 245, 220, 0.95) 0%, rgba(210, 235, 195, 0.9) 100%);
+            box-shadow:
+                0 3px 0 #b0c8a4,
+                0 6px 14px rgba(80, 130, 50, 0.18),
+                inset 0 1px 0 rgba(255, 255, 255, 0.8);
+            transform: translateY(-2px);
         }
 
-        /* 游戏图标 - 使用纯CSS绘制，不依赖外部图片 */
+        .game-capsule:active {
+            transform: translateY(3px);
+            box-shadow:
+                0 0 0 #b0c8a4,
+                0 1px 3px rgba(80, 130, 50, 0.12),
+                inset 0 2px 5px rgba(80, 120, 50, 0.18);
+            transition: all 0.04s ease;
+        }
+
         .game-icon-wrapper {
             width: 28px;
             height: 28px;
@@ -708,47 +829,23 @@
             flex-shrink: 0;
             font-size: 16px;
             line-height: 1;
+            pointer-events: none;
+            box-shadow: inset 0 1px 2px rgba(255, 255, 255, 0.4), 0 1px 2px rgba(0, 0, 0, 0.08);
         }
 
-        .game-icon-minecraft {
-            background: #6a8f3c;
-            color: #fff;
-        }
-
-        .game-icon-roblox {
-            background: #e2231a;
-            color: #fff;
-        }
-
-        .game-icon-honor {
-            background: #c8a44a;
-            color: #fff;
-        }
-
-        .game-icon-identity {
-            background: #4a4a6a;
-            color: #fff;
-        }
-
-        .game-icon-sky {
-            background: #7ab8d4;
-            color: #fff;
-        }
-
-        .game-icon-starrail {
-            background: #5a4a8a;
-            color: #fff;
-        }
-
-        .game-icon-eggy {
-            background: #f5a0b8;
-            color: #fff;
-        }
+        .game-icon-minecraft { background: #6a8f3c; color: #fff; }
+        .game-icon-roblox { background: #e2231a; color: #fff; }
+        .game-icon-honor { background: #c8a44a; color: #fff; }
+        .game-icon-identity { background: #4a4a6a; color: #fff; }
+        .game-icon-sky { background: #7ab8d4; color: #fff; }
+        .game-icon-starrail { background: #5a4a8a; color: #fff; }
+        .game-icon-eggy { background: #f5a0b8; color: #fff; }
 
         .game-name {
             font-size: 0.75rem;
             font-weight: 500;
             color: #2d6a46;
+            pointer-events: none;
         }
 
         .quiet-footer {
@@ -850,16 +947,24 @@
             padding: 0.2rem 0.6rem;
             border-radius: 30px;
             text-decoration: none;
-            transition: all 0.2s;
+            transition: all 0.15s ease;
             word-break: break-all;
             max-width: 60%;
             text-align: right;
             -webkit-tap-highlight-color: transparent;
+            box-shadow: 0 1px 2px rgba(80, 130, 50, 0.08);
         }
 
         .account-link:hover {
             background: #c2e0b4;
             color: #154e2e;
+            transform: translateY(-1px);
+            box-shadow: 0 3px 6px rgba(80, 130, 50, 0.15);
+        }
+
+        .account-link:active {
+            transform: translateY(1px);
+            box-shadow: inset 0 2px 4px rgba(80, 130, 50, 0.15);
         }
 
         .desc-note {
@@ -898,22 +1003,39 @@
         }
 
         .summary-badge {
-            background: rgba(150, 200, 130, 0.25);
-            padding: 0.4rem 1rem;
+            background: linear-gradient(180deg, rgba(160, 210, 140, 0.35) 0%, rgba(140, 195, 120, 0.3) 100%);
+            padding: 0.45rem 1.1rem;
             border-radius: 60px;
             font-size: 0.75rem;
             color: #2d6042;
             text-decoration: none;
-            transition: all 0.2s;
             display: inline-flex;
             align-items: center;
             gap: 6px;
             -webkit-tap-highlight-color: transparent;
+            box-shadow:
+                0 2px 0 #b0c8a4,
+                0 3px 6px rgba(80, 130, 50, 0.1),
+                inset 0 1px 0 rgba(255, 255, 255, 0.5);
+            transition: all 0.08s ease;
+            transform: translateY(0);
         }
 
         .summary-badge:hover {
-            background: #c2e0b4;
-            transform: translateY(-2px);
+            background: linear-gradient(180deg, rgba(180, 225, 160, 0.5) 0%, rgba(160, 210, 140, 0.45) 100%);
+            transform: translateY(-1px);
+            box-shadow:
+                0 2px 0 #b0c8a4,
+                0 5px 10px rgba(80, 130, 50, 0.16),
+                inset 0 1px 0 rgba(255, 255, 255, 0.6);
+        }
+
+        .summary-badge:active {
+            transform: translateY(2px);
+            box-shadow:
+                0 0 0 #b0c8a4,
+                0 1px 2px rgba(80, 130, 50, 0.1),
+                inset 0 2px 4px rgba(80, 130, 50, 0.12);
         }
 
         .core-quote {
@@ -982,7 +1104,7 @@
                 grid-template-columns: 1fr;
             }
             .game-capsule {
-                padding: 0.2rem 0.7rem 0.2rem 0.4rem;
+                padding: 0.3rem 0.8rem 0.3rem 0.4rem;
             }
             .game-icon-wrapper {
                 width: 24px;
@@ -1030,7 +1152,7 @@
             }
             .overlay-btn {
                 font-size: 0.75rem;
-                padding: 0.55rem 1.3rem;
+                padding: 0.65rem 1.5rem;
             }
             .countdown-card {
                 padding: 0.5rem 1rem;
@@ -1051,7 +1173,7 @@
             }
             .wish-submit {
                 font-size: 0.72rem;
-                padding: 0.5rem 1rem;
+                padding: 0.55rem 1rem;
             }
         }
     </style>
@@ -1404,9 +1526,6 @@
             stick.classList.add('blown-out-stick');
             candlesBlown++;
             updateBlowStatus();
-
-            candle.style.transform = 'scale(0.9)';
-            setTimeout(() => candle.style.transform = '', 300);
         }
 
         function renderWishes() {
@@ -1460,7 +1579,7 @@
             countdownDays.textContent = '🎈';
             birthdayTag.textContent = '🎂 生日快乐！';
             birthdaySummaryBadge.textContent = '🎂 09.25 生日快乐！';
-            birthdaySummaryBadge.style.background = 'rgba(245, 215, 110, 0.5)';
+            birthdaySummaryBadge.style.background = 'linear-gradient(180deg, rgba(245, 225, 110, 0.5) 0%, rgba(230, 205, 90, 0.45) 100%)';
             birthdaySummaryBadge.style.color = '#5a4a1a';
 
             coreQuote.innerHTML = '✦ Sunlight, a quiet kind of light. ✦ 像薄荷一样存在 · 不吵但记得住 ✦ <span style="font-weight:600;color:#7a5a10;">🎂 9.25 生日快乐，安静地发光 🎂</span> ✦';
@@ -1548,9 +1667,6 @@
         } else {
             init();
         }
-
-        // 测试用：取消注释即可模拟生日
-        // setTimeout(triggerBirthdayMode, 1500);
 
     })();
 </script>
