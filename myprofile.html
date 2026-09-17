@@ -14,6 +14,20 @@
             box-sizing: border-box;
         }
 
+        /* 全局移除点击蓝色高亮 */
+        * {
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        button, a, .game-capsule, .birthday-event, .candle, .wish-submit, .overlay-btn, .overlay-close-btn {
+            -webkit-tap-highlight-color: transparent;
+            outline: none;
+        }
+
+        button:focus, a:focus, .game-capsule:focus, .birthday-event:focus, .candle:focus {
+            outline: none;
+        }
+
         body {
             background: linear-gradient(135deg, #e2f0e0 0%, #caebcc 100%);
             font-family: 'Inter', 'Space Grotesk', system-ui, -apple-system, sans-serif;
@@ -182,6 +196,17 @@
             transition: all 0.3s ease;
             backdrop-filter: blur(4px);
             letter-spacing: 0.3px;
+            -webkit-tap-highlight-color: transparent;
+            outline: none;
+            -webkit-appearance: none;
+            appearance: none;
+        }
+
+        .overlay-btn:focus,
+        .overlay-btn:active {
+            outline: none;
+            box-shadow: none;
+            -webkit-box-shadow: none;
         }
 
         .overlay-btn:hover {
@@ -234,6 +259,8 @@
             gap: 4px;
             cursor: pointer;
             transition: transform 0.3s ease;
+            -webkit-tap-highlight-color: transparent;
+            outline: none;
         }
 
         .candle:hover {
@@ -300,6 +327,8 @@
             color: #1d5438;
             outline: none;
             transition: border-color 0.2s;
+            -webkit-appearance: none;
+            appearance: none;
         }
 
         .wish-input:focus {
@@ -318,6 +347,16 @@
             cursor: pointer;
             transition: all 0.2s;
             white-space: nowrap;
+            -webkit-tap-highlight-color: transparent;
+            outline: none;
+            -webkit-appearance: none;
+            appearance: none;
+        }
+
+        .wish-submit:focus,
+        .wish-submit:active {
+            outline: none;
+            box-shadow: none;
         }
 
         .wish-submit:hover {
@@ -545,6 +584,14 @@
             backdrop-filter: blur(4px);
             transition: all 0.5s ease;
             cursor: pointer;
+            -webkit-tap-highlight-color: transparent;
+            outline: none;
+        }
+
+        .birthday-event:focus,
+        .birthday-event:active {
+            outline: none;
+            box-shadow: none;
         }
 
         .birthday-event.active-event {
@@ -634,19 +681,70 @@
             border: 1px solid rgba(120, 170, 100, 0.4);
             cursor: pointer;
             text-decoration: none;
+            -webkit-tap-highlight-color: transparent;
+            outline: none;
         }
+
+        .game-capsule:focus,
+        .game-capsule:active {
+            outline: none;
+            box-shadow: none;
+        }
+
         .game-capsule:hover {
             background: rgba(200, 230, 180, 0.7);
             transform: translateY(-3px);
             border-color: #8bc07a;
         }
-        .game-icon {
+
+        /* 游戏图标 - 使用纯CSS绘制，不依赖外部图片 */
+        .game-icon-wrapper {
             width: 28px;
             height: 28px;
             border-radius: 50%;
-            object-fit: cover;
-            background: #d4e8ca;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            font-size: 16px;
+            line-height: 1;
         }
+
+        .game-icon-minecraft {
+            background: #6a8f3c;
+            color: #fff;
+        }
+
+        .game-icon-roblox {
+            background: #e2231a;
+            color: #fff;
+        }
+
+        .game-icon-honor {
+            background: #c8a44a;
+            color: #fff;
+        }
+
+        .game-icon-identity {
+            background: #4a4a6a;
+            color: #fff;
+        }
+
+        .game-icon-sky {
+            background: #7ab8d4;
+            color: #fff;
+        }
+
+        .game-icon-starrail {
+            background: #5a4a8a;
+            color: #fff;
+        }
+
+        .game-icon-eggy {
+            background: #f5a0b8;
+            color: #fff;
+        }
+
         .game-name {
             font-size: 0.75rem;
             font-weight: 500;
@@ -756,6 +854,7 @@
             word-break: break-all;
             max-width: 60%;
             text-align: right;
+            -webkit-tap-highlight-color: transparent;
         }
 
         .account-link:hover {
@@ -809,6 +908,7 @@
             display: inline-flex;
             align-items: center;
             gap: 6px;
+            -webkit-tap-highlight-color: transparent;
         }
 
         .summary-badge:hover {
@@ -855,7 +955,6 @@
             }
         }
 
-        /* ===== 生日当天额外彩蛋 ===== */
         .profile-card.birthday-glow {
             box-shadow: 0 0 0 2px rgba(245, 215, 110, 0.3), 0 20px 40px rgba(180, 150, 40, 0.15);
         }
@@ -885,9 +984,10 @@
             .game-capsule {
                 padding: 0.2rem 0.7rem 0.2rem 0.4rem;
             }
-            .game-icon {
+            .game-icon-wrapper {
                 width: 24px;
                 height: 24px;
+                font-size: 14px;
             }
             .game-name {
                 font-size: 0.65rem;
@@ -957,10 +1057,8 @@
     </style>
 </head>
 <body>
-<!-- ===== 彩带层 ===== -->
 <div class="confetti-container" id="confettiContainer"></div>
 
-<!-- ===== 生日主弹层 ===== -->
 <div class="birthday-overlay" id="birthdayOverlay">
     <div class="birthday-overlay-content">
         <span class="overlay-cake">🎂</span>
@@ -973,7 +1071,6 @@
             愿你的新一岁，安静发光，温柔生长。
         </div>
 
-        <!-- 吹蜡烛互动 -->
         <div class="blow-candle-area">
             <div class="blow-candle-hint">🕯️ 点击蜡烛吹灭它，许个愿吧</div>
             <div class="candle-row" id="candleRow">
@@ -993,7 +1090,6 @@
             <div class="blow-status" id="blowStatus">还有 3 根蜡烛亮着</div>
         </div>
 
-        <!-- 生日许愿墙 -->
         <div class="wish-section">
             <div class="wish-input-row">
                 <input type="text" class="wish-input" id="wishInput" placeholder="写一句生日祝福..." maxlength="40">
@@ -1013,7 +1109,6 @@
 
 <div class="container">
     
-    <!-- ========= 个人资讯卡片 ========= -->
     <div class="profile-card" id="profileCard">
         <div class="birthday-ribbon" id="birthdayRibbon">🎂 9.25 🎂</div>
 
@@ -1030,7 +1125,6 @@
             人生不到三万天。
         </div>
         
-        <!-- ========= 生日活动卡片 ========= -->
         <div class="birthday-event" id="birthdayEventCard" title="点击进入生日活动">
             <span class="birthday-icon">🎂</span>
             <span class="birthday-text">生日特别活动</span>
@@ -1038,7 +1132,6 @@
             <span class="birthday-note" id="birthdayNote">✦ 安静庆祝 · 薄荷色的又一年 ✦</span>
         </div>
 
-        <!-- 生日倒计时小卡片 -->
         <div class="countdown-card" id="countdownCard">
             <span class="countdown-emoji">🎈</span>
             <span class="countdown-text" id="countdownText">距离生日还有</span>
@@ -1046,36 +1139,35 @@
             <span class="countdown-text">天</span>
         </div>
 
-        <!-- 游戏胶囊区域 -->
         <div class="games-section">
             <div class="games-title">🎮 游戏时光 · 薄荷玩家 🎮</div>
             <div class="games-capsules">
                 <a href="#" class="game-capsule" target="_blank">
-                    <img class="game-icon" src="https://cdn.jsdelivr.net/npm/simple-icons@v13/icons/minecraft.svg" alt="Minecraft" onerror="this.src='https://placehold.co/28x28/a8d49c/2a6a3a?text=⛏'">
+                    <span class="game-icon-wrapper game-icon-minecraft">⛏</span>
                     <span class="game-name">Minecraft</span>
                 </a>
                 <a href="#" class="game-capsule" target="_blank">
-                    <img class="game-icon" src="https://cdn.jsdelivr.net/npm/simple-icons@v13/icons/roblox.svg" alt="Roblox" onerror="this.src='https://placehold.co/28x28/a8d49c/2a6a3a?text=🎲'">
+                    <span class="game-icon-wrapper game-icon-roblox">🎲</span>
                     <span class="game-name">Roblox</span>
                 </a>
                 <a href="#" class="game-capsule" target="_blank">
-                    <img class="game-icon" src="https://placehold.co/28x28/a8d49c/2a6a3a?text=👑" alt="Honor of Kings">
+                    <span class="game-icon-wrapper game-icon-honor">👑</span>
                     <span class="game-name">Honor of Kings</span>
                 </a>
                 <a href="#" class="game-capsule" target="_blank">
-                    <img class="game-icon" src="https://placehold.co/28x28/a8d49c/2a6a3a?text=🕯" alt="Identity V">
+                    <span class="game-icon-wrapper game-icon-identity">🕯</span>
                     <span class="game-name">第5人格</span>
                 </a>
                 <a href="#" class="game-capsule" target="_blank">
-                    <img class="game-icon" src="https://placehold.co/28x28/a8d49c/2a6a3a?text=☁️" alt="Sky光遇">
+                    <span class="game-icon-wrapper game-icon-sky">☁️</span>
                     <span class="game-name">Sky 光遇</span>
                 </a>
                 <a href="#" class="game-capsule" target="_blank">
-                    <img class="game-icon" src="https://placehold.co/28x28/a8d49c/2a6a3a?text=🌌" alt="Honkai Star Rail">
+                    <span class="game-icon-wrapper game-icon-starrail">🌌</span>
                     <span class="game-name">星穹铁道</span>
                 </a>
                 <a href="#" class="game-capsule" target="_blank">
-                    <img class="game-icon" src="https://placehold.co/28x28/a8d49c/2a6a3a?text=🥚" alt="Eggy Party">
+                    <span class="game-icon-wrapper game-icon-eggy">🥚</span>
                     <span class="game-name">蛋仔派对</span>
                 </a>
             </div>
@@ -1094,9 +1186,7 @@
         </div>
     </div>
 
-    <!-- ========= 平台卡片网格 ========= -->
     <div class="platforms-grid">
-        <!-- YouTube 卡片 -->
         <div class="platform-card">
             <div class="platform-header">
                 <span class="platform-icon">🎬</span>
@@ -1112,7 +1202,6 @@
             <div class="desc-note">影像叙事 · 安静记录每一帧</div>
         </div>
 
-        <!-- Instagram 卡片 -->
         <div class="platform-card">
             <div class="platform-header"><span class="platform-icon">📸</span><span class="platform-name">Instagram</span></div>
             <div class="sunlight-tag">Sunlight, a quiet kind of light.</div>
@@ -1122,7 +1211,6 @@
             <div class="desc-note">薄荷色日常 · 爪印与光影</div>
         </div>
 
-        <!-- Threads 卡片 -->
         <div class="platform-card">
             <div class="platform-header"><span class="platform-icon">🧵</span><span class="platform-name">Threads</span></div>
             <div class="sunlight-tag">Sunlight, a quiet kind of light.</div>
@@ -1132,7 +1220,6 @@
             <div class="desc-note">畅所欲言 · 安静陪伴</div>
         </div>
 
-        <!-- 抖音卡片 -->
         <div class="platform-card">
             <div class="platform-header"><span class="platform-icon">🎵</span><span class="platform-name">抖音 · 中国版</span></div>
             <div class="sunlight-tag">Sunlight, a quiet kind of light.</div>
@@ -1142,7 +1229,6 @@
             <div class="desc-note">薄荷节奏 · 安静律动</div>
         </div>
 
-        <!-- Bilibili 卡片 -->
         <div class="platform-card">
             <div class="platform-header"><span class="platform-icon">🪄</span><span class="platform-name">Bilibili</span></div>
             <div class="global-nickname">LWHgs123</div>
@@ -1151,7 +1237,6 @@
             <div class="desc-note">创作存档 · 灵感容器</div>
         </div>
 
-        <!-- Facebook 卡片 -->
         <div class="platform-card">
             <div class="platform-header"><span class="platform-icon">📘</span><span class="platform-name">Facebook</span></div>
             <div class="global-nickname">꧁LWHᝰgs123꧂</div>
@@ -1160,7 +1245,6 @@
             <div class="desc-note">温柔连接 · 日常片段</div>
         </div>
 
-        <!-- TikTok 卡片 -->
         <div class="platform-card">
             <div class="platform-header"><span class="platform-icon">📱</span><span class="platform-name">TikTok</span></div>
             <div class="global-nickname">꧁LWHᝰgs123꧂</div>
@@ -1170,7 +1254,6 @@
         </div>
     </div>
 
-    <!-- ========= 总结卡片 ========= -->
     <div class="summary-card">
         <div class="summary-title">◌ 薄荷绿档案 · 全平台速览 ◌</div>
         <div class="summary-badge-grid">
@@ -1208,11 +1291,9 @@
     (function() {
         'use strict';
 
-        // ===== 生日配置 =====
         const BIRTHDAY_MONTH = 9;
         const BIRTHDAY_DAY = 25;
 
-        // ===== DOM 元素 =====
         const overlay = document.getElementById('birthdayOverlay');
         const overlayCloseBtn = document.getElementById('overlayCloseBtn');
         const emojiRainBtn = document.getElementById('emojiRainBtn');
@@ -1234,17 +1315,12 @@
         const blowStatus = document.getElementById('blowStatus');
         const candleRow = document.getElementById('candleRow');
 
-        // ===== 生日彩蛋状态 =====
         let candlesBlown = 0;
         let wishes = [];
         let birthdayTriggered = false;
 
-        // ===== 获取当前日期 =====
-        function getNow() {
-            return new Date();
-        }
+        function getNow() { return new Date(); }
 
-        // ===== 计算距离下一个生日还有多少天 =====
         function getDaysUntilBirthday() {
             const now = getNow();
             const currentYear = now.getFullYear();
@@ -1253,17 +1329,14 @@
             if (today > birthdayThisYear) {
                 birthdayThisYear = new Date(currentYear + 1, BIRTHDAY_MONTH - 1, BIRTHDAY_DAY);
             }
-            const diffTime = birthdayThisYear - today;
-            return Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+            return Math.ceil((birthdayThisYear - today) / (1000 * 60 * 60 * 24));
         }
 
-        // ===== 判断今天是否生日 =====
         function isBirthdayToday() {
             const now = getNow();
             return now.getMonth() === BIRTHDAY_MONTH - 1 && now.getDate() === BIRTHDAY_DAY;
         }
 
-        // ===== 创建彩带 =====
         function createConfetti(count = 80) {
             const colors = ['#a8d49c', '#c2e8b0', '#f5d76e', '#f0b8b8', '#b8d9aa', '#d4ecd0', '#e8c84a', '#8bc07a', '#fce4a8', '#c8e0bc'];
             const shapes = ['50%', '2px', '50% 0 50% 50%'];
@@ -1289,7 +1362,6 @@
             }
         }
 
-        // ===== 表情雨 =====
         function createEmojiRain(count = 30) {
             const emojis = ['🎂', '🎉', '🎈', '🎁', '🌿', '✨', '💚', '🧁', '🍰', '🎊', '🥳', '💫'];
             for (let i = 0; i < count; i++) {
@@ -1307,7 +1379,6 @@
             }
         }
 
-        // ===== 更新吹蜡烛状态 =====
         function updateBlowStatus() {
             const remaining = 3 - candlesBlown;
             if (remaining === 0) {
@@ -1321,7 +1392,6 @@
             }
         }
 
-        // ===== 点击蜡烛 =====
         function handleCandleClick(e) {
             const candle = e.currentTarget;
             const index = candle.dataset.index;
@@ -1335,12 +1405,10 @@
             candlesBlown++;
             updateBlowStatus();
 
-            // 吹灭小动画
             candle.style.transform = 'scale(0.9)';
             setTimeout(() => candle.style.transform = '', 300);
         }
 
-        // ===== 渲染许愿列表 =====
         function renderWishes() {
             if (wishes.length === 0) {
                 wishList.innerHTML = '<div class="wish-empty">✨ 还没有祝福，来写第一条吧</div>';
@@ -1355,14 +1423,12 @@
             wishList.scrollTop = wishList.scrollHeight;
         }
 
-        // ===== HTML转义 =====
         function escapeHtml(text) {
             const div = document.createElement('div');
             div.textContent = text;
             return div.innerHTML;
         }
 
-        // ===== 提交许愿 =====
         function submitWish() {
             const text = wishInput.value.trim();
             if (!text) return;
@@ -1372,31 +1438,23 @@
             createConfetti(15);
         }
 
-        // ===== 触发全屏生日模式 =====
         function triggerBirthdayMode() {
             if (birthdayTriggered) return;
             birthdayTriggered = true;
 
-            // 全屏彩带
             confettiContainer.classList.add('active');
             createConfetti(120);
 
-            // 弹出弹层
-            setTimeout(() => {
-                overlay.classList.add('show');
-            }, 400);
+            setTimeout(() => overlay.classList.add('show'), 400);
 
-            // body 氛围
             document.body.classList.add('birthday-mode');
 
-            // 各个卡片特效
             birthdayRibbon.classList.add('today-ribbon');
             avatarContainer.classList.add('birthday-avatar');
             birthdayEventCard.classList.add('active-event');
             countdownCard.classList.add('birthday-today');
             profileCard.classList.add('birthday-glow');
 
-            // 更新文案
             birthdayNote.textContent = '🎉 生日快乐！今天是我的日子 🎉';
             countdownText.textContent = '🎂 今天生日！';
             countdownDays.textContent = '🎈';
@@ -1407,7 +1465,6 @@
 
             coreQuote.innerHTML = '✦ Sunlight, a quiet kind of light. ✦ 像薄荷一样存在 · 不吵但记得住 ✦ <span style="font-weight:600;color:#7a5a10;">🎂 9.25 生日快乐，安静地发光 🎂</span> ✦';
 
-            // 预置几条祝福
             wishes = [
                 '薄荷色的又一年，生日快乐呀',
                 'Sunlight, a quiet kind of light ✨',
@@ -1415,40 +1472,33 @@
             ];
             renderWishes();
 
-            // 继续飘落
             setInterval(() => createConfetti(20), 8000);
         }
 
-        // ===== 关闭弹层 =====
         overlayCloseBtn.addEventListener('click', () => overlay.classList.remove('show'));
         overlay.addEventListener('click', (e) => {
             if (e.target === overlay) overlay.classList.remove('show');
         });
 
-        // ===== 撒花按钮 =====
         emojiRainBtn.addEventListener('click', () => {
             createEmojiRain(40);
             createConfetti(50);
         });
 
-        // ===== 蜡烛点击 =====
         candleRow.querySelectorAll('.candle').forEach(candle => {
             candle.addEventListener('click', handleCandleClick);
         });
 
-        // ===== 许愿按钮 =====
         wishSubmit.addEventListener('click', submitWish);
         wishInput.addEventListener('keydown', (e) => {
             if (e.key === 'Enter') submitWish();
         });
 
-        // ===== 生日活动卡片点击 =====
         birthdayEventCard.addEventListener('click', () => {
             if (isBirthdayToday()) {
                 overlay.classList.add('show');
                 createConfetti(30);
             } else {
-                // 非生日，点击弹个提示
                 birthdayNote.textContent = '🎂 9月25日，记得来参加生日活动哦～';
                 createEmojiRain(8);
                 setTimeout(() => {
@@ -1457,7 +1507,6 @@
             }
         });
 
-        // ===== 更新倒计时 =====
         function updateCountdown() {
             const days = getDaysUntilBirthday();
             if (days === 0 || isBirthdayToday()) {
@@ -1481,7 +1530,6 @@
             }
         }
 
-        // ===== 初始化 =====
         function init() {
             updateCountdown();
             renderWishes();
@@ -1501,7 +1549,7 @@
             init();
         }
 
-        // ===== 测试用：取消注释即可模拟生日 =====
+        // 测试用：取消注释即可模拟生日
         // setTimeout(triggerBirthdayMode, 1500);
 
     })();
