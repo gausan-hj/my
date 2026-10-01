@@ -1,615 +1,1490 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>LWH · 薄荷绿个人主页 | 安静发光体</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600&family=Space+Grotesk:wght@300;400;500;600&display=swap" rel="stylesheet">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no">
+<meta name="theme-color" content="#e8f8ec">
+<title>LWH · 薄荷绿个人主页 | 安静发光体</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+    --mint-50: #f4fdf7;
+    --mint-100: #e6f9ec;
+    --mint-200: #c9f0d6;
+    --mint-300: #a3e4b8;
+    --mint-400: #78d29a;
+    --mint-500: #52bd7f;
+    --mint-600: #3a9e64;
+    --mint-700: #2a7a4d;
+    --mint-800: #1d5a39;
+    --mint-900: #0f3823;
+    --text-deep: #0f3823;
+    --text-main: #1d5a39;
+    --text-soft: #4a8a68;
+    --text-faint: #7aab8c;
+    --shadow-sm: 0 2px 8px -2px rgba(42, 122, 77, 0.1);
+    --shadow-md: 0 8px 24px -8px rgba(42, 122, 77, 0.16);
+    --shadow-lg: 0 16px 40px -14px rgba(42, 122, 77, 0.24);
+    --radius-sm: 16px;
+    --radius-md: 22px;
+    --radius-lg: 28px;
+    --radius-xl: 36px;
+    --radius-full: 9999px;
+    --ease: cubic-bezier(0.16, 1, 0.3, 1);
+    --ease-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
+}
 
-        * {
-            -webkit-tap-highlight-color: transparent;
-        }
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+}
 
-        button, a, .game-capsule {
-            -webkit-tap-highlight-color: transparent;
-            outline: none;
-        }
+html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+}
 
-        button:focus, a:focus, .game-capsule:focus {
-            outline: none;
-        }
+body {
+    font-family: 'Inter', 'Space Grotesk', system-ui, -apple-system, sans-serif;
+    min-height: 100vh;
+    min-height: 100dvh;
+    color: var(--text-deep);
+    background: linear-gradient(180deg, #eefaf0 0%, #e0f5e6 100%);
+    overflow-x: hidden;
+    position: relative;
+    padding: max(1.5rem, env(safe-area-inset-top)) 1rem max(2.5rem, env(safe-area-inset-bottom));
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overscroll-behavior-y: none;
+}
 
-        body {
-            background: linear-gradient(135deg, #e2f0e0 0%, #caebcc 100%);
-            font-family: 'Inter', 'Space Grotesk', system-ui, -apple-system, sans-serif;
-            min-height: 100vh;
-            padding: 2rem 1.5rem;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            color: #1a3f2c;
-        }
+body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    background:
+        radial-gradient(ellipse 80% 50% at 50% 0%, rgba(255, 255, 255, 0.9) 0%, transparent 55%),
+        radial-gradient(ellipse 60% 40% at 0% 100%, rgba(163, 228, 184, 0.4) 0%, transparent 60%),
+        radial-gradient(ellipse 60% 40% at 100% 90%, rgba(201, 240, 214, 0.5) 0%, transparent 60%);
+}
 
-        /* ===== 个人资讯卡片 ===== */
-        .profile-card {
-            background: rgba(255, 255, 255, 0.78);
-            backdrop-filter: blur(14px);
-            border-radius: 2.5rem;
-            padding: 2.2rem 2rem;
-            margin-bottom: 2.5rem;
-            border: 1px solid rgba(140, 190, 120, 0.5);
-            box-shadow: 0 20px 35px rgba(60, 80, 45, 0.1);
-            transition: all 0.3s ease;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-        }
+/* 桌面端粒子画布 */
+#dew-canvas {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 1;
+    display: none;
+    opacity: 0.85;
+}
 
-        .profile-card:hover {
-            background: rgba(255, 255, 255, 0.88);
-            border-color: rgba(110, 170, 90, 0.7);
-        }
+@media (min-width: 768px) and (prefers-reduced-motion: no-preference) {
+    #dew-canvas { display: block; }
+}
 
-        .avatar-container {
-            width: 120px;
-            height: 120px;
-            margin: 0 auto 1.2rem auto;
-            border-radius: 50%;
-            overflow: hidden;
-            box-shadow: 0 8px 18px rgba(60, 80, 45, 0.15);
-            border: 3px solid rgba(255,255,240,0.7);
-            background: #c8e0bc;
-        }
+.stage {
+    position: relative;
+    z-index: 2;
+    max-width: 1100px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    /* 给倾斜留出透视空间 */
+    perspective: 1600px;
+    perspective-origin: 50% 50%;
+}
 
-        .avatar-img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
+/* ============================================================
+   玻璃卡片 —— 支持 3D 倾斜（transform 由 JS 驱动）
+   ============================================================ */
+.glass {
+    position: relative;
+    background: linear-gradient(
+        160deg,
+        rgba(255, 255, 255, 0.85) 0%,
+        rgba(244, 253, 247, 0.7) 100%
+    );
+    border: 1px solid rgba(255, 255, 255, 0.9);
+    border-radius: var(--radius-lg);
+    box-shadow:
+        var(--shadow-md),
+        inset 0 1px 0 rgba(255, 255, 255, 1);
+    overflow: hidden;
+    /* 关键：transform 由 JS 每帧写入，CSS 不做 transform 过渡 */
+    transform-style: preserve-3d;
+    transform: translateZ(0);
+    will-change: transform;
+    transition: box-shadow 0.35s var(--ease), border-color 0.35s var(--ease);
+}
 
-        .main-name {
-            font-family: 'Space Grotesk', monospace;
-            font-size: 2.2rem;
-            font-weight: 500;
-            color: #1d5438;
-            letter-spacing: -0.5px;
-            margin-bottom: 0.5rem;
-        }
+@media (min-width: 768px) {
+    .glass {
+        backdrop-filter: blur(20px) saturate(180%);
+        -webkit-backdrop-filter: blur(20px) saturate(180%);
+        background: linear-gradient(
+            160deg,
+            rgba(255, 255, 255, 0.7) 0%,
+            rgba(244, 253, 247, 0.5) 100%
+        );
+    }
+}
 
-        .tagline {
-            font-size: 1rem;
-            font-weight: 340;
-            color: #428f62;
-            font-style: italic;
-            letter-spacing: 0.3px;
-            margin-bottom: 1.2rem;
-            border-bottom: 1px dashed #c2dfb4;
-            display: inline-block;
-            padding-bottom: 0.4rem;
-        }
+/* 顶部高光 */
+.glass::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 10%;
+    right: 10%;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 1), transparent);
+    pointer-events: none;
+    z-index: 2;
+}
 
-        .poetic-bio {
-            font-size: 0.9rem;
-            color: #3a7053;
-            line-height: 1.6;
-            margin: 1rem 0;
-        }
+/* 指针追踪光晕 */
+.glass::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: radial-gradient(
+        520px circle at var(--mx, 50%) var(--my, 50%),
+        rgba(255, 255, 255, 0.55) 0%,
+        transparent 38%
+    );
+    opacity: 0;
+    transition: opacity 0.4s var(--ease);
+    pointer-events: none;
+    z-index: 3;
+}
 
-        .mint-divider {
-            width: 60px;
-            height: 2px;
-            background: #b8d9aa;
-            margin: 1rem auto;
-            opacity: 0.6;
-        }
+.glass.is-tilting::after {
+    opacity: 1;
+}
 
-        /* ===== 游戏胶囊区域 - 按钮质感 ===== */
-        .games-section {
-            margin: 1.8rem 0 1rem;
-        }
-        .games-title {
-            font-size: 0.75rem;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            color: #5d8a6b;
-            margin-bottom: 1rem;
-            font-weight: 400;
-        }
-        .games-capsules {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 0.8rem;
-        }
+.glass.is-tilting {
+    border-color: rgba(255, 255, 255, 1);
+    box-shadow:
+        var(--shadow-lg),
+        inset 0 1px 0 rgba(255, 255, 255, 1),
+        0 0 30px -8px rgba(120, 210, 154, 0.4);
+}
 
-        .game-capsule {
-            position: relative;
-            background: linear-gradient(180deg, rgba(255, 255, 255, 0.75) 0%, rgba(240, 248, 235, 0.65) 100%);
-            border-radius: 60px;
-            padding: 0.4rem 1rem 0.4rem 0.5rem;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            text-decoration: none;
-            cursor: pointer;
-            user-select: none;
-            -webkit-user-select: none;
-            -webkit-tap-highlight-color: transparent;
-            outline: none;
-            box-shadow:
-                0 3px 0 #b0c8a4,
-                0 4px 8px rgba(80, 130, 50, 0.12),
-                inset 0 1px 0 rgba(255, 255, 255, 0.7);
-            transition: all 0.08s ease;
-            transform: translateY(0);
-        }
+/* ============================================================
+   HERO
+   ============================================================ */
+.hero {
+    border-radius: var(--radius-xl);
+    padding: 2.2rem 1.5rem 1.8rem;
+    text-align: center;
+}
 
-        .game-capsule:focus,
-        .game-capsule:active {
-            outline: none;
-        }
+@media (min-width: 768px) {
+    .hero {
+        padding: 3.5rem 2.5rem 3rem;
+    }
+}
 
-        .game-capsule:hover {
-            background: linear-gradient(180deg, rgba(230, 245, 220, 0.95) 0%, rgba(210, 235, 195, 0.9) 100%);
-            box-shadow:
-                0 3px 0 #b0c8a4,
-                0 6px 14px rgba(80, 130, 50, 0.18),
-                inset 0 1px 0 rgba(255, 255, 255, 0.8);
-            transform: translateY(-2px);
-        }
+.avatar-wrap {
+    width: 120px;
+    height: 120px;
+    margin: 0 auto 1.3rem;
+    position: relative;
+    display: grid;
+    place-items: center;
+    transform: translateZ(40px);
+}
 
-        .game-capsule:active {
-            transform: translateY(3px);
-            box-shadow:
-                0 0 0 #b0c8a4,
-                0 1px 3px rgba(80, 130, 50, 0.12),
-                inset 0 2px 5px rgba(80, 120, 50, 0.18);
-            transition: all 0.04s ease;
-        }
+@media (min-width: 768px) {
+    .avatar-wrap {
+        width: 156px;
+        height: 156px;
+        margin-bottom: 1.8rem;
+    }
+}
 
-        .game-icon-wrapper {
-            width: 28px;
-            height: 28px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-shrink: 0;
-            font-size: 16px;
-            line-height: 1;
-            pointer-events: none;
-            box-shadow: inset 0 1px 2px rgba(255, 255, 255, 0.4), 0 1px 2px rgba(0, 0, 0, 0.08);
-        }
+.avatar-wrap::before {
+    content: '';
+    position: absolute;
+    inset: -6px;
+    border-radius: 50%;
+    background: conic-gradient(
+        from 0deg,
+        rgba(163, 228, 184, 0.15),
+        rgba(82, 189, 127, 0.75),
+        rgba(201, 240, 214, 0.3),
+        rgba(82, 189, 127, 0.75),
+        rgba(163, 228, 184, 0.15)
+    );
+    animation: spin 10s linear infinite;
+    will-change: transform;
+}
 
-        .game-icon-minecraft { background: #6a8f3c; color: #fff; }
-        .game-icon-roblox { background: #e2231a; color: #fff; }
-        .game-icon-honor { background: #c8a44a; color: #fff; }
-        .game-icon-identity { background: #4a4a6a; color: #fff; }
-        .game-icon-sky { background: #7ab8d4; color: #fff; }
-        .game-icon-starrail { background: #5a4a8a; color: #fff; }
-        .game-icon-eggy { background: #f5a0b8; color: #fff; }
+@media (prefers-reduced-motion: reduce) {
+    .avatar-wrap::before { animation: none; }
+}
 
-        .game-name {
-            font-size: 0.75rem;
-            font-weight: 500;
-            color: #2d6a46;
-            pointer-events: none;
-        }
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
 
-        .quiet-footer {
-            font-size: 0.65rem;
-            color: #7aa27e;
-            margin-top: 1rem;
-            opacity: 0.8;
-        }
+.avatar-wrap::after {
+    content: '';
+    position: absolute;
+    inset: -2px;
+    border-radius: 50%;
+    background: #ffffff;
+    box-shadow:
+        0 10px 30px -8px rgba(42, 122, 77, 0.25),
+        0 0 0 5px rgba(255, 255, 255, 0.7);
+}
 
-        /* ===== 平台卡片网格 ===== */
-        .platforms-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
-            gap: 1.8rem;
-            margin-bottom: 2.5rem;
-        }
+.avatar-core {
+    position: relative;
+    z-index: 1;
+    width: 112px;
+    height: 112px;
+    border-radius: 50%;
+    overflow: hidden;
+    box-shadow: inset 0 -6px 16px rgba(163, 228, 184, 0.35);
+    transition: transform 0.5s var(--ease-bounce);
+}
 
-        .platform-card {
-            background: rgba(255, 255, 255, 0.72);
-            backdrop-filter: blur(12px);
-            border-radius: 2rem;
-            padding: 1.5rem;
-            box-shadow: 0 12px 28px rgba(60, 80, 45, 0.08);
-            transition: all 0.3s ease;
-            border: 1px solid rgba(140, 190, 120, 0.45);
-        }
+@media (min-width: 768px) {
+    .avatar-core {
+        width: 144px;
+        height: 144px;
+    }
+}
 
-        .platform-card:hover {
-            background: rgba(255, 255, 255, 0.88);
-            transform: translateY(-5px);
-            border-color: rgba(110, 170, 90, 0.7);
-        }
+.avatar-wrap:active .avatar-core {
+    transform: scale(1.05);
+}
 
-        .platform-header {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            margin-bottom: 1rem;
-            border-bottom: 2px solid rgba(130, 180, 110, 0.4);
-            padding-bottom: 0.7rem;
-        }
+.avatar-core img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
 
-        .platform-icon {
-            font-size: 2rem;
-        }
+.name {
+    font-family: 'Space Grotesk', monospace;
+    font-size: clamp(1.6rem, 7vw, 2.8rem);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1.15;
+    margin-bottom: 0.6rem;
+    background: linear-gradient(135deg,
+        #0f3823 0%,
+        #2a7a4d 35%,
+        #52bd7f 50%,
+        #2a7a4d 65%,
+        #0f3823 100%);
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+    animation: shimmer 8s ease-in-out infinite;
+    transform: translateZ(30px);
+}
 
-        .platform-name {
-            font-size: 1.2rem;
-            font-weight: 600;
-            color: #2a6a3a;
-        }
+@media (prefers-reduced-motion: reduce) {
+    .name { animation: none; }
+}
 
-        .global-nickname {
-            font-family: 'Space Grotesk', monospace;
-            font-size: 1rem;
-            font-weight: 500;
-            color: #276e46;
-            margin: 0.2rem 0 0.3rem;
-        }
+@keyframes shimmer {
+    0%, 100% { background-position: 0% center; }
+    50% { background-position: 100% center; }
+}
 
-        .sunlight-tag {
-            font-size: 0.7rem;
-            color: #4f8568;
-            border-left: 2px solid #b8d5aa;
-            padding-left: 0.6rem;
-            margin: 0.3rem 0 0.8rem;
-        }
+.tagline {
+    font-size: 0.88rem;
+    font-style: italic;
+    font-weight: 400;
+    color: var(--text-soft);
+    letter-spacing: 0.04em;
+    margin-bottom: 1.4rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    transform: translateZ(20px);
+}
 
-        .account-list {
-            display: flex;
-            flex-direction: column;
-            gap: 0.7rem;
-            margin: 0.5rem 0;
-        }
+.tagline::before,
+.tagline::after {
+    content: '';
+    width: 20px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--mint-400));
+}
 
-        .account-item {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            flex-wrap: wrap;
-            padding: 0.4rem 0;
-            border-bottom: 1px dashed rgba(120, 150, 100, 0.25);
-        }
+.tagline::after {
+    background: linear-gradient(90deg, var(--mint-400), transparent);
+}
 
-        .account-label {
-            font-size: 0.75rem;
-            font-weight: 500;
-            color: #3a7253;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-        }
+@media (min-width: 768px) {
+    .tagline {
+        font-size: 1rem;
+        margin-bottom: 1.8rem;
+    }
+}
 
-        .account-link {
-            font-family: monospace;
-            font-size: 0.72rem;
-            color: #2a6740;
-            background: rgba(160, 200, 140, 0.2);
-            padding: 0.2rem 0.6rem;
-            border-radius: 30px;
-            text-decoration: none;
-            transition: all 0.15s ease;
-            word-break: break-all;
-            max-width: 60%;
-            text-align: right;
-            -webkit-tap-highlight-color: transparent;
-            box-shadow: 0 1px 2px rgba(80, 130, 50, 0.08);
-        }
+.divider {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin: 1.2rem auto;
+}
 
-        .account-link:hover {
-            background: #c2e0b4;
-            color: #154e2e;
-            transform: translateY(-1px);
-            box-shadow: 0 3px 6px rgba(80, 130, 50, 0.15);
-        }
+.divider .line {
+    width: 50px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--mint-300));
+}
 
-        .account-link:active {
-            transform: translateY(1px);
-            box-shadow: inset 0 2px 4px rgba(80, 130, 50, 0.15);
-        }
+.divider .line:last-child {
+    background: linear-gradient(90deg, var(--mint-300), transparent);
+}
 
-        .desc-note {
-            font-size: 0.65rem;
-            color: #7aa581;
-            margin-top: 0.8rem;
-            text-align: right;
-            font-style: italic;
-        }
+.divider .drop {
+    width: 7px;
+    height: 7px;
+    border-radius: 50% 50% 50% 0;
+    background: linear-gradient(135deg, var(--mint-300), var(--mint-500));
+    transform: rotate(-45deg);
+    box-shadow: 0 0 10px rgba(82, 189, 127, 0.5);
+    animation: bob 3s ease-in-out infinite;
+}
 
-        /* ===== 总结卡片 ===== */
-        .summary-card {
-            background: rgba(255, 255, 255, 0.8);
-            backdrop-filter: blur(12px);
-            border-radius: 2rem;
-            padding: 1.8rem 2rem;
-            border: 1px solid rgba(130, 180, 110, 0.55);
-        }
+@media (prefers-reduced-motion: reduce) {
+    .divider .drop { animation: none; }
+}
 
-        .summary-title {
-            font-size: 1rem;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            color: #358551;
-            margin-bottom: 1.2rem;
-            font-weight: 500;
-            text-align: center;
-        }
+@keyframes bob {
+    0%, 100% { transform: rotate(-45deg) translateY(0); }
+    50% { transform: rotate(-45deg) translateY(-4px); }
+}
 
-        .summary-badge-grid {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.8rem;
-            justify-content: center;
-            margin-bottom: 1.2rem;
-        }
+.bio {
+    font-size: 0.86rem;
+    line-height: 1.95;
+    color: var(--text-main);
+    letter-spacing: 0.02em;
+    max-width: 460px;
+    margin: 0 auto 1.6rem;
+    transform: translateZ(18px);
+}
 
-        .summary-badge {
-            background: linear-gradient(180deg, rgba(160, 210, 140, 0.35) 0%, rgba(140, 195, 120, 0.3) 100%);
-            padding: 0.45rem 1.1rem;
-            border-radius: 60px;
-            font-size: 0.75rem;
-            color: #2d6042;
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            -webkit-tap-highlight-color: transparent;
-            box-shadow:
-                0 2px 0 #b0c8a4,
-                0 3px 6px rgba(80, 130, 50, 0.1),
-                inset 0 1px 0 rgba(255, 255, 255, 0.5);
-            transition: all 0.08s ease;
-            transform: translateY(0);
-        }
+@media (min-width: 768px) {
+    .bio {
+        font-size: 0.94rem;
+        line-height: 2.1;
+    }
+}
 
-        .summary-badge:hover {
-            background: linear-gradient(180deg, rgba(180, 225, 160, 0.5) 0%, rgba(160, 210, 140, 0.45) 100%);
-            transform: translateY(-1px);
-            box-shadow:
-                0 2px 0 #b0c8a4,
-                0 5px 10px rgba(80, 130, 50, 0.16),
-                inset 0 1px 0 rgba(255, 255, 255, 0.6);
-        }
+.bio .whisper {
+    display: block;
+    margin-top: 0.5rem;
+    font-size: 0.75rem;
+    color: var(--text-faint);
+    letter-spacing: 0.1em;
+}
 
-        .summary-badge:active {
-            transform: translateY(2px);
-            box-shadow:
-                0 0 0 #b0c8a4,
-                0 1px 2px rgba(80, 130, 50, 0.1),
-                inset 0 2px 4px rgba(80, 130, 50, 0.12);
-        }
+/* ============================================================
+   游戏胶囊
+   ============================================================ */
+.zone-title {
+    font-size: 0.62rem;
+    text-transform: uppercase;
+    letter-spacing: 0.35em;
+    color: var(--text-faint);
+    font-weight: 600;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.8rem;
+    transform: translateZ(15px);
+}
 
-        .core-quote {
-            text-align: center;
-            font-size: 0.75rem;
-            color: #4f8568;
-            border-top: 1px solid rgba(130, 180, 110, 0.3);
-            padding-top: 1rem;
-            margin-top: 0.5rem;
-        }
+.zone-title::before,
+.zone-title::after {
+    content: '';
+    width: 28px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--mint-300));
+}
 
-        .global-footer {
-            text-align: center;
-            margin-top: 2rem;
-            font-size: 0.65rem;
-            color: #61916e;
-            opacity: 0.7;
-            font-family: monospace;
-        }
+.zone-title::after {
+    background: linear-gradient(90deg, var(--mint-300), transparent);
+}
 
-        @media (max-width: 680px) {
-            body {
-                padding: 1rem;
-            }
-            .main-name {
-                font-size: 1.6rem;
-            }
-            .profile-card {
-                padding: 1.5rem;
-            }
-            .account-item {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 5px;
-            }
-            .account-link {
-                max-width: 100%;
-                text-align: left;
-            }
-            .platforms-grid {
-                grid-template-columns: 1fr;
-            }
-            .game-capsule {
-                padding: 0.3rem 0.8rem 0.3rem 0.4rem;
-            }
-            .game-icon-wrapper {
-                width: 24px;
-                height: 24px;
-                font-size: 14px;
-            }
-            .game-name {
-                font-size: 0.65rem;
-            }
-        }
-    </style>
+.capsule-wrap {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.5rem;
+    transform: translateZ(25px);
+}
+
+@media (min-width: 768px) {
+    .capsule-wrap { gap: 0.65rem; }
+}
+
+.capsule {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 0.42rem 0.95rem 0.42rem 0.42rem;
+    background: linear-gradient(180deg, #ffffff 0%, #f4fdf7 100%);
+    border: 1px solid rgba(255, 255, 255, 0.9);
+    border-radius: var(--radius-full);
+    text-decoration: none;
+    cursor: pointer;
+    -webkit-user-select: none;
+    user-select: none;
+    box-shadow:
+        0 2px 0 rgba(168, 220, 185, 0.85),
+        0 4px 12px -4px rgba(42, 122, 77, 0.12),
+        inset 0 1px 0 rgba(255, 255, 255, 1);
+    transition: transform 0.15s var(--ease-bounce), box-shadow 0.2s var(--ease);
+    transform: translateZ(0);
+}
+
+@media (min-width: 768px) {
+    .capsule {
+        padding: 0.5rem 1.15rem 0.5rem 0.5rem;
+        gap: 9px;
+    }
+}
+
+.capsule:active {
+    transform: translateY(2px) scale(0.97);
+    box-shadow:
+        0 0 0 rgba(168, 220, 185, 0.85),
+        0 1px 4px rgba(42, 122, 77, 0.12),
+        inset 0 2px 5px rgba(120, 210, 154, 0.15);
+    transition: transform 0.08s ease, box-shadow 0.08s ease;
+}
+
+@media (hover: hover) and (min-width: 768px) {
+    .capsule:hover {
+        transform: translateY(-3px);
+        box-shadow:
+            0 2px 0 rgba(168, 220, 185, 0.85),
+            0 10px 22px -6px rgba(42, 122, 77, 0.22),
+            0 0 18px -4px rgba(120, 210, 154, 0.45),
+            inset 0 1px 0 rgba(255, 255, 255, 1);
+    }
+}
+
+.capsule-icon {
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    font-size: 13px;
+    line-height: 1;
+    flex-shrink: 0;
+    box-shadow:
+        inset 0 2px 4px rgba(255, 255, 255, 0.4),
+        0 2px 6px rgba(42, 122, 77, 0.18);
+    transition: transform 0.3s var(--ease-bounce);
+}
+
+@media (min-width: 768px) {
+    .capsule-icon {
+        width: 30px;
+        height: 30px;
+        font-size: 15px;
+    }
+}
+
+.capsule:active .capsule-icon {
+    transform: scale(1.12) rotate(-8deg);
+}
+
+.capsule-label {
+    font-size: 0.7rem;
+    font-weight: 600;
+    color: var(--text-main);
+    letter-spacing: 0.02em;
+    white-space: nowrap;
+}
+
+@media (min-width: 768px) {
+    .capsule-label {
+        font-size: 0.76rem;
+    }
+}
+
+.ci-mc { background: linear-gradient(145deg, #a3e4b8, #52bd7f); color: #0f3823; }
+.ci-rb { background: linear-gradient(145deg, #ffc0b8, #f08078); color: #7a1a14; }
+.ci-hk { background: linear-gradient(145deg, #ffe8a0, #f5c860); color: #6a4a10; }
+.ci-id { background: linear-gradient(145deg, #d0c8f0, #9a90d8); color: #2a1a5a; }
+.ci-sk { background: linear-gradient(145deg, #b0e4f2, #70c0e0); color: #0a4a6a; }
+.ci-sr { background: linear-gradient(145deg, #d8c8ff, #a898e8); color: #2a1a5a; }
+.ci-eg { background: linear-gradient(145deg, #ffd0e0, #f5a0c0); color: #7a2a4a; }
+
+/* ============================================================
+   薄荷气泡标签
+   ============================================================ */
+.bubbles {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.45rem;
+    margin-top: 1.5rem;
+    transform: translateZ(20px);
+}
+
+@media (min-width: 768px) {
+    .bubbles {
+        gap: 0.55rem;
+        margin-top: 2rem;
+    }
+}
+
+.bubble {
+    padding: 0.32rem 0.85rem;
+    background: rgba(255, 255, 255, 0.75);
+    border: 1px solid rgba(201, 240, 214, 0.9);
+    border-radius: var(--radius-full);
+    font-size: 0.66rem;
+    font-weight: 500;
+    color: var(--mint-700);
+    letter-spacing: 0.03em;
+    transition: transform 0.2s var(--ease-bounce);
+}
+
+@media (min-width: 768px) {
+    .bubble {
+        padding: 0.4rem 1.05rem;
+        font-size: 0.72rem;
+    }
+}
+
+.bubble:active {
+    transform: scale(0.95);
+}
+
+@media (hover: hover) and (min-width: 768px) {
+    .bubble:hover {
+        background: #ffffff;
+        border-color: var(--mint-300);
+        color: var(--mint-800);
+        transform: translateY(-2px);
+        box-shadow: 0 6px 16px -4px rgba(120, 210, 154, 0.35);
+    }
+}
+
+.hero-foot {
+    font-size: 0.62rem;
+    color: var(--text-faint);
+    margin-top: 1.2rem;
+    letter-spacing: 0.13em;
+    opacity: 0.75;
+    transform: translateZ(12px);
+}
+
+/* ============================================================
+   平台网格
+   ============================================================ */
+.grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+}
+
+@media (min-width: 640px) {
+    .grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1.2rem;
+    }
+}
+
+@media (min-width: 1024px) {
+    .grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1.4rem;
+    }
+}
+
+.platform {
+    padding: 1.3rem 1.2rem 1.1rem;
+    border-radius: var(--radius-md);
+    opacity: 0;
+    animation: rise 0.6s var(--ease) forwards;
+    animation-delay: calc(var(--d, 0) * 0.06s);
+}
+
+@media (min-width: 768px) {
+    .platform {
+        padding: 1.7rem 1.6rem 1.4rem;
+        border-radius: var(--radius-lg);
+    }
+}
+
+@keyframes rise {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .platform {
+        opacity: 1;
+        animation: none;
+    }
+}
+
+.platform:nth-child(1) { --d: 0; }
+.platform:nth-child(2) { --d: 1; }
+.platform:nth-child(3) { --d: 2; }
+.platform:nth-child(4) { --d: 3; }
+.platform:nth-child(5) { --d: 4; }
+.platform:nth-child(6) { --d: 5; }
+.platform:nth-child(7) { --d: 6; }
+
+.platform-head {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 0.9rem;
+    padding-bottom: 0.8rem;
+    border-bottom: 1px solid rgba(201, 240, 214, 0.7);
+    transform: translateZ(15px);
+}
+
+.platform-emoji {
+    font-size: 1.8rem;
+    line-height: 1;
+    filter: drop-shadow(0 3px 6px rgba(82, 189, 127, 0.2));
+}
+
+@media (min-width: 768px) {
+    .platform-emoji {
+        font-size: 2.1rem;
+    }
+}
+
+.platform-title {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--text-deep);
+    letter-spacing: -0.01em;
+}
+
+@media (min-width: 768px) {
+    .platform-title {
+        font-size: 1.2rem;
+    }
+}
+
+.platform-handle {
+    font-family: 'Space Grotesk', monospace;
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: var(--mint-600);
+    margin: 0.15rem 0 0.2rem;
+}
+
+.platform-motto {
+    font-size: 0.66rem;
+    font-style: italic;
+    color: var(--text-faint);
+    border-left: 2px solid var(--mint-300);
+    padding-left: 0.7rem;
+    margin-bottom: 0.9rem;
+    letter-spacing: 0.02em;
+    transform: translateZ(10px);
+}
+
+@media (min-width: 768px) {
+    .platform-motto {
+        font-size: 0.7rem;
+    }
+}
+
+.accounts {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    margin-bottom: 0.6rem;
+    transform: translateZ(12px);
+}
+
+.account {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    padding: 0.35rem 0;
+    border-bottom: 1px dashed rgba(201, 240, 214, 0.6);
+}
+
+.account:last-child {
+    border-bottom: none;
+}
+
+@media (max-width: 480px) {
+    .account {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 6px;
+    }
+}
+
+.account-label {
+    font-size: 0.72rem;
+    font-weight: 500;
+    color: var(--text-main);
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    white-space: nowrap;
+}
+
+.account-link {
+    font-family: 'Space Grotesk', monospace;
+    font-size: 0.7rem;
+    font-weight: 600;
+    color: var(--mint-700);
+    background: linear-gradient(180deg, #f4fdf7, #e6f9ec);
+    padding: 0.3rem 0.85rem;
+    border-radius: var(--radius-full);
+    text-decoration: none;
+    border: 1px solid rgba(201, 240, 214, 0.9);
+    transition: transform 0.15s var(--ease-bounce), background 0.2s, color 0.2s;
+    word-break: break-all;
+    max-width: 60%;
+    text-align: right;
+    box-shadow:
+        0 1px 4px -1px rgba(42, 122, 77, 0.08),
+        inset 0 1px 0 rgba(255, 255, 255, 1);
+}
+
+@media (max-width: 480px) {
+    .account-link {
+        max-width: 100%;
+        width: 100%;
+        text-align: center;
+        padding: 0.42rem 0.85rem;
+    }
+}
+
+.account-link:active {
+    transform: scale(0.96);
+    background: linear-gradient(180deg, var(--mint-400), var(--mint-500));
+    color: #ffffff;
+    border-color: var(--mint-500);
+    transition: all 0.1s ease;
+}
+
+@media (hover: hover) and (min-width: 768px) {
+    .account-link:hover {
+        background: linear-gradient(180deg, var(--mint-400), var(--mint-500));
+        color: #ffffff;
+        border-color: var(--mint-500);
+        transform: translateY(-2px);
+        box-shadow:
+            0 6px 16px -4px rgba(82, 189, 127, 0.45),
+            0 0 16px -4px rgba(120, 210, 154, 0.55);
+    }
+}
+
+.platform-note {
+    font-size: 0.62rem;
+    color: var(--text-faint);
+    text-align: right;
+    font-style: italic;
+    letter-spacing: 0.03em;
+    opacity: 0.75;
+    margin-top: 0.3rem;
+    transform: translateZ(8px);
+}
+
+/* ============================================================
+   总结卡片
+   ============================================================ */
+.summary {
+    padding: 1.6rem 1.2rem 1.4rem;
+    border-radius: var(--radius-lg);
+    opacity: 0;
+    animation: rise 0.6s var(--ease) 0.4s forwards;
+}
+
+@media (min-width: 768px) {
+    .summary {
+        padding: 2.2rem 2rem 1.8rem;
+        border-radius: var(--radius-xl);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .summary {
+        opacity: 1;
+        animation: none;
+    }
+}
+
+.summary-title {
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.28em;
+    color: var(--mint-700);
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 1.3rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.8rem;
+    transform: translateZ(15px);
+}
+
+@media (min-width: 768px) {
+    .summary-title {
+        font-size: 0.85rem;
+        letter-spacing: 0.32em;
+        margin-bottom: 1.6rem;
+    }
+}
+
+.summary-title::before,
+.summary-title::after {
+    content: '';
+    width: 30px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--mint-300));
+}
+
+.summary-title::after {
+    background: linear-gradient(90deg, var(--mint-300), transparent);
+}
+
+.badge-row {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.45rem;
+    margin-bottom: 1rem;
+    transform: translateZ(12px);
+}
+
+@media (min-width: 768px) {
+    .badge-row {
+        gap: 0.65rem;
+        margin-bottom: 1.3rem;
+    }
+}
+
+.badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 0.4rem 0.9rem;
+    background: linear-gradient(180deg, #ffffff, #f4fdf7);
+    border: 1px solid rgba(201, 240, 214, 0.9);
+    border-radius: var(--radius-full);
+    font-size: 0.68rem;
+    font-weight: 600;
+    color: var(--mint-800);
+    text-decoration: none;
+    box-shadow:
+        0 2px 0 rgba(168, 220, 185, 0.6),
+        0 3px 10px -3px rgba(42, 122, 77, 0.1),
+        inset 0 1px 0 rgba(255, 255, 255, 1);
+    transition: transform 0.15s var(--ease-bounce), box-shadow 0.2s;
+}
+
+@media (min-width: 768px) {
+    .badge {
+        padding: 0.48rem 1.1rem;
+        font-size: 0.73rem;
+        gap: 7px;
+    }
+}
+
+.badge:active {
+    transform: translateY(2px) scale(0.97);
+    box-shadow:
+        0 0 0 rgba(168, 220, 185, 0.6),
+        0 1px 3px rgba(42, 122, 77, 0.1),
+        inset 0 2px 5px rgba(120, 210, 154, 0.15);
+    transition: all 0.08s ease;
+}
+
+@media (hover: hover) and (min-width: 768px) {
+    .badge:hover {
+        transform: translateY(-3px);
+        box-shadow:
+            0 2px 0 rgba(168, 220, 185, 0.6),
+            0 10px 22px -6px rgba(82, 189, 127, 0.35),
+            0 0 18px -4px rgba(120, 210, 154, 0.45),
+            inset 0 1px 0 rgba(255, 255, 255, 1);
+        border-color: var(--mint-300);
+    }
+}
+
+.summary-quote {
+    text-align: center;
+    font-size: 0.72rem;
+    color: var(--text-soft);
+    letter-spacing: 0.06em;
+    line-height: 2;
+    padding-top: 1.2rem;
+    border-top: 1px solid rgba(201, 240, 214, 0.7);
+    margin-top: 0.5rem;
+    transform: translateZ(10px);
+}
+
+@media (min-width: 768px) {
+    .summary-quote {
+        font-size: 0.78rem;
+        padding-top: 1.4rem;
+    }
+}
+
+.summary-quote .accent {
+    color: var(--mint-700);
+    font-weight: 700;
+    letter-spacing: 0.08em;
+}
+
+.foot {
+    text-align: center;
+    font-size: 0.62rem;
+    color: var(--text-faint);
+    letter-spacing: 0.13em;
+    opacity: 0.7;
+    font-family: 'Space Grotesk', monospace;
+    margin-top: 0.8rem;
+    padding-bottom: 0.5rem;
+}
+
+@media (hover: none) {
+    .capsule:hover,
+    .badge:hover,
+    .account-link:hover,
+    .bubble:hover {
+        transform: none;
+    }
+}
+
+@media (max-width: 767px) {
+    .glass {
+        backdrop-filter: none;
+        -webkit-backdrop-filter: none;
+        background: linear-gradient(
+            160deg,
+            rgba(255, 255, 255, 0.95) 0%,
+            rgba(244, 253, 247, 0.88) 100%
+        );
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .glass {
+        transform: none !important;
+        will-change: auto;
+    }
+}
+</style>
 </head>
 <body>
-<div class="container">
-    
-    <div class="profile-card" id="profileCard">
-        <div class="avatar-container" id="avatarContainer">
-            <img class="avatar-img" src="IMG_20260426_004811_408.webp" alt="LWH头像" onerror="this.src='https://placehold.co/120x120/c8e0bc/2a6a3a?text=🌿'">
+
+<canvas id="dew-canvas" aria-hidden="true"></canvas>
+
+<main class="stage">
+
+    <!-- HERO -->
+    <section class="glass hero">
+        <div class="avatar-wrap">
+            <div class="avatar-core">
+                <img src="IMG_20260426_004811_408.webp"
+                     alt="LWH 头像"
+                     loading="eager"
+                     decoding="async"
+                     onerror="this.src='https://placehold.co/144x144/e6f9ec/2a7a4d?text=%F0%9F%8C%BF'">
+            </div>
         </div>
-        <div class="main-name">꧁LWHᝰgs123꧂</div>
-        <div class="tagline">Sunlight, a quiet kind of light.</div>
-        <div class="mint-divider"></div>
-        <div class="poetic-bio">
+
+        <h1 class="name">꧁LWHᝰgs123꧂</h1>
+        <p class="tagline">Sunlight, a quiet kind of light.</p>
+
+        <div class="divider" aria-hidden="true">
+            <span class="line"></span>
+            <span class="drop"></span>
+            <span class="line"></span>
+        </div>
+
+        <p class="bio">
             薄荷绿的影子落在指尖上。<br>
             安静，但不空洞。<br>
-            像薄荷一样存在，不吵，但记得住。<br>
-            人生不到三万天。
+            像薄荷一样存在，不吵，但记得住。
+            <span class="whisper">人生不到三万天。</span>
+        </p>
+
+        <div class="zone-title">游戏时光</div>
+        <div class="capsule-wrap">
+            <a href="#" class="capsule"><span class="capsule-icon ci-mc">⛏</span><span class="capsule-label">Minecraft</span></a>
+            <a href="#" class="capsule"><span class="capsule-icon ci-rb">🎲</span><span class="capsule-label">Roblox</span></a>
+            <a href="#" class="capsule"><span class="capsule-icon ci-hk">👑</span><span class="capsule-label">Honor of Kings</span></a>
+            <a href="#" class="capsule"><span class="capsule-icon ci-id">🕯</span><span class="capsule-label">第5人格</span></a>
+            <a href="#" class="capsule"><span class="capsule-icon ci-sk">☁️</span><span class="capsule-label">Sky 光遇</span></a>
+            <a href="#" class="capsule"><span class="capsule-icon ci-sr">🌌</span><span class="capsule-label">星穹铁道</span></a>
+            <a href="#" class="capsule"><span class="capsule-icon ci-eg">🥚</span><span class="capsule-label">蛋仔派对</span></a>
         </div>
 
-        <div class="games-section">
-            <div class="games-title">🎮 游戏时光 · 薄荷玩家 🎮</div>
-            <div class="games-capsules">
-                <a href="#" class="game-capsule" target="_blank">
-                    <span class="game-icon-wrapper game-icon-minecraft">⛏</span>
-                    <span class="game-name">Minecraft</span>
-                </a>
-                <a href="#" class="game-capsule" target="_blank">
-                    <span class="game-icon-wrapper game-icon-roblox">🎲</span>
-                    <span class="game-name">Roblox</span>
-                </a>
-                <a href="#" class="game-capsule" target="_blank">
-                    <span class="game-icon-wrapper game-icon-honor">👑</span>
-                    <span class="game-name">Honor of Kings</span>
-                </a>
-                <a href="#" class="game-capsule" target="_blank">
-                    <span class="game-icon-wrapper game-icon-identity">🕯</span>
-                    <span class="game-name">第5人格</span>
-                </a>
-                <a href="#" class="game-capsule" target="_blank">
-                    <span class="game-icon-wrapper game-icon-sky">☁️</span>
-                    <span class="game-name">Sky 光遇</span>
-                </a>
-                <a href="#" class="game-capsule" target="_blank">
-                    <span class="game-icon-wrapper game-icon-starrail">🌌</span>
-                    <span class="game-name">星穹铁道</span>
-                </a>
-                <a href="#" class="game-capsule" target="_blank">
-                    <span class="game-icon-wrapper game-icon-eggy">🥚</span>
-                    <span class="game-name">蛋仔派对</span>
-                </a>
+        <div class="bubbles">
+            <span class="bubble">✦ 影像叙事者</span>
+            <span class="bubble">🌿 薄荷色灵魂</span>
+            <span class="bubble">🎬 拍视频的人</span>
+            <span class="bubble">🐾 宠物星球居民</span>
+            <span class="bubble">🎮 多元玩家</span>
+        </div>
+
+        <p class="hero-foot">◌ 文艺感是安静的棱镜 ◌</p>
+    </section>
+
+    <!-- 平台网格 -->
+    <section class="grid">
+
+        <article class="glass platform">
+            <div class="platform-head">
+                <span class="platform-emoji">🎬</span>
+                <div>
+                    <h2 class="platform-title">YouTube</h2>
+                    <p class="platform-handle">꧁LWHᝰgs123꧂</p>
+                </div>
             </div>
-        </div>
-        
-        <div class="persona-tags">
-            <span class="tag">✦ 影像叙事者</span>
-            <span class="tag">🌿 薄荷色灵魂</span>
-            <span class="tag">🎬 拍视频的人</span>
-            <span class="tag">🐾 宠物星球居民</span>
-            <span class="tag">🎮 多元玩家</span>
-        </div>
-        <div class="quiet-footer">
-            ◌ 文艺感是安静的棱镜 ◌
-        </div>
-    </div>
-
-    <div class="platforms-grid">
-        <div class="platform-card">
-            <div class="platform-header">
-                <span class="platform-icon">🎬</span>
-                <span class="platform-name">YouTube</span>
+            <p class="platform-motto">Sunlight, a quiet kind of light.</p>
+            <div class="accounts">
+                <div class="account"><span class="account-label">🎬 主频道</span><a class="account-link" href="https://www.youtube.com/@Gausan123" target="_blank" rel="noopener">@Gausan123</a></div>
+                <div class="account"><span class="account-label">📼 旧频道</span><a class="account-link" href="https://www.youtube.com/@tiantian124" target="_blank" rel="noopener">@tiantian124</a></div>
+                <div class="account"><span class="account-label">🎥 Vlog</span><a class="account-link" href="https://www.youtube.com/@gauting256" target="_blank" rel="noopener">@gauting256</a></div>
             </div>
-            <div class="global-nickname">꧁LWHᝰgs123꧂</div>
-            <div class="sunlight-tag">Sunlight, a quiet kind of light.</div>
-            <div class="account-list">
-                <div class="account-item"><span class="account-label">🎬 主频道</span><a class="account-link" href="https://www.youtube.com/@Gausan123" target="_blank">@Gausan123</a></div>
-                <div class="account-item"><span class="account-label">📼 旧频道</span><a class="account-link" href="https://www.youtube.com/@tiantian124" target="_blank">@tiantian124</a></div>
-                <div class="account-item"><span class="account-label">🎥 Vlog频道</span><a class="account-link" href="https://www.youtube.com/@gauting256" target="_blank">@gauting256</a></div>
+            <p class="platform-note">影像叙事 · 安静记录每一帧</p>
+        </article>
+
+        <article class="glass platform">
+            <div class="platform-head">
+                <span class="platform-emoji">📸</span>
+                <div><h2 class="platform-title">Instagram</h2></div>
             </div>
-            <div class="desc-note">影像叙事 · 安静记录每一帧</div>
-        </div>
-
-        <div class="platform-card">
-            <div class="platform-header"><span class="platform-icon">📸</span><span class="platform-name">Instagram</span></div>
-            <div class="sunlight-tag">Sunlight, a quiet kind of light.</div>
-            <div class="account-list">
-                <div class="account-item"><span class="account-label">🐾 宠物账号</span><a class="account-link" href="https://www.instagram.com/gish_dog_hamster" target="_blank">@gish_dog_hamster</a></div>
+            <p class="platform-motto">Sunlight, a quiet kind of light.</p>
+            <div class="accounts">
+                <div class="account"><span class="account-label">🐾 宠物账号</span><a class="account-link" href="https://www.instagram.com/gish_dog_hamster" target="_blank" rel="noopener">@gish_dog_hamster</a></div>
             </div>
-            <div class="desc-note">薄荷色日常 · 爪印与光影</div>
-        </div>
+            <p class="platform-note">薄荷色日常 · 爪印与光影</p>
+        </article>
 
-        <div class="platform-card">
-            <div class="platform-header"><span class="platform-icon">🧵</span><span class="platform-name">Threads</span></div>
-            <div class="sunlight-tag">Sunlight, a quiet kind of light.</div>
-            <div class="account-list">
-                <div class="account-item"><span class="account-label">🐾 宠物账号</span><a class="account-link" href="https://www.threads.com/@gish_dog_hamster" target="_blank">@gish_dog_hamster</a></div>
+        <article class="glass platform">
+            <div class="platform-head">
+                <span class="platform-emoji">🧵</span>
+                <div><h2 class="platform-title">Threads</h2></div>
             </div>
-            <div class="desc-note">畅所欲言 · 安静陪伴</div>
-        </div>
-
-        <div class="platform-card">
-            <div class="platform-header"><span class="platform-icon">🎵</span><span class="platform-name">抖音 · 中国版</span></div>
-            <div class="sunlight-tag">Sunlight, a quiet kind of light.</div>
-            <div class="account-list">
-                <div class="account-item"><span class="account-label">🎬 拍摄账号</span><a class="account-link" href="https://v.douyin.com/Lq1ClGr3Wxg/" target="_blank">高山123</a></div>
+            <p class="platform-motto">Sunlight, a quiet kind of light.</p>
+            <div class="accounts">
+                <div class="account"><span class="account-label">🐾 宠物账号</span><a class="account-link" href="https://www.threads.com/@gish_dog_hamster" target="_blank" rel="noopener">@gish_dog_hamster</a></div>
             </div>
-            <div class="desc-note">薄荷节奏 · 安静律动</div>
+            <p class="platform-note">畅所欲言 · 安静陪伴</p>
+        </article>
+
+        <article class="glass platform">
+            <div class="platform-head">
+                <span class="platform-emoji">🎵</span>
+                <div><h2 class="platform-title">抖音 · 中国版</h2></div>
+            </div>
+            <p class="platform-motto">Sunlight, a quiet kind of light.</p>
+            <div class="accounts">
+                <div class="account"><span class="account-label">🎬 拍摄账号</span><a class="account-link" href="https://v.douyin.com/Lq1ClGr3Wxg/" target="_blank" rel="noopener">高山123</a></div>
+            </div>
+            <p class="platform-note">薄荷节奏 · 安静律动</p>
+        </article>
+
+        <article class="glass platform">
+            <div class="platform-head">
+                <span class="platform-emoji">🪄</span>
+                <div>
+                    <h2 class="platform-title">Bilibili</h2>
+                    <p class="platform-handle">LWHgs123</p>
+                </div>
+            </div>
+            <p class="platform-motto">Sunlight, a quiet kind of light.</p>
+            <div class="accounts">
+                <div class="account"><span class="account-label">🎬 拍摄用途</span><a class="account-link" href="https://b23.tv/o7qNaU5" target="_blank" rel="noopener">LWHgs123的空间</a></div>
+            </div>
+            <p class="platform-note">创作存档 · 灵感容器</p>
+        </article>
+
+        <article class="glass platform">
+            <div class="platform-head">
+                <span class="platform-emoji">📘</span>
+                <div>
+                    <h2 class="platform-title">Facebook</h2>
+                    <p class="platform-handle">꧁LWHᝰgs123꧂</p>
+                </div>
+            </div>
+            <p class="platform-motto">Sunlight, a quiet kind of light.</p>
+            <div class="accounts">
+                <div class="account"><span class="account-label">🌿 个人账号</span><a class="account-link" href="https://www.facebook.com/share/1LD8UH9C6X/" target="_blank" rel="noopener">个人主页</a></div>
+            </div>
+            <p class="platform-note">温柔连接 · 日常片段</p>
+        </article>
+
+        <article class="glass platform">
+            <div class="platform-head">
+                <span class="platform-emoji">📱</span>
+                <div>
+                    <h2 class="platform-title">TikTok</h2>
+                    <p class="platform-handle">꧁LWHᝰgs123꧂</p>
+                </div>
+            </div>
+            <p class="platform-motto">Sunlight, a quiet kind of light.</p>
+            <div class="accounts">
+                <div class="account"><span class="account-label">🌿 个人账号</span><a class="account-link" href="https://www.tiktok.com/@gausan123ajk" target="_blank" rel="noopener">@gausan123ajk</a></div>
+            </div>
+            <p class="platform-note">全球视野 · 薄荷微光</p>
+        </article>
+
+    </section>
+
+    <!-- 总结 -->
+    <section class="glass summary">
+        <h2 class="summary-title">薄荷绿档案 · 全平台速览</h2>
+
+        <div class="badge-row">
+            <span class="badge">🎬 YouTube · 3</span>
+            <span class="badge">📸 Instagram · 1</span>
+            <span class="badge">🧵 Threads · 1</span>
+            <span class="badge">🎵 抖音 · 1</span>
+            <span class="badge">🪄 Bilibili · 1</span>
+            <span class="badge">📘 Facebook · 1</span>
+            <span class="badge">📱 TikTok · 1</span>
         </div>
 
-        <div class="platform-card">
-            <div class="platform-header"><span class="platform-icon">🪄</span><span class="platform-name">Bilibili</span></div>
-            <div class="global-nickname">LWHgs123</div>
-            <div class="sunlight-tag">Sunlight, a quiet kind of light.</div>
-            <div class="account-list"><div class="account-item"><span class="account-label">🎬 拍摄用途</span><a class="account-link" href="https://b23.tv/o7qNaU5" target="_blank">LWHgs123的空间</a></div></div>
-            <div class="desc-note">创作存档 · 灵感容器</div>
+        <div class="badge-row">
+            <a class="badge" href="https://www.youtube.com/@Gausan123" target="_blank" rel="noopener">▶ YouTube主</a>
+            <a class="badge" href="https://www.youtube.com/@tiantian124" target="_blank" rel="noopener">📼 YouTube旧</a>
+            <a class="badge" href="https://www.youtube.com/@gauting256" target="_blank" rel="noopener">🎥 Vlog</a>
+            <a class="badge" href="https://www.instagram.com/gish_dog_hamster" target="_blank" rel="noopener">🐾 IG宠物</a>
+            <a class="badge" href="https://www.threads.com/@gish_dog_hamster" target="_blank" rel="noopener">🧸 Threads宠物</a>
+            <a class="badge" href="https://b23.tv/o7qNaU5" target="_blank" rel="noopener">🪄 B站</a>
+            <a class="badge" href="https://www.facebook.com/share/1LD8UH9C6X/" target="_blank" rel="noopener">📘 FB</a>
+            <a class="badge" href="https://v.douyin.com/Lq1ClGr3Wxg/" target="_blank" rel="noopener">🎬 抖音</a>
+            <a class="badge" href="https://www.tiktok.com/@gausan123ajk" target="_blank" rel="noopener">📱 TikTok</a>
         </div>
 
-        <div class="platform-card">
-            <div class="platform-header"><span class="platform-icon">📘</span><span class="platform-name">Facebook</span></div>
-            <div class="global-nickname">꧁LWHᝰgs123꧂</div>
-            <div class="sunlight-tag">Sunlight, a quiet kind of light.</div>
-            <div class="account-list"><div class="account-item"><span class="account-label">🌿 个人账号</span><a class="account-link" href="https://www.facebook.com/share/1LD8UH9C6X/" target="_blank">个人主页</a></div></div>
-            <div class="desc-note">温柔连接 · 日常片段</div>
-        </div>
+        <p class="summary-quote">
+            ✦ Sunlight, a quiet kind of light. ✦<br>
+            <span class="accent">像薄荷一样存在 · 不吵但记得住</span>
+        </p>
+    </section>
 
-        <div class="platform-card">
-            <div class="platform-header"><span class="platform-icon">📱</span><span class="platform-name">TikTok</span></div>
-            <div class="global-nickname">꧁LWHᝰgs123꧂</div>
-            <div class="sunlight-tag">Sunlight, a quiet kind of light.</div>
-            <div class="account-list"><div class="account-item"><span class="account-label">🌿 个人账号</span><a class="account-link" href="https://www.tiktok.com/@gausan123ajk" target="_blank">@gausan123ajk</a></div></div>
-            <div class="desc-note">全球视野 · 薄荷微光</div>
-        </div>
-    </div>
+    <p class="foot">☁️ mint green aesthetic · 安静但很酷 ☁️</p>
 
-    <div class="summary-card">
-        <div class="summary-title">◌ 薄荷绿档案 · 全平台速览 ◌</div>
-        <div class="summary-badge-grid">
-            <span class="summary-badge">🎬 YouTube · 3频道</span>
-            <span class="summary-badge">📸 Instagram · 1账号</span>
-            <span class="summary-badge">🧵 Threads · 1账号</span>
-            <span class="summary-badge">🎵 抖音 · 1账号</span>
-            <span class="summary-badge">🪄 Bilibili · 1账号</span>
-            <span class="summary-badge">📘 Facebook · 1账号</span>
-            <span class="summary-badge">📱 TikTok · 1账号</span>
-        </div>
-        <div class="summary-badge-grid">
-            <a href="https://www.youtube.com/@Gausan123" target="_blank" class="summary-badge">▶ YouTube主</a>
-            <a href="https://www.youtube.com/@tiantian124" target="_blank" class="summary-badge">📼 YouTube旧</a>
-            <a href="https://www.youtube.com/@gauting256" target="_blank" class="summary-badge">🎥 Vlog</a>
-            <a href="https://www.instagram.com/gish_dog_hamster" target="_blank" class="summary-badge">🐾 IG宠物</a>
-            <a href="https://www.threads.com/@gish_dog_hamster" target="_blank" class="summary-badge">🧸 Threads宠物</a>
-            <a href="https://b23.tv/o7qNaU5" target="_blank" class="summary-badge">🪄 B站</a>
-            <a href="https://www.facebook.com/share/1LD8UH9C6X/" target="_blank" class="summary-badge">📘 FB</a>
-            <a href="https://v.douyin.com/Lq1ClGr3Wxg/" target="_blank" class="summary-badge">🎬 抖音拍摄</a>
-            <a href="https://www.tiktok.com/@gausan123ajk" target="_blank" class="summary-badge">📱 TikTok</a>
-        </div>
-        <div class="core-quote" id="coreQuote">
-            ✦ Sunlight, a quiet kind of light. ✦ 像薄荷一样存在 · 不吵但记得住 ✦
-        </div>
-    </div>
+</main>
 
-    <div class="global-footer">
-        ☁️  mint green aesthetic · 安静但很酷 · 点击任意链接直接跳转  ☁️
-    </div>
-</div>
+<script>
+(function() {
+    'use strict';
+
+    /* ============================================================
+       设备检测
+       ============================================================ */
+    const isMobile = /Android|iPhone|iPad|iPod|Mobile/i.test(navigator.userAgent)
+                     || window.matchMedia('(max-width: 767px)').matches;
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    /* ============================================================
+       1. 卡片 3D 倾斜 —— 桌面鼠标 / 手机手指 都跟手
+       ============================================================ */
+    function setupTilt(card) {
+        // 平滑参数
+        let targetRX = 0, targetRY = 0;
+        let currentRX = 0, currentRY = 0;
+        let rafId = null;
+        let isActive = false;
+
+        // 最大倾斜角度（度）
+        const MAX_TILT = isMobile ? 5 : 8;
+
+        function applyFromPointer(clientX, clientY) {
+            const rect = card.getBoundingClientRect();
+            const x = clientX - rect.left;
+            const y = clientY - rect.top;
+
+            // 指针出界 → 复位
+            if (x < -20 || y < -20 || x > rect.width + 20 || y > rect.height + 20) {
+                reset();
+                return;
+            }
+
+            const cx = rect.width / 2;
+            const cy = rect.height / 2;
+
+            // 归一化 → [-1, 1]，然后 × 最大角度
+            targetRY = ((x - cx) / cx) * MAX_TILT;
+            targetRX = ((cy - y) / cy) * MAX_TILT;
+
+            // 记录光晕位置
+            card.style.setProperty('--mx', (x / rect.width * 100) + '%');
+            card.style.setProperty('--my', (y / rect.height * 100) + '%');
+
+            if (!isActive) {
+                isActive = true;
+                card.classList.add('is-tilting');
+            }
+            scheduleTick();
+        }
+
+        function reset() {
+            targetRX = 0;
+            targetRY = 0;
+            isActive = false;
+            card.classList.remove('is-tilting');
+            scheduleTick();
+        }
+
+        function scheduleTick() {
+            if (rafId === null) {
+                rafId = requestAnimationFrame(tick);
+            }
+        }
+
+        function tick() {
+            // 线性插值 → 跟手且柔和
+            currentRX += (targetRX - currentRX) * 0.18;
+            currentRY += (targetRY - currentRY) * 0.18;
+
+            card.style.transform =
+                'perspective(1100px) rotateX(' + currentRX.toFixed(2) + 'deg) rotateY(' + currentRY.toFixed(2) + 'deg)';
+
+            if (Math.abs(currentRX - targetRX) > 0.02 || Math.abs(currentRY - targetRY) > 0.02) {
+                rafId = requestAnimationFrame(tick);
+            } else {
+                // 贴齐
+                currentRX = targetRX;
+                currentRY = targetRY;
+                card.style.transform =
+                    'perspective(1100px) rotateX(' + currentRX.toFixed(2) + 'deg) rotateY(' + currentRY.toFixed(2) + 'deg)';
+                rafId = null;
+            }
+        }
+
+        // ---- 指针事件（鼠标 + 触摸统一） ----
+        // pointerdown：手指一触就立刻响应
+        card.addEventListener('pointerdown', (e) => {
+            // 触摸场景下，只有主指针才处理
+            if (e.pointerType === 'touch' && !e.isPrimary) return;
+            applyFromPointer(e.clientX, e.clientY);
+        }, { passive: true });
+
+        // pointermove：鼠标滑动 / 手指拖动 都跟手
+        card.addEventListener('pointermove', (e) => {
+            if (e.pointerType === 'touch' && !e.isPrimary) return;
+            applyFromPointer(e.clientX, e.clientY);
+        }, { passive: true });
+
+        // pointerup / leave / cancel：复位
+        card.addEventListener('pointerup', reset, { passive: true });
+        card.addEventListener('pointerleave', reset, { passive: true });
+        card.addEventListener('pointercancel', reset, { passive: true });
+    }
+
+    // 对每个玻璃卡片启用倾斜
+    document.querySelectorAll('.glass').forEach(setupTilt);
+
+    /* ============================================================
+       2. 桌面端粒子系统（手机端完全关闭）
+       ============================================================ */
+    const canvas = document.getElementById('dew-canvas');
+
+    if (canvas && !isMobile && !prefersReducedMotion) {
+        startParticles(canvas);
+    }
+
+    function startParticles(canvas) {
+        const ctx = canvas.getContext('2d', { alpha: true });
+        let particles = [];
+        let mouse = { x: null, y: null };
+        let animId = null;
+        let isVisible = true;
+
+        const PARTICLE_COUNT = 42;
+        const MOUSE_RADIUS = 140;
+        const CONNECT_DIST = 110;
+
+        function resize() {
+            const dpr = Math.min(window.devicePixelRatio || 1, 1.5);
+            canvas.width = window.innerWidth * dpr;
+            canvas.height = window.innerHeight * dpr;
+            canvas.style.width = window.innerWidth + 'px';
+            canvas.style.height = window.innerHeight + 'px';
+            ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+        }
+
+        class Particle {
+            constructor() { this.reset(true); }
+            reset(init) {
+                this.x = Math.random() * window.innerWidth;
+                this.y = init ? Math.random() * window.innerHeight : -20;
+                this.vx = (Math.random() - 0.5) * 0.35;
+                this.vy = Math.random() * 0.4 + 0.1;
+                this.r = Math.random() * 2 + 0.8;
+                this.baseA = Math.random() * 0.35 + 0.2;
+                this.a = this.baseA;
+                this.pulse = Math.random() * Math.PI * 2;
+                this.pulseSpeed = Math.random() * 0.012 + 0.006;
+                this.hue = Math.random() > 0.5 ? 145 : 158;
+            }
+            update() {
+                if (mouse.x !== null) {
+                    const dx = this.x - mouse.x;
+                    const dy = this.y - mouse.y;
+                    const d2 = dx * dx + dy * dy;
+                    if (d2 < MOUSE_RADIUS * MOUSE_RADIUS && d2 > 1) {
+                        const d = Math.sqrt(d2);
+                        const f = (MOUSE_RADIUS - d) / MOUSE_RADIUS;
+                        this.vx += (dx / d) * f * 0.5;
+                        this.vy += (dy / d) * f * 0.5;
+                    }
+                }
+                this.vx *= 0.97;
+                this.vy *= 0.97;
+                if (this.vy < 0.05) this.vy += 0.005;
+                this.x += this.vx;
+                this.y += this.vy;
+                const w = window.innerWidth, h = window.innerHeight;
+                if (this.x < -30) this.x = w + 30;
+                if (this.x > w + 30) this.x = -30;
+                if (this.y > h + 30) this.reset(false);
+                this.pulse += this.pulseSpeed;
+                this.a = this.baseA * (0.65 + 0.35 * Math.sin(this.pulse));
+            }
+            draw() {
+                const gr = this.r * 5;
+                const g = ctx.createRadialGradient(this.x, this.y, 0, this.x, this.y, gr);
+                g.addColorStop(0, 'hsla(' + this.hue + ', 70%, 72%, ' + (this.a * 0.5) + ')');
+                g.addColorStop(0.4, 'hsla(' + this.hue + ', 65%, 68%, ' + (this.a * 0.15) + ')');
+                g.addColorStop(1, 'hsla(' + this.hue + ', 60%, 68%, 0)');
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, gr, 0, Math.PI * 2);
+                ctx.fillStyle = g;
+                ctx.fill();
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.r, 0, Math.PI * 2);
+                ctx.fillStyle = 'hsla(' + this.hue + ', 75%, 70%, ' + this.a + ')';
+                ctx.fill();
+            }
+        }
+
+        function init() {
+            particles = [];
+            for (let i = 0; i < PARTICLE_COUNT; i++) particles.push(new Particle());
+        }
+
+        function animate() {
+            if (!isVisible) { animId = null; return; }
+            ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
+
+            // 连线
+            for (let i = 0; i < particles.length; i++) {
+                for (let j = i + 1; j < particles.length; j++) {
+                    const dx = particles[i].x - particles[j].x;
+                    const dy = particles[i].y - particles[j].y;
+                    const d2 = dx * dx + dy * dy;
+                    if (d2 < CONNECT_DIST * CONNECT_DIST) {
+                        const d = Math.sqrt(d2);
+                        const o = (1 - d / CONNECT_DIST) * 0.12;
+                        ctx.beginPath();
+                        ctx.moveTo(particles[i].x, particles[i].y);
+                        ctx.lineTo(particles[j].x, particles[j].y);
+                        ctx.strokeStyle = 'hsla(150, 70%, 70%, ' + o + ')';
+                        ctx.lineWidth = 0.8;
+                        ctx.stroke();
+                    }
+                }
+            }
+
+            for (let i = 0; i < particles.length; i++) {
+                particles[i].update();
+                particles[i].draw();
+            }
+            animId = requestAnimationFrame(animate);
+        }
+
+        window.addEventListener('mousemove', (e) => {
+            mouse.x = e.clientX;
+            mouse.y = e.clientY;
+        }, { passive: true });
+
+        window.addEventListener('mouseleave', () => {
+            mouse.x = null;
+            mouse.y = null;
+        });
+
+        document.addEventListener('visibilitychange', () => {
+            isVisible = !document.hidden;
+            if (isVisible && !animId) animate();
+        });
+
+        let resizeTimer;
+        window.addEventListener('resize', () => {
+            clearTimeout(resizeTimer);
+            resizeTimer = setTimeout(() => {
+                resize();
+                init();
+            }, 250);
+        }, { passive: true });
+
+        resize();
+        init();
+        animate();
+    }
+
+    /* ============================================================
+       3. 卡片入场观察
+       ============================================================ */
+    if ('IntersectionObserver' in window) {
+        const obs = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animationPlayState = 'running';
+                    obs.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.05, rootMargin: '50px' });
+
+        document.querySelectorAll('.platform, .summary').forEach(el => {
+            obs.observe(el);
+        });
+    }
+
+    /* ============================================================
+       4. 防止双击缩放
+       ============================================================ */
+    let lastTouchEnd = 0;
+    document.addEventListener('touchend', (e) => {
+        const now = Date.now();
+        if (now - lastTouchEnd < 300) e.preventDefault();
+        lastTouchEnd = now;
+    }, { passive: false });
+
+})();
+</script>
 </body>
 </html>
