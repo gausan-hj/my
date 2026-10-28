@@ -1182,13 +1182,13 @@ body.egg-open { overflow: hidden; }
     background: linear-gradient(90deg, rgba(200, 160, 255, 0.4), transparent);
 }
 
-/* 关于我（新简介） */
+/* 关于我 */
 .egg-about {
     font-size: 0.92rem;
     line-height: 2.1;
     color: rgba(240, 230, 255, 0.88);
     letter-spacing: 0.04em;
-    margin-bottom: 2rem;
+    margin-bottom: 0;
     max-width: 480px;
     margin-left: auto;
     margin-right: auto;
@@ -1208,7 +1208,7 @@ body.egg-open { overflow: hidden; }
     display: flex;
     flex-direction: column;
     gap: 0.7rem;
-    margin-bottom: 2rem;
+    margin-bottom: 0;
     text-align: left;
     max-width: 500px;
     margin-left: auto;
@@ -1289,7 +1289,7 @@ body.egg-open { overflow: hidden; }
     flex-wrap: wrap;
     justify-content: center;
     gap: 0.55rem;
-    margin-bottom: 2rem;
+    margin-bottom: 0;
 }
 
 .egg-tag {
@@ -1317,7 +1317,7 @@ body.egg-open { overflow: hidden; }
     display: flex;
     flex-direction: column;
     gap: 0.55rem;
-    margin-bottom: 2rem;
+    margin-bottom: 0;
     max-width: 440px;
     margin-left: auto;
     margin-right: auto;
@@ -1417,16 +1417,506 @@ body.egg-open { overflow: hidden; }
 }
 
 /* ============================================================
+   ★★★ 档案区块 · ARCHIVE SECTIONS ★★★
+   ============================================================ */
+.archive {
+    position: relative;
+    max-width: 560px;
+    margin: 0 auto;
+    padding: 1.7rem 1.1rem 1.6rem;
+    border-radius: 24px;
+    text-align: center;
+    overflow: hidden;
+    border: 1px solid rgba(200, 160, 255, 0.16);
+    background: linear-gradient(170deg, rgba(80, 40, 120, 0.14) 0%, rgba(20, 8, 30, 0.35) 100%);
+    box-shadow: inset 0 1px 0 rgba(240, 230, 255, 0.06);
+}
+
+@media (min-width: 768px) {
+    .archive { padding: 2.1rem 1.7rem 1.9rem; border-radius: 28px; }
+}
+
+.archive--zodiac {
+    border-color: rgba(200, 90, 110, 0.32);
+    background:
+        radial-gradient(ellipse 90% 60% at 50% 0%, rgba(150, 30, 60, 0.24) 0%, transparent 70%),
+        linear-gradient(170deg, rgba(70, 20, 40, 0.4) 0%, rgba(20, 8, 24, 0.55) 100%);
+    box-shadow:
+        0 0 60px -26px rgba(190, 50, 90, 0.8),
+        inset 0 1px 0 rgba(255, 200, 210, 0.08);
+}
+
+.archive--sins {
+    border-color: rgba(170, 110, 230, 0.28);
+    background:
+        radial-gradient(ellipse 90% 60% at 50% 0%, rgba(120, 40, 160, 0.22) 0%, transparent 70%),
+        linear-gradient(170deg, rgba(48, 16, 60, 0.45) 0%, rgba(14, 6, 22, 0.6) 100%);
+    box-shadow:
+        0 0 60px -26px rgba(160, 90, 230, 0.6),
+        inset 0 1px 0 rgba(220, 190, 255, 0.08);
+}
+
+.archive--intj {
+    border-color: rgba(160, 150, 230, 0.24);
+    background:
+        radial-gradient(ellipse 90% 60% at 50% 0%, rgba(70, 60, 140, 0.28) 0%, transparent 72%),
+        linear-gradient(170deg, rgba(26, 20, 52, 0.6) 0%, rgba(10, 7, 20, 0.7) 100%);
+    box-shadow:
+        0 0 60px -26px rgba(130, 120, 220, 0.6),
+        inset 0 1px 0 rgba(210, 200, 255, 0.08);
+}
+
+.arch-code {
+    display: inline-block;
+    font-family: 'Space Grotesk', monospace;
+    font-size: 0.56rem;
+    letter-spacing: 0.34em;
+    color: rgba(220, 180, 255, 0.42);
+    margin-bottom: 0.6rem;
+    text-indent: 0.34em;
+}
+
+.arch-title {
+    font-family: 'Space Grotesk', monospace;
+    font-size: clamp(0.9rem, 3.9vw, 1.15rem);
+    font-weight: 700;
+    letter-spacing: 0.09em;
+    line-height: 1.5;
+    color: #f2e9ff;
+    text-transform: uppercase;
+    margin-bottom: 0.35rem;
+    text-shadow: 0 0 26px rgba(200, 160, 255, 0.42);
+    word-break: break-word;
+}
+
+.archive--zodiac .arch-title { text-shadow: 0 0 26px rgba(255, 110, 140, 0.45); }
+
+.arch-sub {
+    font-size: 0.68rem;
+    letter-spacing: 0.24em;
+    color: rgba(220, 180, 255, 0.55);
+    margin-bottom: 0.2rem;
+}
+
+.arch-line {
+    width: 46px;
+    height: 1px;
+    margin: 1rem auto 1.3rem;
+    background: linear-gradient(90deg, transparent, rgba(200, 160, 255, 0.6), transparent);
+}
+
+.archive--zodiac .arch-line {
+    background: linear-gradient(90deg, transparent, rgba(255, 120, 150, 0.7), transparent);
+}
+
+/* ---------- 卯兔插画 ---------- */
+.zodiac-portrait {
+    position: relative;
+    width: min(238px, 64vw);
+    aspect-ratio: 3 / 4;
+    margin: 0 auto 1.5rem;
+    border-radius: 22px;
+    overflow: hidden;
+    border: 1px solid rgba(200, 100, 130, 0.32);
+    background:
+        radial-gradient(ellipse 75% 55% at 50% 30%, rgba(170, 40, 70, 0.5) 0%, transparent 72%),
+        radial-gradient(ellipse 90% 60% at 50% 108%, rgba(90, 40, 140, 0.5) 0%, transparent 75%),
+        linear-gradient(170deg, #1a0a18 0%, #240d20 45%, #12060f 100%);
+    box-shadow:
+        0 0 46px -14px rgba(200, 50, 90, 0.65),
+        inset 0 0 50px -18px rgba(220, 160, 200, 0.3);
+}
+
+.zodiac-portrait::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: repeating-linear-gradient(
+        0deg,
+        rgba(255, 255, 255, 0.028) 0px,
+        rgba(255, 255, 255, 0.028) 1px,
+        transparent 1px,
+        transparent 3px
+    );
+}
+
+.zodiac-portrait svg {
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+
+.zodiac-facts {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.55rem;
+    margin-bottom: 1.15rem;
+}
+
+.zodiac-fact {
+    display: flex;
+    align-items: baseline;
+    gap: 0.5rem;
+    padding: 0.42rem 0.95rem;
+    border: 1px solid rgba(200, 120, 150, 0.28);
+    border-radius: 9999px;
+    background: rgba(120, 30, 60, 0.18);
+}
+
+.fact-key {
+    font-size: 0.58rem;
+    letter-spacing: 0.2em;
+    color: rgba(230, 190, 205, 0.6);
+    white-space: nowrap;
+}
+
+.fact-val {
+    font-size: 0.76rem;
+    font-weight: 600;
+    color: #f0e6ff;
+    letter-spacing: 0.06em;
+}
+
+.fact-val.is-red {
+    color: #ff8a9e;
+    text-shadow: 0 0 16px rgba(255, 90, 120, 0.7);
+}
+
+.arch-mini-label {
+    font-size: 0.58rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: rgba(230, 190, 205, 0.5);
+    margin-bottom: 0.75rem;
+    text-indent: 0.3em;
+}
+
+.dark-tags {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.45rem;
+    margin-bottom: 1.3rem;
+}
+
+.dark-tag {
+    padding: 0.34rem 0.9rem;
+    border-radius: 9999px;
+    font-size: 0.7rem;
+    letter-spacing: 0.08em;
+    color: #ecc9d8;
+    background: rgba(140, 30, 60, 0.24);
+    border: 1px solid rgba(200, 90, 120, 0.32);
+}
+
+.arch-quote {
+    font-size: 0.81rem;
+    line-height: 2.05;
+    letter-spacing: 0.03em;
+    color: rgba(240, 230, 255, 0.82);
+    text-align: left;
+    padding: 1rem 1.1rem;
+    border-left: 2px solid rgba(220, 90, 120, 0.6);
+    background: rgba(140, 30, 60, 0.12);
+    border-radius: 0 14px 14px 0;
+}
+
+.archive--zodiac .arch-quote { color: rgba(250, 235, 242, 0.85); }
+
+/* ---------- 七宗罪 ---------- */
+.sins-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+    text-align: left;
+    margin-bottom: 1.3rem;
+}
+
+.sin-row {
+    --p: 0%;
+    --c1: #4a1220;
+    --c2: #c05070;
+    position: relative;
+    padding: 0.7rem 0.85rem 0.78rem;
+    border-radius: 14px;
+    background: rgba(255, 255, 255, 0.025);
+    border: 1px solid rgba(200, 160, 255, 0.1);
+}
+
+.sin-row.is-top {
+    border-color: rgba(230, 60, 90, 0.45);
+    background: linear-gradient(100deg, rgba(150, 20, 45, 0.32) 0%, rgba(60, 16, 60, 0.22) 100%);
+    box-shadow: 0 0 28px -10px rgba(230, 60, 90, 0.75);
+}
+
+.sin-head {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    margin-bottom: 0.55rem;
+}
+
+.sin-icon {
+    width: 25px;
+    height: 25px;
+    display: grid;
+    place-items: center;
+    border-radius: 8px;
+    font-size: 0.76rem;
+    line-height: 1;
+    color: #f0d8ff;
+    background: rgba(200, 160, 255, 0.12);
+    border: 1px solid rgba(200, 160, 255, 0.22);
+    flex-shrink: 0;
+}
+
+.is-top .sin-icon {
+    color: #ffd0d8;
+    background: rgba(230, 60, 90, 0.22);
+    border-color: rgba(230, 60, 90, 0.45);
+}
+
+.sin-name {
+    flex: 1;
+    min-width: 0;
+    font-size: 0.79rem;
+    font-weight: 600;
+    color: #f0e6ff;
+    letter-spacing: 0.05em;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0.35rem;
+}
+
+.sin-name em {
+    font-style: normal;
+    font-family: 'Space Grotesk', monospace;
+    font-size: 0.58rem;
+    letter-spacing: 0.18em;
+    color: rgba(220, 180, 255, 0.48);
+}
+
+.is-top .sin-name em { color: rgba(255, 160, 180, 0.75); }
+
+.sin-score {
+    font-family: 'Space Grotesk', monospace;
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: #e6d0ff;
+    letter-spacing: 0.02em;
+    flex-shrink: 0;
+    white-space: nowrap;
+}
+
+.is-top .sin-score {
+    color: #ff8a9e;
+    text-shadow: 0 0 20px rgba(255, 90, 120, 0.85);
+}
+
+.sin-bar {
+    position: relative;
+    height: 6px;
+    border-radius: 9999px;
+    background: rgba(255, 255, 255, 0.07);
+    overflow: hidden;
+    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+.sin-fill {
+    display: block;
+    height: 100%;
+    width: 0;
+    border-radius: 9999px;
+    background: linear-gradient(90deg, var(--c1), var(--c2));
+    box-shadow: 0 0 12px -1px var(--c2);
+}
+
+.is-top .sin-bar { height: 8px; }
+
+.sin-row.is-unknown .sin-bar {
+    background: repeating-linear-gradient(
+        90deg,
+        rgba(200, 160, 255, 0.18) 0 7px,
+        transparent 7px 15px
+    );
+}
+
+.sin-row.is-unknown .sin-score {
+    color: rgba(220, 180, 255, 0.45);
+    font-size: 0.7rem;
+    letter-spacing: 0.22em;
+    font-weight: 600;
+}
+
+@keyframes sinGrow {
+    from { width: 0; }
+    to { width: var(--p); }
+}
+
+@keyframes sinFade {
+    from { opacity: 0; transform: translateY(5px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.egg-overlay.open .sin-fill {
+    animation: sinGrow 1.25s cubic-bezier(0.16, 1, 0.3, 1) both;
+    animation-delay: var(--delay, 0s);
+}
+
+.egg-overlay.open .sin-score {
+    animation: sinFade 0.85s ease both;
+    animation-delay: var(--delay, 0s);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .egg-overlay.open .sin-fill { animation: none; width: var(--p); }
+    .egg-overlay.open .sin-score { animation: none; }
+}
+
+.sins-note {
+    font-size: 0.73rem;
+    font-style: italic;
+    line-height: 1.95;
+    color: rgba(220, 180, 255, 0.62);
+    text-align: center;
+    padding-top: 1rem;
+    border-top: 1px solid rgba(200, 160, 255, 0.12);
+    letter-spacing: 0.03em;
+}
+
+/* ---------- INTJ ---------- */
+.intj-board {
+    position: relative;
+    padding: 1.4rem 1rem 1.35rem;
+    border-radius: 20px;
+    overflow: hidden;
+    border: 1px solid rgba(160, 150, 230, 0.22);
+    background: linear-gradient(170deg, rgba(28, 20, 52, 0.85) 0%, rgba(10, 7, 18, 0.92) 100%);
+    margin-bottom: 1.2rem;
+    box-shadow: inset 0 1px 0 rgba(200, 190, 255, 0.08);
+}
+
+.intj-board::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background-image:
+        linear-gradient(rgba(160, 150, 230, 0.09) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(160, 150, 230, 0.09) 1px, transparent 1px);
+    background-size: 24px 24px;
+    -webkit-mask-image: radial-gradient(ellipse 72% 72% at 50% 50%, #000 8%, transparent 78%);
+    mask-image: radial-gradient(ellipse 72% 72% at 50% 50%, #000 8%, transparent 78%);
+}
+
+.intj-board::after {
+    content: '♞';
+    position: absolute;
+    top: 4px;
+    right: 12px;
+    font-size: 1.7rem;
+    line-height: 1;
+    color: rgba(190, 180, 255, 0.16);
+    pointer-events: none;
+}
+
+.intj-type {
+    position: relative;
+    font-family: 'Space Grotesk', monospace;
+    font-size: clamp(2rem, 10vw, 2.9rem);
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-indent: 0.18em;
+    line-height: 1;
+    background: linear-gradient(135deg, #ffffff 0%, #b8a8ff 45%, #7c6bd8 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+    margin-bottom: 0.55rem;
+    filter: drop-shadow(0 0 24px rgba(150, 130, 255, 0.45));
+}
+
+.intj-architect {
+    position: relative;
+    font-size: 0.68rem;
+    letter-spacing: 0.24em;
+    color: rgba(210, 200, 255, 0.78);
+    margin-bottom: 1rem;
+    text-indent: 0.24em;
+}
+
+.intj-keywords {
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.4rem;
+}
+
+.intj-keyword {
+    padding: 0.3rem 0.8rem;
+    border-radius: 9999px;
+    font-size: 0.68rem;
+    letter-spacing: 0.06em;
+    color: #cfc4ff;
+    background: rgba(120, 100, 220, 0.14);
+    border: 1px solid rgba(150, 130, 230, 0.28);
+}
+
+.intj-mood {
+    font-size: 0.79rem;
+    line-height: 2;
+    color: rgba(235, 228, 255, 0.8);
+    text-align: center;
+    margin-bottom: 1rem;
+    letter-spacing: 0.03em;
+}
+
+.intj-mood strong {
+    color: #c8b8ff;
+    font-weight: 600;
+}
+
+.intj-quote {
+    font-size: 0.8rem;
+    line-height: 2.05;
+    color: rgba(235, 228, 255, 0.8);
+    text-align: left;
+    padding: 0.95rem 1.1rem;
+    border-left: 2px solid rgba(150, 130, 230, 0.65);
+    background: rgba(120, 100, 220, 0.1);
+    border-radius: 0 14px 14px 0;
+    letter-spacing: 0.02em;
+}
+
+/* ============================================================
    响应式
    ============================================================ */
 @media (max-width: 520px) {
-    .egg-overlay { padding: 1.5rem 1rem; }
+    .egg-overlay { padding: 1.5rem 0.85rem; }
     .egg-birthday { padding: 1.2rem 1.6rem; }
     .egg-content { padding: 0.5rem 0 1.5rem; }
     .egg-about { font-size: 0.86rem; line-height: 2; }
     .song { padding: 0.75rem 0.95rem; gap: 12px; }
     .song-name { font-size: 0.82rem; }
     .wish { font-size: 0.78rem; padding: 0.65rem 1rem; }
+    .archive { padding: 1.4rem 0.85rem 1.3rem; border-radius: 20px; }
+    .sin-row { padding: 0.65rem 0.7rem 0.72rem; }
+    .sin-name { font-size: 0.75rem; }
+    .sin-score { font-size: 0.82rem; }
+    .is-top .sin-score { font-size: 0.92rem; }
+    .arch-quote, .intj-quote { font-size: 0.77rem; padding: 0.85rem 0.9rem; }
+    .zodiac-fact { padding: 0.38rem 0.8rem; }
+    .fact-val { font-size: 0.72rem; }
+}
+
+@media (max-width: 360px) {
+    .sin-name em { display: none; }
+    .arch-title { letter-spacing: 0.05em; }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -1663,7 +2153,7 @@ body.egg-open { overflow: hidden; }
             <span class="line"></span>
         </div>
 
-        <!-- 关于我（新简介，不同于主页） -->
+        <!-- 关于我 -->
         <div class="egg-section-title">About Me</div>
         <p class="egg-about">
             习惯在深夜写代码，在清晨听歌。<br>
@@ -1678,7 +2168,249 @@ body.egg-open { overflow: hidden; }
             <span class="line"></span>
         </div>
 
-        <!-- 喜欢听的歌 -->
+        <!-- ============================================================
+             01 · 生肖档案
+             ============================================================ -->
+        <section class="archive archive--zodiac">
+            <span class="arch-code">ARCHIVE 01</span>
+            <h3 class="arch-title">ZODIAC ARCHIVE · 卯兔档案</h3>
+            <p class="arch-sub">DARK RABBIT</p>
+            <div class="arch-line" aria-hidden="true"></div>
+
+            <!-- 兔子插画（纯 SVG，无需外部图片） -->
+            <div class="zodiac-portrait">
+                <svg viewBox="0 0 240 320" role="img" aria-label="暗色卯兔插画">
+                    <defs>
+                        <radialGradient id="rbFur" cx="42%" cy="26%" r="80%">
+                            <stop offset="0%" stop-color="#d2c4e2"/>
+                            <stop offset="34%" stop-color="#8e7dab"/>
+                            <stop offset="70%" stop-color="#4b3b64"/>
+                            <stop offset="100%" stop-color="#1a0f26"/>
+                        </radialGradient>
+                        <linearGradient id="rbEar" x1="0" y1="0" x2="0" y2="1">
+                            <stop offset="0%" stop-color="#b03050" stop-opacity="0.85"/>
+                            <stop offset="100%" stop-color="#3d0e21" stop-opacity="0.92"/>
+                        </linearGradient>
+                        <radialGradient id="rbEye">
+                            <stop offset="0%" stop-color="#ff9aac"/>
+                            <stop offset="32%" stop-color="#e02346"/>
+                            <stop offset="74%" stop-color="#8a0a22"/>
+                            <stop offset="100%" stop-color="#380310"/>
+                        </radialGradient>
+                        <radialGradient id="rbHalo">
+                            <stop offset="0%" stop-color="#8a2a4a" stop-opacity="0.78"/>
+                            <stop offset="58%" stop-color="#4a1a5a" stop-opacity="0.3"/>
+                            <stop offset="100%" stop-color="#2a0a20" stop-opacity="0"/>
+                        </radialGradient>
+                        <filter id="rbGlow" x="-120%" y="-120%" width="340%" height="340%">
+                            <feGaussianBlur stdDeviation="6"/>
+                        </filter>
+                    </defs>
+
+                    <!-- 光晕 -->
+                    <ellipse cx="120" cy="140" rx="122" ry="132" fill="url(#rbHalo)"/>
+
+                    <!-- 耳朵 -->
+                    <g>
+                        <ellipse cx="88" cy="74" rx="17" ry="62" transform="rotate(-11 88 74)" fill="url(#rbFur)"/>
+                        <ellipse cx="88" cy="72" rx="8.5" ry="46" transform="rotate(-11 88 72)" fill="url(#rbEar)"/>
+                        <ellipse cx="152" cy="74" rx="17" ry="62" transform="rotate(11 152 74)" fill="url(#rbFur)"/>
+                        <ellipse cx="152" cy="72" rx="8.5" ry="46" transform="rotate(11 152 72)" fill="url(#rbEar)"/>
+                    </g>
+
+                    <!-- 肩背 -->
+                    <path d="M120 208 C 62 208 32 252 26 320 L 214 320 C 208 252 178 208 120 208 Z" fill="url(#rbFur)"/>
+
+                    <!-- 头部 -->
+                    <ellipse cx="120" cy="176" rx="57" ry="58" fill="url(#rbFur)"/>
+
+                    <!-- 眼睛辉光 -->
+                    <ellipse cx="99" cy="172" rx="16" ry="13" fill="#e02346" opacity="0.55" filter="url(#rbGlow)"/>
+                    <ellipse cx="141" cy="172" rx="16" ry="13" fill="#e02346" opacity="0.55" filter="url(#rbGlow)"/>
+
+                    <!-- 眼睛 -->
+                    <ellipse cx="99" cy="172" rx="8" ry="10.5" transform="rotate(-10 99 172)" fill="url(#rbEye)"/>
+                    <ellipse cx="141" cy="172" rx="8" ry="10.5" transform="rotate(10 141 172)" fill="url(#rbEye)"/>
+
+                    <!-- 鼻子 -->
+                    <path d="M112.5 194 L127.5 194 L120 202.5 Z" fill="#c98aa8" opacity="0.82"/>
+
+                    <!-- 嘴 -->
+                    <path d="M120 202.5 q -8 8 -15 3.5 M120 202.5 q 8 8 15 3.5"
+                          stroke="rgba(212,172,202,0.55)" stroke-width="1.6"
+                          fill="none" stroke-linecap="round"/>
+
+                    <!-- 胡须 -->
+                    <path d="M104 192 L70 186 M103 198 L68 198 M136 192 L170 186 M137 198 L172 198"
+                          stroke="rgba(205,190,225,0.26)" stroke-width="1.2" stroke-linecap="round"/>
+
+                    <!-- 星尘 -->
+                    <circle cx="46" cy="52" r="1.6" fill="#d8b8ff" opacity="0.7"/>
+                    <circle cx="196" cy="88" r="1.2" fill="#ff9ab0" opacity="0.6"/>
+                    <circle cx="60" cy="232" r="1.4" fill="#d8b8ff" opacity="0.5"/>
+                    <circle cx="188" cy="250" r="1.8" fill="#ff9ab0" opacity="0.45"/>
+                    <circle cx="120" cy="28" r="1.2" fill="#e8d8ff" opacity="0.6"/>
+                    <circle cx="32" cy="142" r="1.1" fill="#e8d8ff" opacity="0.4"/>
+                    <circle cx="212" cy="172" r="1.3" fill="#d8b8ff" opacity="0.45"/>
+                </svg>
+            </div>
+
+            <div class="zodiac-facts">
+                <div class="zodiac-fact">
+                    <span class="fact-key">生肖</span>
+                    <span class="fact-val">卯兔 · RABBIT</span>
+                </div>
+                <div class="zodiac-fact">
+                    <span class="fact-key">暗面代号</span>
+                    <span class="fact-val is-red">嘴毒</span>
+                </div>
+            </div>
+
+            <div class="arch-mini-label">人格关键词</div>
+            <div class="dark-tags">
+                <span class="dark-tag">得过且过</span>
+                <span class="dark-tag">胆怯</span>
+                <span class="dark-tag">虚荣</span>
+                <span class="dark-tag">偏执</span>
+                <span class="dark-tag">自我折磨</span>
+            </div>
+
+            <p class="arch-quote">
+                「兔子不一定永远温顺。安静的外表之下，也可以藏着敏锐的观察、戒备的本能与不愿轻易示人的锋芒。它选择沉默，不代表它没有自己的世界。」
+            </p>
+        </section>
+
+        <div class="egg-divider" aria-hidden="true">
+            <span class="line"></span>
+            <span class="dot"></span>
+            <span class="line"></span>
+        </div>
+
+        <!-- ============================================================
+             02 · 七宗罪档案
+             ============================================================ -->
+        <section class="archive archive--sins">
+            <span class="arch-code">ARCHIVE 02</span>
+            <h3 class="arch-title">THE SEVEN SINS · 七宗罪档案</h3>
+            <p class="arch-sub">SEVEN SINS PROFILE</p>
+            <div class="arch-line" aria-hidden="true"></div>
+
+            <div class="sins-list">
+
+                <div class="sin-row is-top" style="--p:80%; --c1:#5e0f1f; --c2:#e0394f; --delay:0.05s;">
+                    <div class="sin-head">
+                        <span class="sin-icon" aria-hidden="true">ϟ</span>
+                        <span class="sin-name">愤怒 <em>WRATH</em></span>
+                        <span class="sin-score">80%</span>
+                    </div>
+                    <div class="sin-bar"><span class="sin-fill"></span></div>
+                </div>
+
+                <div class="sin-row" style="--p:70%; --c1:#4a1220; --c2:#c05070; --delay:0.16s;">
+                    <div class="sin-head">
+                        <span class="sin-icon" aria-hidden="true">◈</span>
+                        <span class="sin-name">贪婪 <em>GREED</em></span>
+                        <span class="sin-score">70%</span>
+                    </div>
+                    <div class="sin-bar"><span class="sin-fill"></span></div>
+                </div>
+
+                <div class="sin-row" style="--p:65%; --c1:#3f1038; --c2:#b050a0; --delay:0.27s;">
+                    <div class="sin-head">
+                        <span class="sin-icon" aria-hidden="true">♡</span>
+                        <span class="sin-name">色欲 <em>LUST</em></span>
+                        <span class="sin-score">65%</span>
+                    </div>
+                    <div class="sin-bar"><span class="sin-fill"></span></div>
+                </div>
+
+                <div class="sin-row" style="--p:65%; --c1:#2e1a52; --c2:#8f6fe0; --delay:0.38s;">
+                    <div class="sin-head">
+                        <span class="sin-icon" aria-hidden="true">♛</span>
+                        <span class="sin-name">傲慢 <em>PRIDE</em></span>
+                        <span class="sin-score">65%</span>
+                    </div>
+                    <div class="sin-bar"><span class="sin-fill"></span></div>
+                </div>
+
+                <div class="sin-row" style="--p:45%; --c1:#251a45; --c2:#6a5ac0; --delay:0.49s;">
+                    <div class="sin-head">
+                        <span class="sin-icon" aria-hidden="true">◐</span>
+                        <span class="sin-name">嫉妒 <em>ENVY</em></span>
+                        <span class="sin-score">45%</span>
+                    </div>
+                    <div class="sin-bar"><span class="sin-fill"></span></div>
+                </div>
+
+                <div class="sin-row" style="--p:35%; --c1:#1e1834; --c2:#4f4a82; --delay:0.6s;">
+                    <div class="sin-head">
+                        <span class="sin-icon" aria-hidden="true">☾</span>
+                        <span class="sin-name">懒惰 <em>SLOTH</em></span>
+                        <span class="sin-score">35%</span>
+                    </div>
+                    <div class="sin-bar"><span class="sin-fill"></span></div>
+                </div>
+
+                <div class="sin-row is-unknown" style="--delay:0.72s;">
+                    <div class="sin-head">
+                        <span class="sin-icon" aria-hidden="true">◍</span>
+                        <span class="sin-name">暴食 <em>GLUTTONY</em></span>
+                        <span class="sin-score">未知</span>
+                    </div>
+                    <div class="sin-bar"></div>
+                </div>
+
+            </div>
+
+            <p class="sins-note">
+                「这些数字记录的是一次测试，而不是对一个人的最终判决。」
+            </p>
+        </section>
+
+        <div class="egg-divider" aria-hidden="true">
+            <span class="line"></span>
+            <span class="dot"></span>
+            <span class="line"></span>
+        </div>
+
+        <!-- ============================================================
+             03 · INTJ 人格档案
+             ============================================================ -->
+        <section class="archive archive--intj">
+            <span class="arch-code">ARCHIVE 03</span>
+            <h3 class="arch-title">MBTI PROFILE · INTJ</h3>
+            <p class="arch-sub">THE ARCHITECT · 建筑师</p>
+            <div class="arch-line" aria-hidden="true"></div>
+
+            <div class="intj-board">
+                <div class="intj-type">INTJ</div>
+                <div class="intj-architect">THE ARCHITECT · 建筑师</div>
+                <div class="intj-keywords">
+                    <span class="intj-keyword">理性</span>
+                    <span class="intj-keyword">独立</span>
+                    <span class="intj-keyword">战略思考</span>
+                    <span class="intj-keyword">观察力</span>
+                    <span class="intj-keyword">原则感</span>
+                    <span class="intj-keyword">克制</span>
+                </div>
+            </div>
+
+            <p class="intj-mood">
+                <strong>人格氛围</strong> · 安静、深沉，重视自己的判断，不喜欢被轻易看透。
+            </p>
+
+            <p class="intj-quote">
+                「我习惯先观察，再判断；先思考，再行动。我有自己的原则与节奏，不需要所有人理解我的选择。安静不是空白，理性也不意味着没有情绪。」
+            </p>
+        </section>
+
+        <div class="egg-divider" aria-hidden="true">
+            <span class="line"></span>
+            <span class="dot"></span>
+            <span class="line"></span>
+        </div>
+
+        <!-- 歌单 -->
         <div class="egg-section-title">On Repeat · 循环列表</div>
         <div class="egg-playlist">
             <div class="song">
@@ -1766,7 +2498,7 @@ body.egg-open { overflow: hidden; }
         </div>
 
         <!-- 签名 -->
-        <p class="egg-signature">— ꧁LWHᝰgs123꧂ —</p>
+        <p class="egg-signature" style="margin-top:2rem;">— ꧁LWHᝰgs123꧂ —</p>
 
         <button class="egg-close" id="eggClose" type="button">
             ✦ 回到主页 ✦
@@ -1902,6 +2634,7 @@ body.egg-open { overflow: hidden; }
         eggOverlay.classList.add('open');
         eggOverlay.setAttribute('aria-hidden', 'false');
         document.body.classList.add('egg-open');
+        eggOverlay.scrollTop = 0;
     }
 
     function closeEgg() {
